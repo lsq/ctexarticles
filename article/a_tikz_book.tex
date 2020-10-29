@@ -1,0 +1,251 @@
+\documentclass[12pt,a4paper]{book}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage[french]{babel}
+
+\usepackage[T1]{fontenc}
+
+\usepackage{amsmath,amssymb,amsfonts,tikz}
+
+\usepackage[explicit]{titlesec}
+
+\usepackage[most]{tcolorbox}
+
+\usepackage[left=1.5cm,right=1.5cm,top=1.5cm,bottom=2cm]{geometry}
+
+\usepackage{enumitem}
+\usepackage{ulem}
+\usetikzlibrary{calc}
+\usepackage{fontspec}
+\usepackage{array,multirow,makecell}
+\setcellgapes{1pt}
+\makegapedcells
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash }b{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash }b{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash }b{#1}}
+
+\everymath{\displaystyle}
+
+\definecolor{col1}{RGB}{243,111,36}
+
+\definecolor{col2}{RGB}{0,182,187}
+
+\definecolor{col3}{RGB}{240,225,225}
+
+\definecolor{col4}{RGB}{221,10,138}
+
+\definecolor{col5}{RGB}{0,182,189}
+
+\definecolor{col6}{RGB}{209,254,197}
+
+\definecolor{col7}{RGB}{151,197,216}
+
+\definecolor{col8}{RGB}{221,0,43}
+
+\usepackage{eso-pic}
+
+\usepackage{anyfontsize}
+
+\AddToShipoutPicture{\setlength{\unitlength}{0,5cm}
+
+\put(-1.5,57.5){
+
+\begin{tikzpicture}
+
+\fill[col1](current page.north west)rectangle([xshift=0.5cm,yshift=-2cm]current page.north east);
+
+\end{tikzpicture}
+
+}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand\chaptername{COURS}
+
+\newcommand{\chaptitle}[1]{%
+
+\begin{tikzpicture}[overlay]
+
+\node[fill=col2 , minimum width=3.5cm, minimum height=4.5cm,xshift=2cm,yshift=3.1cm ] {} ;
+
+\node[xshift=2cm,yshift=2.3cm,scale=3 ] {\textbf{\textcolor{white}{{\sf \thechapter}}}} ;
+
+\node[ xshift=6.2cm,yshift=3.34cm,scale=1.2 ] {\textbf{\textcolor{white}{{\Huge\sf\bfseries \chaptername}}}} ;
+
+\node[xshift=4cm,yshift=1.8cm ,text width=\dimexpr14.5cm,anchor=west,align=flush left ] {{\Huge \textbf{#1}}};
+
+\fill[top color =black!35,bottom color =black](0.24,0.85)--++(0,1)--++(-1,0)--cycle;
+
+\end{tikzpicture}
+
+}
+
+\titleformat{\chapter}[block]{}{}{10pt}{
+\Huge \chaptitle{#1} }
+\titlespacing*{\chapter}{0pt}{50pt}{0pt}
+\newcommand\SecTitle[1]{%
+\begin{tikzpicture}
+\node (A) [rectangle,fill=col5,minimum height=1cm,anchor=west,text width=\dimexpr15.5cm,anchor=west,align=flush left ] {\qquad {\Large \textbf{\textcolor{white}{\sffamily#1}}}};
+\node [color=col5,line width=2pt, circle,draw=col5,fill=white](a) at ($ (A.north west)!0.5!(A.south west) $) {\Huge {\sffamily{\textbf{\textcolor{col5}{\arabic{section}}}}}};
+\fill[col5]([ xshift=-0.09mm]A.north east)--([xshift=0.5cm]A.north east)--++(0,-0.2)to[out=-90,in=5]([xshift=-0.1mm]A.south east)--cycle;
+\end{tikzpicture}
+}
+
+\titleformat{\section}
+{\normalfont}{}{0em}
+{\SecTitle{#1}}
+
+\begin{document}
+
+\chapter{Ensemble $\mathbb{N}$ et notions en arithmétique}
+ \section{L'ensemble des entiers naturels $\mathbb{N}$}
+\begin{tcolorbox}[colback=col3,colframe=col4,leftrule=5pt,toprule=0pt,rightrule=0pt,bottomrule=0pt,arc=0pt,outer arc=0pt,top=12pt]
+
+
+\large Définition:
+Tout les nombres entiers naturels composent un ensemble. On note: $\mathbb{N}$ et on écrit $\mathbb{N} = \{0,1,2... \}$.
+
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=col6,colframe=col7,leftrule=5pt,toprule=0pt,rightrule=0pt,bottomrule=0pt,arc=0pt,outer arc=0pt,top=12pt]
+
+\large Vocabulaire et symbole:
+    \begin{enumerate}[label=\textbullet]
+
+\item le nombre 0 est le nombre entier naturel nul.
+\item les nombres entiers naturels non nuls composent un ensemble, nous le notons par le symbole : $\mathbb{N}^*$.
+\item $\mathbb{N^*} =\{1,2,3...\}$.
+\item  6 est un entier naturel, on écrit  $6\in \mathbb{N}$.
+\item (-6) est un entier naturel, on écrit  $(-6)\in \mathbb{N}$.
+ 
+   \end{enumerate}
+\end{tcolorbox}
+
+\section{Les nombres paires et les nombres impaires }
+
+\begin{tcolorbox}[colback=col3,colframe=col4,leftrule=5pt,toprule=0pt,rightrule=0pt,bottomrule=0pt,arc=0pt,outer arc=0pt,top=12pt]
+
+
+\large Définition:
+\begin{enumerate}[label=\textbullet]
+    \item a est un nombre entier naturel paire, s'il existe un entier naturel k tel que a=2$\times$ k.
+    
+     \item a est un nombre entier naturel impaires, s'il exite un entier naturel k tel que a = 2$\times$ k +1.
+    
+\end{enumerate}
+\end{tcolorbox}
+
+\subsection{Remarque} un nombre entier naturel est soit paire ou impaire,et on a les résultat suivants:
+
+\begin{center}
+    \begin{tabular}{|R{2cm}||C{2cm}||L{1.5cm}|L{1.5cm}|L{1.5cm}|}
+\hline a & b  &  a+b &  a-b  &  a $\times$ b\\
+\hline  paire & paire & paire & paire  & paire  \\
+\hline impaire & impaire & paire & paire & impaire  \\
+\hline impaire & paire & impaire & impaire & paire\\
+\hline paire & impaire & impaire & impaire  & paire \\
+\hline
+\end{tabular}
+\end{center}
+\section{Diviseurs et Multiples d'un nombre }
+\begin{tcolorbox}[colback=col3,colframe=col4,leftrule=5pt,toprule=0pt,rightrule=0pt,bottomrule=0pt,arc=0pt,outer arc=0pt,top=12pt]
+
+\large Activité: Déterminer les dix premièrs multiples du nombre 4.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=col3,colframe=col4,leftrule=5pt,toprule=0pt,rightrule=0pt,bottomrule=0pt,arc=0pt,outer arc=0pt,top=12pt]
+
+
+\large Définition:
+a et b deux élèments de $\mathbb{N}$,on dit que a et un multiple de b,s'il existe un nombre entier naturel k tel que : $a=b\times k$.
+\end{tcolorbox} 
+\begin{tcolorbox}[colback=col6,colframe=col1,leftrule=5pt,toprule=0pt,rightrule=0pt,bottomrule=0pt,arc=0pt,outer arc=0pt,top=12pt]
+ 
+\large Exemple: on a $145= 5 \times 29$ alors: 145 est un multiple de 5.
+\end{tcolorbox}
+\subsection{Remarque} 
+\begin{enumerate}
+    \item Le nombre $0$ et un multiple de tout les nombres entirs naturels.
+    \item Le nombre $1$ et un diviseur de tout les nombres entirs naturels.
+\end{enumerate}
+\section{Critére de divisibilité }
+\begin{tcolorbox}[colback=col3,colframe=col4,leftrule=5pt,toprule=0pt,rightrule=0pt,bottomrule=0pt,arc=0pt,outer arc=0pt,top=12pt]
+
+
+\large Propriété: Soit n un nombre entier naturel, n est divisible par: 
+
+\begin{itemize}[label=\textbullet]
+
+\item 2 si et seulement si son chiffre d'unités est: 0,2,4,6 ou 8.
+\item 3 si et seulement si la somme de ces chiffre est divisible par 3.
+\item 4 si et seulement si le nombre formé par ces deux dirniérs chiffres est divisible par 4.
+\item 5 si et seulement si son chiffre d'unités est: 0 ou 5.
+\item 9 si et seulement si la somme de ces chiffre est divisible par 9.
+\end{itemize}
+
+\end{tcolorbox} 
+
+\section{Les nombres premiers-décomposition d'un nombre}
+\subsection{Les nombres premiers}
+\begin{tcolorbox}[colback=col3,colframe=col4,leftrule=5pt,toprule=0pt,rightrule=0pt,bottomrule=0pt,arc=0pt,outer arc=0pt,top=12pt]
+
+
+\large Définition:
+Un entier naturel $n$ est premier s'il possède exactement deux diviseurs :$1$ et n.
+\end{tcolorbox} 
+\subsection{Remarque} 
+
+\begin{enumerate}[label=\textbullet]
+    \item $0$ et $1$ ne sont pas des nombres premiers.
+    \item $2$ est le seul nombre premier pair.
+    \item Les premiers nombress premiers sont: $2;3;5;7;13;17;19$ ect.
+\end{enumerate}
+
+\subsection{Décoposition d'un nombre}
+
+\begin{tcolorbox}[colback=col6,colframe=col2,leftrule=5pt,toprule=0pt,rightrule=0pt,bottomrule=0pt,arc=0pt,outer arc=0pt,top=12pt]
+
+
+\large Théorème:
+Tout nombre entier naturel se décompose de façon unique comme produit de nombres premiers.
+\end{tcolorbox} 
+
+\subsection{PGCD et PPCM de deux nombres entiers naturels}
+
+\begin{tcolorbox}[colback=col3,colframe=col4,leftrule=5pt,toprule=0pt,rightrule=0pt,bottomrule=0pt,arc=0pt,outer arc=0pt,top=12pt]
+
+
+\large Définition:
+Soient a et b deux entiers naturels non nuls. \\
+L'ensemble des diviseurs communs à $a$ et $b$ admet un plus grand élément $d$, appelé plus grand diviseur commun de $a$ et $b$, noté pgcd(a,b).\\
+Lorsque $pgcd(a,b)=1$, on dit que $a$ et $b$ sont premiers entre eux.\\
+L'ensemble des multiples strictement supérieurs à $0$ communs à $a$ et $b$ admet un plut petit élément m,appelé plus petit multiple commun de $a$ et $b$ noté $ppcm(a,b)$.
+\end{tcolorbox} 
+\begin{tcolorbox}[colback=col6,colframe=col1,leftrule=5pt,toprule=0pt,rightrule=0pt,bottomrule=0pt,arc=0pt,outer arc=0pt,top=12pt]
+ 
+\large Exemple: 
+\begin{enumerate}[label=\textbullet]
+\item$90= 2 \times 3^2 \times 5$ et $168= 2^3 \times 3 \times 7$  d'ou $pgcd(90,168)=2 \times 3=9$ .
+\item $90= 2 \times 3^2 \times 5$ et $168= 2^3 \times 3 \times 7$  d'ou $ppcm(90,168)=2^3 \times 3^2 \times 5 \times 7 = 2520$
+\end{enumerate}
+\end{tcolorbox}
+\begin{tcolorbox}[colback=col6,colframe=col2,leftrule=5pt,toprule=0pt,rightrule=0pt,bottomrule=0pt,arc=0pt,outer arc=0pt,top=12pt]
+
+
+\large Théorème:
+\begin{enumerate}[label=\textbullet]
+\item Le $pgcd$ de deux nombres entiers naturels est le produit des facteurs premiers communs entre les deux décompositions de ces deux nombres affectés de la plus petite puissance.
+\item Le $ppcm$ de deux nombres entiers naturels est le produit des facteurs premiers communs et non communs entre les deux décompositions de ces deux nombres affectés de la plus grande puissance.
+\end{enumerate}
+\end{tcolorbox}
+\begin{tcolorbox}[colback=col3,colframe=col4,leftrule=5pt,toprule=0pt,rightrule=0pt,bottomrule=0pt,arc=0pt,outer arc=0pt,top=12pt]
+
+
+\large Définition:
+Deux nombres entiers sont premiers entre eux si $1$ est leur seul diviseur commun.
+\end{tcolorbox} 
+\subsection{Remarque} 
+Deux nombres premiers entre eux ne sont pas forcément premiers (exp:$pgcd(4;9)=1$).
+
+\end{document}
