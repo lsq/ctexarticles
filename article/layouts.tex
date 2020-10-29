@@ -1,0 +1,24 @@
+\documentclass{ctexart}
+\usepackage{layouts}
+\begin{document}
+\begin{figure}
+\listdiagram
+\caption{List parameters} \label{fig:lstp}
+\end{figure}
+\newpage
+\begin{figure}
+	\oddpagelayoutfalse
+	\twocolumnlayouttrue
+	\pagediagram
+	\caption{Left-hand two-column page layout parameters} \label{fig:pplt}
+\end{figure}
+\newpage
+\begin{figure}
+	\currentpage
+	\oddpagelayouttrue
+	\pagedesign
+	\caption{Odd page layout for this document} \label{fig:ptrs}
+\end{figure}
+\newpage
+
+\end{document}
