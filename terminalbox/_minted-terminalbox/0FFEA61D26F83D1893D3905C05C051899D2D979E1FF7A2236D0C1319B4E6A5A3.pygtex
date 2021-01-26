@@ -1,0 +1,22 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c}{\PYGZpc{}matplotlib inline}
+import matplotlib.pyplot as plt
+import tensorflow as tf
+import gym
+import numpy as np
+import math
+
+\PYGZsh{} The main source\PYGZhy{}code for Reinforcement Learning is located in the following module:
+
+import reinforcement\PYG{n+nb}{\PYGZus{}}learning as rl
+
+\PYGZsh{} This was developed using Python 3.6.0 (Anaconda) with package versions:
+
+\PYGZsh{} TensorFlow
+tf.\PYG{n+nb}{\PYGZus{}\PYGZus{}}version\PYG{n+nb}{\PYGZus{}\PYGZus{}}
+\PYGZsh{} \PYGZsq{}1.1.0\PYGZsq{}
+
+\PYGZsh{} OpenAI Gym
+gym.\PYG{n+nb}{\PYGZus{}\PYGZus{}}version\PYG{n+nb}{\PYGZus{}\PYGZus{}}
+\PYGZsh{} \PYGZsq{}0.8.1\PYGZsq{}
+\end{Verbatim}

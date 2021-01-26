@@ -1,0 +1,126 @@
+% !TeX encoding = utf-8
+% !TEX spellcheck = en-us
+% !TeX program = xelatex
+
+\documentclass[]{ctexart}
+
+\usepackage{pst-fractal}
+
+\title{\texttt{pst-fractal}绘制常见分形图的宏包}
+\begin{document}
+	
+	\maketitle
+	\centering
+	
+	\section{康托集 （Cantor set）}
+	
+	\begin{pspicture}(10,-2)
+		\psCantor[linewidth=3mm,linecolor=red,
+		n=7,xWidth=11,yWidth=4mm]
+	\end{pspicture}
+	
+	\section{三角形}
+	
+	\multido{\iA=1+1}{6}{%
+		\begin{pspicture}(2,1.7)
+			\psSier[linecolor=blue!70,
+			fillcolor=red!40](0,0){2cm}{\iA}
+	\end{pspicture} }
+	
+	\section{Siepinski曲线}
+	
+	\begin{pspicture}(-4,-4)(4,4)
+		\psframe*[linecolor=-yellow](-4,-4)(4,4)
+		\psSier[n=5,unit=0.125,fillstyle=solid,fillcolor=-cyan,linecolor=-blue]
+	\end{pspicture}
+	
+	\section{Julia集}
+	
+	
+	\psfractal[xWidth=4cm,yWidth=4cm, baseColor=white
+	, dIter=20](-2,-2)(2,2)
+	
+	\section{Mandelbrot集}
+	
+	
+	\psfractal[type=Mandel, xWidth=6cm,
+	yWidth=4.8cm, baseColor=white,
+	dIter=10](-2,-1.2)(1,1.2)
+	
+	
+	\section{叶序 （Phyllotaxis）}
+	
+	\psframebox{%
+		\begin{pspicture}(-3,-3)(3,3)
+			\psPhyllotaxis
+	\end{pspicture}}
+	
+	
+	\section{Fern}
+	
+	\psframebox{%
+		\begin{pspicture}(-3,0)(3,11)
+			\psFern[scale=30,maxIter=100000,linecolor=green]
+	\end{pspicture}}
+	
+	
+	% \section{阿波罗尼圆}
+	
+	% \begin{pspicture}(-5,-5)(5,5)
+	% \psAppolonius[Radius=5cm,Color]
+	% \end{pspicture}
+	
+	\section{毕达哥拉斯树}
+	
+	\begin{pspicture}[showgrid=true](-6,0)(6,7)
+		\psPTree[xWidth=1.75cm,Color=true]
+		\psdot*[linecolor=white](0,0)
+	\end{pspicture}
+	
+	\section{斐波那契分形}
+	
+	
+	\begin{pspicture}[showgrid](0,0)(12,8)
+		\psFibonacci[unit=0.02,linecolor={[rgb]{0.5 0 0}},n=23,linewidth=0.015cm]
+		\rput(5.5,4){n=23}
+	\end{pspicture}
+	
+	\bigskip
+	
+	\begin{pspicture}(-4,-4)(4,4)
+		\psgrid[gridlabels=0pt,subgriddiv=0,gridcolor={[rgb]{0 0 0.5}},griddots=10]
+		\pskFibonacci[unit=0.2,linecolor={[rgb]{0 0 0.5}},n=4,k=6,angle=60](-2,0)
+	\end{pspicture}
+	\bigskip
+	
+	\begin{pspicture}(-4,-4)(4,4)
+		\psgrid[gridlabels=0pt,subgriddiv=0,gridcolor=red,griddots=10]
+		\pskFibonacci[unit=0.025,linecolor={[rgb]{0 0 0.5}},linewidth=0.02cm,n=6,k=6](3,0.5)
+	\end{pspicture}
+	
+	\bigskip
+	
+	\begin{pspicture}[showgrid=false](-4,-4)(4,4)
+		\psgrid[gridlabels=0pt,subgriddiv=0,gridcolor=red,griddots=10]
+		\psBiperiodicFibonacci[unit=0.2,linecolor={[rgb]{0 0.5 0}},linewidth=0.1cm,n=5,a=6,b=6,angle
+		=60](0,2.1)
+		\psBiperiodicFibonacci[unit=0.2,linecolor=white,n=5,a=6,b=6,angle=60](0,2.1)
+	\end{pspicture}
+	
+	\bigskip
+	
+	\begin{pspicture}(-5,-5)(5,5)
+		\psBiperiodicFibonacci[unit=0.8,linecolor=black,linewidth=0.1cm,,n=8,a=2,b=3,angle=120](-1,1)
+		\psBiperiodicFibonacci[unit=0.8,linecolor=white,n=8,a=2,b=3,angle=120](-1,1)
+	\end{pspicture}
+	
+	
+	\section{The Henon Sttractor}
+	\begin{pspicture}(-5,-6)(5,6)
+		\psclip{\psframe(-5,-5)(5,5)}
+		\psHenon
+		\endpsclip
+		\psgrid[unit=5,subgriddiv=10](-1,-1)(1,1)
+	\end{pspicture}
+	
+\end{document}

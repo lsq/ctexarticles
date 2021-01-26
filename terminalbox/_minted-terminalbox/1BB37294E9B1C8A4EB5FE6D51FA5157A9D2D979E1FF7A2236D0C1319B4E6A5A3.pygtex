@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+agent = rl.Agent(env\PYG{n+nb}{\PYGZus{}}name=env\PYG{n+nb}{\PYGZus{}}name,
+                 training=True,
+                 render=True,
+                 use\PYG{n+nb}{\PYGZus{}}logging=False)
+\end{Verbatim}

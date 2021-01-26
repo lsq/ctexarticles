@@ -1,0 +1,32 @@
+\documentclass{ctexart}
+
+\usepackage{ifplatform}
+\usepackage[margin=3cm]{geometry}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{listings,breakable}
+
+\title{\texttt{ifplatform}检测\texttt{*.tex}文件的运行系统环境}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{tcblisting}{sidebyside}
+		此文档运行在
+		\ifwindows
+		\windowsname
+		\fi
+		\iflinux
+		\linuxname
+		\fi
+		\ifmacosx
+		\macosxname
+		\fi
+		\ifcygwin
+		\cygwinname
+		\fi
+		系统下
+	\end{tcblisting}
+	
+\end{document}

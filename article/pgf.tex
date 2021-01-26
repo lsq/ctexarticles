@@ -1,0 +1,17 @@
+\documentclass{elegantnote}
+\makeatletter
+\def\pgfutil@insertatbegincurrentpagefrombox#1{%
+	\edef\pgf@temp{\the\wd\pgfutil@abb}%
+	\global\setbox\pgfutil@abb\hbox{%
+		\unhbox\pgfutil@abb%
+		\hskip\dimexpr2in-2\hoffset-\pgf@temp\relax% changed
+		#1%
+		\hskip\dimexpr-2in-2\hoffset\relax% new
+	}%
+}
+\makeatother
+\begin{document}
+	\begin{itemize}
+		\item test
+	\end{itemize}
+\end{document}

@@ -1,0 +1,98 @@
+\documentclass[a4paper]{ctexart}
+
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage[left=2cm]{geometry}
+
+\title{\texttt{tikzpagenodes} 宏包定位文档的不同区域}
+
+\author{\TeX{}白兔}
+\begin{document}
+	
+	\maketitle
+	
+	\begin{center}
+		\begin{tabular}{lll}
+			node & & 描述 \\
+			current page text area & 正文区 & \verb|\textwidth| $\times $ \verb|\textheight| \\
+			current page marginpar area & 边注区 & \verb|\marginparwidth| $\times $ \verb|\textheight| \\
+			
+			current page header area & 页眉区 & \verb|\textwidth| $\times $ \verb|\headerheight| \\
+			
+			current page footer area & 页脚区 & \verb|\textwidth| $\times $ \verb|\headerheight| \\
+		\end{tabular}
+	\end{center}
+	
+	\tikz[remember picture,overlay]{%
+		% 文档外框线
+		\draw[blue,line width=2mm]
+		(current page.south west)
+		rectangle
+		(current page.north east)
+		;
+		% 正文区框线
+		\draw[green,line width=2mm]
+		(current page text area.south west)
+		rectangle
+		(current page text area.north east)
+		;
+		% 页眉区框线
+		\draw[red,line width=2mm]
+		(current page header area.south west)
+		rectangle
+		(current page header area.north east)
+		;
+		% 页脚区框线
+		\draw[orange,line width=2mm]
+		(current page footer area.south west)
+		rectangle
+		(current page footer area.north east)
+		;
+		% 边注区框线
+		\draw[yellow,line width=2mm]
+		(current page marginpar area.south west)
+		rectangle
+		(current page marginpar area.north east)
+		;}
+	
+	
+	\begin{tikzpicture}[remember picture,overlay]
+		
+		% 文档外填充
+		\fill[blue,opacity=.1]
+		(current page.south west)
+		rectangle
+		(current page.north east)
+		;
+		
+		% 正文区填充
+		\fill[green!5,opacity=.01]
+		(current page text area.south west)
+		rectangle
+		(current page text area.north east)
+		;
+		
+		% 页眉区填充
+		\fill[red,opacity=.4]
+		(current page header area.south west)
+		rectangle
+		(current page header area.north east)
+		;
+		
+		% 页脚区填充
+		\fill[orange,opacity=.4]
+		(current page footer area.south west)
+		rectangle
+		(current page footer area.north east)
+		;
+		
+		% 边注区填充
+		\fill[yellow,opacity=.4]
+		(current page marginpar area.south west)
+		rectangle
+		(current page marginpar area.north east)
+		;
+		
+	\end{tikzpicture}
+	
+\end{document}

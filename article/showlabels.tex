@@ -1,0 +1,62 @@
+\documentclass[a4paper]{ctexart}
+
+\usepackage{amsmath,mwe,graphicx}
+\usepackage[right]{showlabels}
+\usepackage[inner=.7cm, outer=6.5cm]{geometry}
+\usepackage{showframe}
+\usepackage{algorithm}
+
+\title{\texttt{showlabels}宏包的使用}
+
+\begin{document}
+	
+	\maketitle
+	
+	无论何时使用 \verb|\label| 命令，此软件包都会将新标签的名称放在margin 中，从而帮助您跟踪所定义的所有标签
+	无论何时使用 \label| 命令，此软件包都会将新标签的名称放在margin 中，从而帮助您跟踪所定义的所有标签
+	
+	\section{Title}
+	\label{sec:title}
+	
+	\subsection{Subtitle}
+	\label{ssec:subtitle}
+	
+	Plain text.
+	
+	\subsection{Another subtitle}
+	\label{ssec:another_subtitle}
+	
+	hello world
+	\begin{align}
+		\label{eq1}
+		a^2 + b^2 = c^2
+	\end{align}
+	\begin{equation}
+		\label{eq1}
+		a^2 + b^2 = c^2
+	\end{equation}
+	
+	
+	\begin{figure}[htbp]
+		\centering
+		% \includegraphics[width=0.95\textwidth]{}
+		\caption{caption}
+		\label{fig:label}
+	\end{figure}
+	
+	\begin{table}[htbp]
+		\centering
+		\caption{caption}
+		\label{tab1}
+	\end{table}
+	
+	
+	\begin{algorithm}
+		\caption{algorithm}
+		\label{alg1}
+		
+		hello world
+	\end{algorithm}
+	
+	
+\end{document}

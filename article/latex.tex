@@ -1,0 +1,968 @@
+% !Mode:: "TeX:UTF-8"
+\documentclass[fontset=none]{ctexart}
+\usepackage{geometry}
+\geometry{margin=2cm}
+\usepackage[all]{tcolorbox} 
+\usepackage{url}
+\usepackage{fontawesome}
+\usepackage{zhlipsum}
+
+%===设置本站支持的中文字体==中文字体下载：https://www.latexstudio.net/fonts/font.zip 方正字体勿商用=====
+\setCJKmainfont{Source Han Serif CN}
+[
+UprightFont = *-Regular,
+BoldFont = *-Bold,
+ItalicFont = *-Regular,
+BoldItalicFont = *-Bold
+]
+\setCJKsansfont{Noto Sans CJK SC}
+[
+UprightFont = *-Regular,
+BoldFont = *-Bold,
+ItalicFont = *-Regular,
+BoldItalicFont = *-Bold
+]
+\setCJKmonofont{Noto Sans Mono CJK SC}
+[
+UprightFont = *-Regular,
+BoldFont = *-Bold,
+AutoFakeSlant = 0.2
+]
+
+\setmainfont{TeX Gyre Pagella}
+
+\newcommand*{\songti}{\CJKfamily{zhsong}} % 宋体
+\newcommand*{\heiti}{\CJKfamily{zhhei}} % 黑体
+\newcommand*{\kaiti}{\CJKfamily{zhkai}} % 楷体
+%=========================================================
+
+
+
+%%%%%%%%%%%%%颜色%%%%%%%%%%%%%%%
+\definecolor{doc}{RGB}{33,133,197}
+\definecolor{ExampleFrame}{RGB}{48,109,224}
+
+\usepackage{ascolorbox}
+
+
+
+\definecolor{exampleborder}{HTML}{FE642E}
+\definecolor{examplebg}{HTML}{CEF6EC}
+\definecolor{statementborder}{rgb}{.9,0,0}
+\definecolor{statementbg}{rgb}{1,1,1}
+\definecolor{backcolor}{RGB}{48,108,223}
+\definecolor{listcolor}{RGB}{255,255,229}
+\definecolor{listred}{RGB}{199,15,44}
+\ctexset{
+	section = {
+		format=\raggedright\bfseries\sffamily,numberformat =\rmfamily,
+		beforeskip={2ex},
+		afterskip={2ex plus 3pt minus 3pt}
+}}
+
+\tcbset{listing engine=minted}
+\tcbset{
+	docexample/.add style={bicolor,colbacklower=white}{
+		fontlower=\normalsize,
+		documentation minted language=latex,
+		documentation minted options={
+			autogobble=true,
+			fontsize=\footnotesize,
+		}
+	}
+}
+
+
+\usepackage{dtk-logos}
+\AtBeginDocument{\hypersetup{hidelinks}}
+%%%%%%%%%%%%填写相关信息%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{cleveref}
+\usepackage{menukeys}
+\usepackage[bottom]{footmisc}
+\begin{document}
+	
+	
+	\begin{titlepage}
+		\thispagestyle{empty}
+		
+		\vspace*{3cm}
+		\begin{center}
+			\huge
+			\ascboxA{\textbf{ascolorbox 宏包使用手册 1.0.3}}
+			
+		\end{center}
+		
+		\bigskip\bigskip
+		
+		\begin{center}
+			\includegraphics[height=1cm]{latexstudio} 
+			
+			倾情制作 
+			
+%			\includegraphics[width=6cm]{gongzhonghao}
+			
+			扫码关注我们公众号！
+			
+			
+			\begin{minipage}{9.5cm}
+				\begin{ascolorbox17}{相关说明}
+					\color{listred}
+					宏包（日文）地址：
+					
+					\url{https://github.com/Yasunari/ascolorbox}
+					
+					本文对宏包进行了中文化的修订，大家可下载试用。
+				\end{ascolorbox17}
+			\end{minipage}
+		\end{center}
+		
+		
+		
+		
+		
+	\end{titlepage}
+	\newpage 
+	%\maketitle
+	
+	ascolorbox 参考tcolorbox宏包手册，充分利用该宏包的 \verb|\DeclareTColorBox|机制，提供了方便
+	设计、创建各种框的参数。 ascolorbox里的框大多都定义成环境，语法方面遵循普通tcolorbox的用法。
+	使用的时候只需 \cs{usepackage\{ascolorbox\}}即可。
+	
+	
+	
+	
+	
+	%\newpage
+	%目录
+	%\tableofcontents
+	
+	\section{使用说明}
+	这是一个简单的盒子，四周只有一个单线框。根据 \verb|itembbox.sty| 提供的 itemsquarebox 样式创建的。
+	\oarg{subtitle} 是可选参数，用于指定副标题，并且可以用好\oarg{thickness}来指定边框的粗细，边框的默认粗细为 0.5pt。
+	老版本是不支持换页的，新版本已经支持分页了。由于使用了  \docColor{empty skin} 参数，因此 \docColor{colback = gray} 要多加注意。
+	
+	\begin{dispExample}
+		\begin{simplesquarebox}[子标题]{标题}
+			\zhlipsum[1]
+		\end{simplesquarebox}
+	\end{dispExample}
+	
+	\begin{dispExample}
+		\begin{simplesquarebox}[子标题]{标题}[1.5][colback=gray]
+			\zhlipsum[1]
+		\end{simplesquarebox}
+	\end{dispExample}
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\begin{practicebox}{<title>}[<options>]
+			environment content
+		\end{practicebox}
+	\end{dispListing*}
+	
+	练习/问题框。可以在 \docColor{options} 中进行选项设置，该框支持分页。
+	\begin{dispExample}
+		\begin{practicebox}{欧拉的遗产}
+			\zhlipsum[1]
+		\end{practicebox}
+	\end{dispExample}
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\begin{ascolorbox1}[<subtitle>]{<title>}[<options>]
+			environment content
+		\end{ascolorbox1}
+	\end{dispListing*}
+	
+	这是 tcolorbox 手册自带框的黑白版本，支持分页。 \oarg{subtitle} 是选择项， \oarg{option} 可以自动加定义。
+	
+	\begin{dispExample}
+		\begin{ascolorbox1}[子标题]{标题}
+			\zhlipsum[1]
+		\end{ascolorbox1}
+	\end{dispExample}
+	
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\begin{ascolorbox2}{<title>}[<options>]
+			environment content
+		\end{ascolorbox2}
+	\end{dispListing*}
+	
+	这是 tcolorbox 自带手册中的框的黑白版本，支持分页。 \docColor{option} 可以自动加定义。
+	
+	\begin{dispExample}
+		\begin{ascolorbox2}{标题}
+			\zhlipsum[1]
+		\end{ascolorbox2}
+	\end{dispExample}
+	
+	\begin{dispExample}
+		\begin{ascolorbox2}{标题}[colframe=red!50!white, coltext=red!50!black]
+			\zhlipsum[1]
+		\end{ascolorbox2}
+	\end{dispExample}
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\begin{ascolorbox3}{<title>}[<color>][<option>]
+			environment content
+		\end{ascolorbox3}
+	\end{dispListing*}
+	
+	这是 tcolorbox 手册自带框的黑白版本。\docColor{color} 可以用来修改框颜色，\docColor{option} 可以自动加定义。
+	
+	\begin{dispExample}
+		\begin{ascolorbox3}{标题}
+			\zhlipsum[1]
+		\end{ascolorbox3}
+	\end{dispExample}
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\begin{ascolorbox3}{标题}[orange][coltitle=orange!50!black]
+			\zhlipsum[1]
+		\end{ascolorbox3}
+	\end{dispListing*}
+	
+	
+	\begin{ascolorbox3}{标题}[orange][coltitle=orange!50!black]
+		\zhlipsum[1]
+	\end{ascolorbox3}
+	
+	
+	
+	
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\begin{ascolorbox4}[<subtitle>]{<title>}[<length>][<option>]
+			environment content
+		\end{ascolorbox4}
+	\end{dispListing*}
+	
+	这是 ascolorbox 原创的样式，  可以通过修改\oarg{length}来修改实线与虚线的宽度。四个角的正方形和圆弧也会跟着这一个值进行变化，其默认宽度为 3，如果在双栏环境里，推荐改为 2 版面看起来更加整洁。
+	
+	\begin{dispExample}
+		\begin{ascolorbox4}[子标题]{标题}
+			\zhlipsum[1]
+		\end{ascolorbox4}
+	\end{dispExample}
+	
+	\begin{dispExample}
+		\begin{ascolorbox4}[子标题]{标题}[2]
+			\zhlipsum[1]
+		\end{ascolorbox4}
+	\end{dispExample}
+	
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\begin{ascolorbox5}[<subtitle>]{<title>}[<color>][<option>]
+			environment content
+		\end{ascolorbox5}
+	\end{dispListing*}
+	
+	这是 ascolorbox 原创的样式，  可以通过修改\oarg{color}来修改颜色。
+	
+	\begin{dispExample}
+		\begin{ascolorbox5}[子标题]{标题}
+			\zhlipsum[1]
+		\end{ascolorbox5}
+	\end{dispExample}
+	
+	可在 \oarg{option} 中指定框架颜色，标题颜色和字符颜色。
+	
+	\begin{dispExample}
+		\begin{ascolorbox5}[子标题]{标题}[black!50!white][coltext=black!10!white]
+			\zhlipsum[1]
+		\end{ascolorbox5}
+	\end{dispExample}
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\begin{ascolorbox8}{<title>}[<option>]
+			environment content
+		\end{ascolorbox8}
+	\end{dispListing*}
+	
+	这是 tcolorbox 的黑白版本，  可以通过修改\oarg{option}来修改设置。
+	
+	\begin{dispExample}
+		\begin{ascolorbox8}{标题}
+			\zhlipsum[1]
+		\end{ascolorbox8}
+	\end{dispExample}
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\begin{ascolorbox9}{<title>}[<number>][<option>]
+			environment content
+		\end{ascolorbox5}
+	\end{dispListing*}
+	
+	这是 ascolorbox 原创的样式，  可以通过\oarg{number}来指定重复小球的个数，默认数值为3。若是在双栏排版的时候推荐修改数值为2。
+	
+	\begin{dispExample}
+		\begin{ascolorbox9}{标题}
+			\zhlipsum[1]
+		\end{ascolorbox9}
+	\end{dispExample}
+	
+	
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\begin{ascolorbox10}[<subtitle>]{<title>}[<thickness>][<option>]
+			environment content
+		\end{ascolorbox10}
+	\end{dispListing*}
+	
+	只有底部和顶部的框线，可以通过 \oarg{thickness} 来修改线的粗细，默认值是 0.8。
+	
+	\begin{dispExample}
+		\begin{ascolorbox10}[子标题]{标题}
+			\zhlipsum[1]
+		\end{ascolorbox10}
+	\end{dispExample}
+	
+	
+	框的左右缩进宽度为2mm，如果想增加缩进宽度，可以通过修改 \docColor{/tcb/
+		enlarge left by} 和 \docColor{/tcb/enlarge right by} 来调整缩进的宽度。选项可以在保证框的宽度的同时改变左右边距，因此用户可以根据需求调整。
+	
+	\begin{dispExample}
+		\begin{ascolorbox10}[子标题]{标题}[1][width=\linewidth-4cm,enlarge right by=2cm, enlarge left by=2cm]
+			\zhlipsum[1]
+		\end{ascolorbox10}
+	\end{dispExample}
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\begin{ascolorbox11}[<subtitle>]{<title>}[<length>][<option>]
+			environment content
+		\end{ascolorbox11}
+	\end{dispListing*}
+	
+	只有底部和顶部的框线，可以通过 \oarg{length} 来调整四角的正方形的尺寸，默认值是4pt，双栏排版时，推荐设置小一些。
+	
+	\begin{dispExample}
+		\begin{ascolorbox11}[子标题]{标题}
+			\zhlipsum[1]
+		\end{ascolorbox11}
+	\end{dispExample}
+	
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\begin{ascolorbox12}[<subtitle>]{<title>}[<option>]
+			environment content
+		\end{ascolorbox12}
+	\end{dispListing*}
+	
+	这是 ascolorbox 的原创样式。
+	
+	\begin{dispExample}
+		\begin{ascolorbox12}[子标题]{标题}
+			\zhlipsum[1]
+		\end{ascolorbox12}
+	\end{dispExample}
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\begin{ascolorbox13}[<subtitle>]{<title>}[<option>]
+			environment content
+		\end{ascolorbox13}
+	\end{dispListing*}
+	
+	这是 tcolorbox自带的样式，这里是其黑白版本。
+	
+	\begin{dispExample}
+		\begin{ascolorbox13}[子标题]{标题}
+			\zhlipsum[1]
+		\end{ascolorbox13}
+	\end{dispExample}
+	
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\begin{ascolorbox14}{<title>}[<option>]
+			environment content
+		\end{ascolorbox14}
+	\end{dispListing*}
+	
+	用 overlay 制作的笔记本的风格的框，环的位置为其高度的四分点上，当然文本内容不能太少，这样环会溢出来版式，不好看了。
+	
+	\begin{dispExample}
+		\begin{ascolorbox14}{标题}
+			\zhlipsum[1-2]
+		\end{ascolorbox14}
+	\end{dispExample}
+	
+	
+	
+	
+	
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\begin{ascolorbox15}{<title>}[<option>]
+			environment content
+		\end{ascolorbox15}
+	\end{dispListing*}
+	
+	这是两页笔记本的风格框，环位置为其高度的四分点上，当然文本内容不能太少，这样环会溢出来版式，不好看。
+	
+	\begin{dispExample}
+		\begin{ascolorbox15}{标题}
+			\zhlipsum[1]
+		\end{ascolorbox15}
+	\end{dispExample}
+	
+	
+	
+	
+	
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\begin{ascolorbox16}{<title>}[<option>]
+			environment content
+		\end{ascolorbox16}
+	\end{dispListing*}
+	
+	这是底部和顶部有框线的，这个样式与 ascolorbox10 类似的样式。
+	
+	\begin{dispExample}
+		\begin{ascolorbox16}{标题}
+			\zhlipsum[1]
+		\end{ascolorbox16}
+	\end{dispExample}
+	
+	
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\begin{ascolorbox17}[<subtitle>]{<title>}[<color>][<option>]
+			environment content
+		\end{ascolorbox17}
+	\end{dispListing*}
+	
+	这是一个括号样式的框，可以通过 \oarg{color} 来调整线条的颜色，如果颜色设置为白色，则只包括括号部分。 
+	
+	\begin{dispExample}
+		\begin{ascolorbox17}[子标题]{标题}
+			\zhlipsum[1]
+		\end{ascolorbox17}
+	\end{dispExample}
+	
+	
+	\begin{dispExample}
+		\begin{ascolorbox17}[子标题]{标题}[white]
+			\zhlipsum[1]
+		\end{ascolorbox17}
+	\end{dispExample}
+	
+	
+	
+	
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\begin{ascolorbox18}{<title>}[<option>]
+			environment content
+		\end{ascolorbox18}
+	\end{dispListing*}
+	
+	这是tcolorbox 手册自带的样式，参考其修改的黑白版本。
+	
+	\begin{dispExample}
+		\begin{ascolorbox18}{标题}
+			\zhlipsum[1]
+		\end{ascolorbox18}
+	\end{dispExample}
+	
+	
+	稍作调整，即可调整其标题的位置。
+	
+	
+	\begin{dispExample}
+		\begin{ascolorbox18}{标题}[attach boxed title to bottom left={xshift=1.2cm}]
+			\zhlipsum[1]
+		\end{ascolorbox18}
+	\end{dispExample}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\begin{ascolorbox19}[<subtitle>]{<title>}[<length>][<option>]
+			environment content
+		\end{ascolorbox19}
+	\end{dispListing*}
+	
+	这是 ascolorbox 原创的样式，可以通过 \oarg{length} 来调整两根线的距离，默认值是2pt。左上部分为 \verb|black!40!white|，正方形部分为 \verb|black!70!white|，右下部分为黑色。
+	
+	\begin{dispExample}
+		\begin{ascolorbox19}[子标题]{标题}
+			\zhlipsum[1]
+		\end{ascolorbox19}
+	\end{dispExample}
+	
+	\begin{dispExample}
+		\begin{ascolorbox19}[子标题]{标题}[3]
+			\zhlipsum[1]
+		\end{ascolorbox19}
+	\end{dispExample}
+	
+	\section{ascbox 使用方法}
+	
+	\cs{ascbox} 是根据 \cs{tcbox}定义的框，用来设置小标题是非常方便的。 由于 \cs{DeclareTCBox} 主要用于 \cs{ascbox}，因此可以设置很多选项。 大多 \cs{ascbox}可以通过在参数部分添加\verb|*|来反转颜色。
+	\begin{dispExample*}{sidebyside}
+		\ascboxA{This is my title} 
+		
+		\ascboxB{This is my title}
+	\end{dispExample*}
+	
+	
+	通过在 \verb|{type}| 中指定 A 到 E 之一可以更改输出格式。 默认输出格式为 A。 您可以通过在 \verb|{type}| 之前添加 \verb|*|来反转色调。
+	\begin{dispExample*}{sidebyside}
+		\ascboxB[B]{This is my title}
+		
+		\ascboxB*[B]{This is my title} 
+	\end{dispExample*}
+	
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxB[C]{This is my title}
+		
+		\ascboxB*[C]{This is my title}
+	\end{dispExample*}
+	\begin{dispExample*}{sidebyside}
+		\ascboxB[D]{This is my title}
+		
+		\ascboxB*[D]{This is my title}
+	\end{dispExample*}
+	\begin{dispExample*}{sidebyside}
+		\ascboxB[E]{This is my title}
+		
+		\ascboxB*[E]{This is my title}
+	\end{dispExample*}
+	
+	
+	在 \verb|{option}| 之后，可以用\verb|*|删除标题的下划线。 因此，如果添加两个\verb|*|，则输出将为“颜色反转+没有下划线”。
+	\begin{dispExample*}{sidebyside}
+		\ascboxB**{This is my title} 
+	\end{dispExample*}
+	
+	如果要取消下划线、却又不要反转色调，则必须大括号指定省略\oarg{options}。
+	\begin{dispExample*}{sidebyside}
+		\ascboxB[A][]*{This is my title}
+		
+		\ascboxB*[C][]*{This is my title}
+	\end{dispExample*}
+	
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\ascboxC<star>[<type>][<options>]<star>{<title>}
+	\end{dispListing*}
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxC{This is my title}
+		
+		\ascboxC*{This is my title}
+	\end{dispExample*}
+	
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxC[B]{This is my title}
+		
+		\ascboxC*[B]{This is my title}
+	\end{dispExample*}
+	
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxC[C]{This is my title}
+		
+		\ascboxC*[C]{This is my title} 
+	\end{dispExample*}
+	
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxC[D]{This is my title}
+		
+		\ascboxC*[D]{This is my title}
+	\end{dispExample*}
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxC[E]{This is my title}
+		
+		\ascboxC*[E]{This is my title}
+	\end{dispExample*}
+	
+	
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\ascboxD<star>[<type>][<options>]<star>{<title>}
+	\end{dispListing*}
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxD{This is my title}
+		
+		\ascboxD*{This is my title}
+	\end{dispExample*}
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxD[B]{This is my title}
+		
+		\ascboxD*[B]{This is my title}
+	\end{dispExample*}
+	
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxD[C]{This is my title}
+		
+		\ascboxD*[C]{This is my title}
+	\end{dispExample*}
+	
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxD[D]{This is my title}
+		
+		\ascboxD*[D]{This is my title}
+	\end{dispExample*}
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxD[E]{This is my title}
+		
+		\ascboxD*[E]{This is my title}
+	\end{dispExample*}
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\ascboxE<star>[<type>][<options>]<star>{<title>}
+	\end{dispListing*}
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxE{This is my title}
+		
+		\ascboxE*{This is my title}
+	\end{dispExample*}
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxE[B]{This is my title}
+		
+		\ascboxE*[B]{This is my title}
+	\end{dispExample*}
+	
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxE[C]{This is my title}
+		
+		\ascboxE*[C]{This is my title}
+	\end{dispExample*}
+	
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxE[D]{This is my title}
+		
+		\ascboxE*[D]{This is my title}
+	\end{dispExample*}
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxE[E]{This is my title}
+		
+		\ascboxE*[E]{This is my title}
+	\end{dispExample*}
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\ascboxF<star>[<type>][<options>]<star>{<title>}
+	\end{dispListing*}
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxF{This is my title}
+		
+		\ascboxF*{This is my title}
+	\end{dispExample*}
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxF[B]{This is my title}
+		
+		\ascboxF*[B]{This is my title}
+	\end{dispExample*}
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\ascboxG<star>[<type>][<options>]<star>{<title>}
+	\end{dispListing*}
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxG{This is my title}
+		
+		\ascboxG*{This is my title}
+	\end{dispExample*}
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\ascboxH<star>[<type>][<options>]<star>{<title>}
+	\end{dispListing*}
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxH{This is my title}
+		
+		\ascboxH*{This is my title}
+	\end{dispExample*}
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxH[B]{This is my title}
+		
+		\ascboxH*[B]{This is my title}
+	\end{dispExample*}
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\ascboxI<star>[<type>][<options>]<star>{<title>}
+	\end{dispListing*}
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxI{This is my title}
+		
+		\ascboxI*{This is my title}
+	\end{dispExample*}
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxI[B]{This is my title}
+		
+		\ascboxI*[B]{This is my title}
+	\end{dispExample*}
+	
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxI[C]{This is my title}
+		
+		\ascboxI*[C]{This is my title}
+	\end{dispExample*}
+	
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxI[D]{This is my title}
+		
+		\ascboxI*[D]{This is my title}
+	\end{dispExample*}
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxI[E]{This is my title}
+		
+		\ascboxI*[E]{This is my title}
+	\end{dispExample*}
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxI[F]{This is my title}
+		
+		\ascboxI*[F]{This is my title}
+	\end{dispExample*}
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxI[G]{This is my title}
+		
+		\ascboxI*[G]{This is my title}
+	\end{dispExample*}
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxI[H]{This is my title}
+		
+		\ascboxI*[H]{This is my title}
+	\end{dispExample*}
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\ascboxJ<star>[<type>][<options>]<star>{<title>}
+	\end{dispListing*}
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxJ{This is my title}
+		
+		\ascboxJ*{This is my title}
+	\end{dispExample*}
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxJ[B]{This is my title}
+		
+		\ascboxJ*[B]{This is my title}
+	\end{dispExample*}
+	
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxJ[C]{This is my title}
+		
+		\ascboxJ*[C]{This is my title}
+	\end{dispExample*}
+	
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxJ[D]{This is my title}
+		
+		\ascboxJ*[D]{This is my title}
+	\end{dispExample*}
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxJ[E]{This is my title}
+		
+		\ascboxJ*[E]{This is my title}
+	\end{dispExample*}
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxJ[F]{This is my title}
+		
+		\ascboxJ*[F]{This is my title}
+	\end{dispExample*}
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxJ[G]{This is my title}
+		
+		\ascboxJ*[G]{This is my title}
+	\end{dispExample*}
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxJ[H]{This is my title}
+		
+		\ascboxJ*[H]{This is my title}
+	\end{dispExample*}
+	
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\ascboxK<star>[<type>][<options>]<star>{<title>}
+	\end{dispListing*}
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxK{This is my title}
+		
+		\ascboxK*{This is my title}
+	\end{dispExample*}
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxK[B]{This is my title}
+		
+		\ascboxK*[B]{This is my title}
+	\end{dispExample*}
+	
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxK[C]{This is my title}
+		
+		\ascboxK*[C]{This is my title}
+	\end{dispExample*}
+	
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxK[D]{This is my title}
+		
+		\ascboxK*[D]{This is my title}
+	\end{dispExample*}
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxK[E]{This is my title}
+		
+		\ascboxK*[E]{This is my title}
+	\end{dispExample*}
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxK[F]{This is my title}
+		
+		\ascboxK*[F]{This is my title}
+	\end{dispExample*}
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxK[G]{This is my title}
+		
+		\ascboxK*[G]{This is my title}
+	\end{dispExample*}
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxK[H]{This is my title}
+		
+		\ascboxK*[H]{This is my title}
+	\end{dispExample*}
+	
+	
+	\begin{dispListing*}{colback=listcolor,colframe=listred}
+		\ascboxL<star>[<type>][<options>]<star>{<title>}
+	\end{dispListing*}
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxL{This is my title}
+		
+		\ascboxL*{This is my title}
+	\end{dispExample*}
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxL[B]{This is my title}
+		
+		\ascboxL*[B]{This is my title}
+	\end{dispExample*}
+	
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxL[C]{This is my title}
+		
+		\ascboxL*[C]{This is my title}
+	\end{dispExample*}
+	
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxL[D]{This is my title}
+		
+		\ascboxL*[D]{This is my title}
+	\end{dispExample*}
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxL[E]{This is my title}
+		
+		\ascboxL*[E]{This is my title}
+	\end{dispExample*}
+	
+	
+	\begin{dispExample*}{sidebyside}
+		\ascboxY{This is my title}
+	\end{dispExample*}
+	
+	
+\end{document} 

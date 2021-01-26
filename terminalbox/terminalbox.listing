@@ -1,0 +1,7 @@
+	TensorFlow@xubuntu:~$
+---------- TRAINING -------------
+Epoch: 004/020 cost: 1.41867 train_accuray:0.63000 test_accuray:0.62820
+Epoch: 008/020 cost: 0.98922 train_accuray:0.71000 test_accuray:0.72040
+Epoch: 012/020 cost: 0.81536 train_accuray:0.70000 test_accuray:0.76270
+Epoch: 016/020 cost: 0.71605 train_accuray:0.83000 test_accuray:0.78570
+Epoch: 020/020 cost: 0.65017 train_accuray:0.82000 test_accuray:0.80130

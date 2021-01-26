@@ -1,0 +1,84 @@
+% !TeX encoding = utf-8
+% !TEX spellcheck = en-us
+% !TeX program = xelatex
+
+% ---------------------------------
+% 作者: TeX白兔
+% 邮箱: faithbetter@outlook.com
+% 时间: 2020-12-24 13:22:08
+% 描述: LaTeX3 条件语句应用，输出数字对应的英文全称和简写
+% ---------------------------------
+
+\documentclass[margin=5mm]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{ctex}
+\usepackage{xparse}
+\usepackage{xcolor}
+
+\ExplSyntaxOn
+\NewDocumentCommand \mymonth {o m}{
+	\str_if_eq:nnTF {#1}{abb}{
+		\int_case:nnF
+		{#2}
+		{
+			{1} {Jan}
+			{2} {Feb}
+			{3} {Mar}
+			{4} {Apr}
+			{5} {May}
+			{6} {Jun}
+			{7} {Jul}
+			{8} {Aug}
+			{9} {Sep}
+			{10} {Oct}
+			{11} {Nov}
+			{12} {Dec}
+		}
+		{\color{red}No~ idea!}
+	}{
+		\int_case:nnF
+		{#2}
+		{
+			{1} {January}
+			{2} {February}
+			{3} {March}
+			{4} {April}
+			{5} {May}
+			{6} {June}
+			{7} {July}
+			{8} {August}
+			{9} {September}
+			{10} {October}
+			{11} {November}
+			{12} {December}
+		}
+		{\color{red}No~ idea!}
+	}
+}
+\ExplSyntaxOff
+
+
+\begin{document}
+	
+	\begin{tabular}{cll}
+		\hline
+		月份 & 英文全称 & 英文简写 \\
+		\hline
+		0月 & \mymonth{0} & \mymonth[abb]{0} \\
+		1月 & \mymonth{1} & \mymonth[abb]{1} \\
+		2月 & \mymonth{2} & \mymonth[abb]{2} \\
+		3月 & \mymonth{3} & \mymonth[abb]{3} \\
+		4月 & \mymonth{4} & \mymonth[abb]{4} \\
+		5月 & \mymonth{5} & \mymonth[abb]{5} \\
+		6月 & \mymonth{6} & \mymonth[abb]{6} \\
+		7月 & \mymonth{7} & \mymonth[abb]{7} \\
+		8月 & \mymonth{8} & \mymonth[abb]{8} \\
+		9月 & \mymonth{9} & \mymonth[abb]{9} \\
+		10月 & \mymonth{10} & \mymonth[abb]{10} \\
+		11月 & \mymonth{11} & \mymonth[abb]{11} \\
+		12月 & \mymonth{12} & \mymonth[abb]{12} \\
+		13月 & \mymonth{13} & \mymonth[abb]{13} \\
+		\hline
+	\end{tabular}
+	
+\end{document}

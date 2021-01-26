@@ -1,0 +1,35 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage[x11names]{xcolor}
+\usepackage[spiral=false,linecolor=Chocolate3!100!white!80]%
+{fancypar}
+
+\newcommand{\testtext}{But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful.}
+
+\begin{document}
+	
+	\NotebookPar{\testtext}
+	\fancyparsetup{spiral=true,linecolor=LightGoldenrod3,
+		interheight=2pt,intercolor=Cornsilk2}
+	
+	\NotebookPar{\testtext}
+	\fancyparsetup{spiral=false,linecolor=OliveDrab4!100!white!90,
+		interheight=0pt,textcolor=white}
+	
+	\NotebookPar{\testtext}
+	
+	\MarkedPar[mark=\ddag,position=left]{\testtext}
+	
+	\MarkedPar[mark=$\bullet$]{\testtext}
+	
+	\textit{The notebook style:}
+	\NotebookPar{\testtext}
+	\textit{The zebra style:}
+	\ZebraPar{\testtext}
+	
+	\textit{The marked style:}
+	\MarkedPar{\testtext}
+	
+	\textit{The underlined style:}
+	\UnderlinedPar{\testtext}
+\end{document}

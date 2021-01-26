@@ -1,4 +1,4 @@
-\documentclass[a4paper]{article}
+\documentclass[linespread=1.5,a4paper]{ctexart}
 %\documentclass[varwidth=true, crop=true, border={30pt 10pt}, convert={command=\unexpanded{pdftocairo -r 600 -png \infile\space}}]{standalone}
 %\documentclass[tikz, convert, convert={command=\unexpanded{pdftocairo -r 600 -png \infile\space}}]{standalone}
 %\usepackage{ctex}
@@ -6,22 +6,26 @@
 %\usepackage{showframe}
 %\usepackage{layout}
 \usepackage[left=2.5cm, right=2.5cm,top=1.5cm, bottom=1.5cm]{geometry}
-\usepackage[heading = true]{ctex}
+%\usepackage[heading = true]{ctex}
 \usepackage{calc}
 \usepackage{graphicx}
 \usepackage{enumitem}
 %\usepackage{xeCJK}
-%\setCJKmainfont{FangSong_GB2312}
+\setCJKmainfont{FangSong_GB2312}
 %\setCJKmainfont{FandolSong}
 %\setCJKmainfont{Microsoft YaHei}
 %\setCJKmainfont{Microsoft YaHei Light}
-\setCJKmainfont{Source Han Serif SC}[%
-UprightFont     = * SemiBold,
-BoldFont        = * Heavy,
-ItalicFont      = * SemiBold,
-BoldItalicFont  = * SemiBold,
-RawFeature      = +fwid]
+%使用思源宋体方案
+%\setCJKmainfont{Source Han Serif SC}[%
+%UprightFont     = * SemiBold,
+%BoldFont        = * Heavy,
+%ItalicFont      = * SemiBold,
+%BoldItalicFont  = * SemiBold,
+%RawFeature      = +fwid]
 \setCJKmonofont{Sarasa Mono SC}
+%\newcommand*{\kaiti}{\CJKfamily{zhkai}} % 楷体
+\setCJKfamilyfont{kt2312}{KaiTi_GB2312}
+\newcommand*{\kaiti}{\CJKfamily{kt2312}} % 楷体GB2312
 
 %\newlength\mylen
 %\settowidth\mylen{\medspace}
@@ -42,26 +46,34 @@ appendixname=附录,
 % },
 section = {
 %	name = {第,条},
+%	runin = true,
+	beforeskip = 0pt,
+	afterskip = 0pt,
 	name = {,、},
 	%nameformat=\Large\bf,
-	indent = 0pt,
+	indent = 2em,
 %	aftername = \hspace{0.5em}\medskip,
 	aftername = \hspace{0pt},
 	number = \chinese{section},
 	%number = \arabic{section},
-	format = \bf\zihao{3},
+	format = \heiti\zihao{3},
 	%break = \Needspace{.5\textheight},
 },
 subsection = {
+%	runin = true,
+	beforeskip = 0pt,
+	afterskip = 0pt,
 	name = {（,）},
 %	indent = 0.2222em,
-	indent = 0.55em,
+%	indent = 0.55em,
+	indent = 2.55em,
 	% nameformat= \Large\bf,
 %	aftername = \medspace,
 	aftername = \hspace{0pt},
 	number = \chinese{subsection},
 	%number = \arabic{section},
-	format = \bf\zihao{3},
+	%比较合适的一个方案
+	format = \bf\kaiti\zihao{3},
 },
 % subsubsection = {
 % name = {,.},
@@ -92,6 +104,9 @@ subsection = {
 	itemindent = 3em,
 	leftmargin = 0em,
 	listparindent = 2em,
+	parsep = 0pt,
+	itemsep=0pt,
+	topsep=0pt,
 %	labelsep= 0pt	
 }
 \setlist[enumerate,2]{
@@ -101,12 +116,14 @@ subsection = {
 	itemindent = 5em,
 	leftmargin = 0em,
 	listparindent = 2em,
+	parsep = 0pt,
+	topsep=0pt,
 %	labelsep= 0pt	
 }
 \title{%
-%\vspace{-4ex}
-\zihao{2}\textbf{成本费用分析报告编制方法}%
-%\vspace{-9ex}
+\vspace{-4ex}
+\zihao{2}\heiti{成本费用分析报告编制方法}%
+\vspace{-4ex}
 }
 \author{}
 \date{}
@@ -126,9 +143,16 @@ subsection = {
 如何呈现出一份完美的费用分析报告，这是每个财务人员必须要掌握的技能。
 下面就带你一步步Get这个技能！
 
+% 下面仅是测试
+%\section{这部分仅是测试}
+%\begin{enumerate}[label=（\chinese*）,leftmargin=2em, labelsep=0pt]
+%	\item 对比分析
+%	\item 因素分析
+%	\item 相关分析
+%	\item 差额分析
+%\end{enumerate}
 
 \section{切忌胡子眉毛一把抓}
-
 一个企业主要分析的对象有：
 
 \subsection{人力成本分析}
@@ -153,16 +177,16 @@ subsection = {
 
 首先进行总体分析，总体分析是做数据趋势的判断，主要方式：
 
-\subsection{单一数据的同期比、预算比、或者几年数据的趋势分析；}
+\subsection{对比分析、趋势分析}
+单一数据的同期比、预算比、或者几年数据的趋势分析；
 \subsection{费用使用效率指标的同期比、预算比等；}
 单一数据的对比分析让我们对费用的整体情况有个把握，但不管是增加还是降低，每个数据波动都是一个疑问，带着这个疑问结合指标分析，判断重点分析对象。
 
 \includegraphics[width=0.8\textwidth]{./figure/cost_diagram.jpeg}
 \subsection{指标分析}
+
 \begin{enumerate}
-	\item 成本率
-	
-	成本率指标的计算，为了识别成本费用结构波动。不管异常出现在哪个方向，主营业务成本和人工费用必须进行剖析，如果有异常则带着疑问去剖析，如果没有异常则带着“能否更好”的心态去剖析。所以总体指标分析，仅仅分析的是趋势，让我们知道问题点，从而带着问题去做明细分析。
+	\item{成本率}	成本率指标的计算，为了识别成本费用结构波动。不管异常出现在哪个方向，主营业务成本和人工费用必须进行剖析，如果有异常则带着疑问去剖析，如果没有异常则带着“能否更好”的心态去剖析。所以总体指标分析，仅仅分析的是趋势，让我们知道问题点，从而带着问题去做明细分析。
 	
 	\item 人工指标
 	

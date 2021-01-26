@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nb}{\PYGZca{}\PYGZca{}}I\PYG{n+nb}{\PYGZca{}\PYGZca{}}I\PYG{k}{\PYGZbs{}begin}\PYG{n+nb}{\PYGZob{}}simplesquarebox\PYG{n+nb}{\PYGZcb{}}[子标题]\PYG{n+nb}{\PYGZob{}}标题\PYG{n+nb}{\PYGZcb{}}[1.5][colback=gray]
+\PYG{n+nb}{\PYGZca{}\PYGZca{}}I\PYG{n+nb}{\PYGZca{}\PYGZca{}}I\PYG{n+nb}{\PYGZca{}\PYGZca{}}I\PYG{k}{\PYGZbs{}zhlipsum}\PYG{n+na}{[1]}
+\PYG{n+nb}{\PYGZca{}\PYGZca{}}I\PYG{n+nb}{\PYGZca{}\PYGZca{}}I\PYG{k}{\PYGZbs{}end}\PYG{n+nb}{\PYGZob{}}simplesquarebox\PYG{n+nb}{\PYGZcb{}}
+\PYG{n+nb}{\PYGZca{}\PYGZca{}}I
+\end{Verbatim}

@@ -1,0 +1,557 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{ascolorbox}[2016/2/23, v1.02]
+\RequirePackage{tikz,tcolorbox,varwidth,multicol}
+
+\usetikzlibrary{calc}
+\tcbuselibrary{xparse,hooks,skins,breakable}
+
+\DeclareTColorBox{simplesquarebox}{ o m O{.5} O{} }%
+{empty, left=2mm, right=2mm, top=-1mm, attach boxed title to top left={xshift=1.2zw}, boxed title style={empty,left=-2mm,right=-2mm}, colframe=black, coltitle=black, coltext=black, breakable,
+underlay unbroken={\draw[black,line width=#3pt](title.east) -- (title.east-|frame.east) -- (frame.south east) -- (frame.south west) -- (title.west-|frame.west) -- (title.west); },
+underlay first={\draw[black,line width=#3pt](title.east) -- (title.east-|frame.east) -- (frame.south east) ;
+\draw[black,line width=#3pt] (frame.south west) -- (title.west-|frame.west) -- (title.west); },
+underlay middle={\draw[black,line width=#3pt](frame.north east) -- (frame.south east) ;
+\draw[black,line width=#3pt](frame.south west) -- (frame.north west) ;},
+underlay last={\draw[black,line width=#3pt](frame.north east) -- (frame.south east) -- (frame.south west) -- (frame.north west) ;},
+fonttitle=\sffamily, IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
+
+
+\DeclareTColorBox{practicebox}{ m O{} }%
+{enhanced,colback=black!5!white, colframe=black!5!white , attach boxed title to top left={xshift=0mm,yshift=1mm}, fonttitle=\sffamily,varwidth boxed title=0.7\linewidth, breakable, arc=0mm,title={#1},
+enlarge top by=2mm,
+   boxed title style={empty,arc=0pt,outer arc=0pt,boxrule=0pt},
+   underlay unbroken={
+      \draw[black,ultra thick] (frame.north west) -- (frame.north east);
+      \draw[black] ([yshift=-.8mm]frame.north west) -- ([yshift=-.8mm]frame.north east);
+      \draw[black,ultra thick] (frame.south west) -- (frame.south east);
+      \draw[black] ([yshift=.8mm]frame.south west) -- ([yshift=.8mm]frame.south east);
+      \fill[black] ([yshift=1mm]frame.north west) rectangle +(6mm,6mm);
+      \node[white] at ([xshift=3mm,yshift=4mm]frame.north west){\large\textsf{好}};
+      \node at ([xshift=9mm,yshift=4mm]frame.north west){\large\textsf{好}};
+      \fill[black] ([xshift=12mm,yshift=1mm]frame.north west) rectangle +(6mm,6mm);
+      \node[white] at ([xshift=15mm,yshift=4mm]frame.north west){\large\textsf{学}};
+      \node at ([xshift=21mm,yshift=4mm]frame.north west){\large\textsf{习}};
+      \draw[thick] ([yshift=1mm]frame.north west) -- ++(0mm,6mm) -- ++(24mm,0mm) -- node[right=2mm] {\textsf{\color{blue}#1}} ++(0mm,-6mm) -- cycle;
+  },
+   underlay first={
+      \draw[black,ultra thick] (frame.north west) -- (frame.north east);
+      \draw[black] ([yshift=-.8mm]frame.north west) -- ([yshift=-.8mm]frame.north east);
+      \fill[black] ([yshift=1mm]frame.north west) rectangle +(6mm,6mm);
+      \node[white] at ([xshift=3mm,yshift=4mm]frame.north west){\large\textsf{好}};
+      \node at ([xshift=9mm,yshift=4mm]frame.north west){\large\textsf{好}};
+      \fill[black] ([xshift=12mm,yshift=1mm]frame.north west) rectangle +(6mm,6mm);
+      \node[white] at ([xshift=15mm,yshift=4mm]frame.north west){\large\textsf{学}};
+      \node at ([xshift=21mm,yshift=4mm]frame.north west){\large\textsf{习}};
+      \draw[thick] ([yshift=1mm]frame.north west) -- ++(0mm,6mm) -- ++(24mm,0mm) -- node[right=2mm] {\textsf{\color{blue}#1}} ++(0mm,-6mm) -- cycle;
+  },
+   underlay middle={
+  },
+   underlay last={
+      \draw[black,ultra thick] (frame.south west) -- (frame.south east);
+      \draw[black] ([yshift=.8mm]frame.south west) -- ([yshift=.8mm]frame.south east);
+  },
+#2}
+
+
+\DeclareTColorBox{ascolorbox1}{ o m O{}}%
+{enhanced,colback=white, skin=enhancedlast jigsaw,breakable, attach boxed title to top left={xshift=-4mm,yshift=-0.5mm}, fonttitle=\bfseries\sffamily, varwidth boxed title=0.7\linewidth, colbacktitle=black!45!white,colframe=black,
+   boxed title style={empty,arc=0pt,outer arc=0pt,boxrule=0pt},
+   underlay boxed title={
+\fill[black!45!white] (title.north west) -- (title.north east) -- +(\tcboxedtitleheight-1mm,-\tcboxedtitleheight+1mm)
+-- ([xshift=4mm,yshift=0.5mm]frame.north east) -- +(0mm,-1mm) -- (title.south west) -- cycle;
+     \fill[black!45!white!50!black] ([yshift=-0.5mm]frame.north west)
+       -- +(-0.4,0) -- +(0,-0.3) -- cycle;
+     \fill[black!45!white!50!black] ([yshift=-0.5mm]frame.north east)
+       -- +(0,-0.3) -- +(0.4,0) -- cycle;  },
+IfValueTF={#1}{title=#2〈#1〉}{title=#2},#3}
+
+
+\DeclareTColorBox{ascolorbox2}{ m O{}}%
+{enhanced, colback=white, boxrule=1pt,
+attach boxed title to top left={xshift=.5cm,yshift=-2mm}, fonttitle=\bfseries,varwidth boxed title=0.7\linewidth,coltitle=black, boxed title style={enhanced,boxrule=0.75mm,colframe=white,
+    borderline={0.1mm}{0mm}{black},
+    borderline={0.1mm}{0.75mm}{black},
+    interior style={top color=black!10!white,bottom color=black!10!white,
+      middle color=black!30!white},
+    drop fuzzy shadow},
+  title={#1},#2}
+
+
+\DeclareTColorBox{ascolorbox3}{ m O{black} O{}}%
+{empty, breakable, title={#1},attach boxed title to top left, boxed title style={empty,size=minimal, toprule=2pt, top=4pt,
+underlay ={\draw[#2,line width=3pt]
+         ([yshift=-1.6pt]frame.north west)--([yshift=-1.6pt]frame.north east);}},
+     coltitle=black,fonttitle=\large\bfseries,
+     before=\par\medskip\noindent,parbox=false,boxsep=0pt,left=0pt,right=3mm,top=4pt,
+     breakable,pad at break=0mm,
+underlay unbroken={\draw[#2,line width=1pt]
+       ([yshift=-1pt]title.north east)--([xshift=-0.5pt,yshift=-1pt]title.north-|frame.east)
+       --([xshift=-0.5pt]frame.south east)--(frame.south west) ;
+       \draw[#2,line width=.5pt]
+       ([yshift=-2.5pt]title.north east)--([xshift=-2pt,yshift=-2.5pt]title.north-|frame.east)
+       --([yshift=1.5pt,xshift=-2pt]frame.south east)--([yshift=1.5pt]frame.south west);},
+underlay first={\draw[#2,line width=1pt]
+       ([yshift=-1pt]title.north east)--([xshift=-0.5pt,yshift=-1pt]title.north-|frame.east)
+       --([xshift=-0.5pt]frame.south east) ;
+       \draw[#2,line width=.5pt]
+       ([yshift=-2.5pt]title.north east)--([xshift=-2pt,yshift=-2.5pt]title.north-|frame.east)
+       --([xshift=-2pt]frame.south east) ;},
+underlay middle={\draw[#2,line width=1pt]
+       ([xshift=-0.5pt]frame.north east)
+       --([xshift=-0.5pt]frame.south east) ;
+       \draw[#2,line width=.5pt]
+       ([xshift=-2pt]frame.north east)
+       --([xshift=-2pt]frame.south east);},
+underlay last={\draw[#2,line width=1pt]
+       ([xshift=-0.5pt]frame.north east)
+       --([xshift=-0.5pt]frame.south east)--(frame.south west) ;
+       \draw[#2,line width=.5pt]
+       ([xshift=-2pt]frame.north east)
+       --([yshift=1.5pt,xshift=-2pt]frame.south east)--([yshift=1.5pt]frame.south west);},
+#3}
+
+
+\DeclareTColorBox{ascolorbox4}{ o m O{3} O{}}%
+{enhanced, colback=white, colframe=white,
+attach boxed title to top left={xshift=1cm,yshift=-\tcboxedtitleheight/2}, fonttitle=\bfseries,varwidth boxed title=0.7\linewidth, coltitle=black, fonttitle=\sffamily,
+enlarge top by=2mm, enlarge bottom by=2mm, breakable,
+boxed title style={colback=white,left=0mm,right=0mm},
+borderline={.75pt}{#3pt}{black,dotted},
+underlay unbroken={\draw[black,line width=.5pt]
+       (title.east|-frame.north east)--([xshift=-#3*4pt]frame.north east)
+       arc [start angle=180, end angle=270, radius=#3*4pt]
+       -- ([yshift=#3*4pt]frame.south east)
+       arc [start angle=90, end angle=180, radius=#3*4pt]
+       -- ([xshift=#3*4pt]frame.south west)
+       arc [start angle=0, end angle=90, radius=#3*4pt]
+       -- ([yshift=-#3*4pt]frame.north west)
+       arc [start angle=270, end angle=360, radius=#3*4pt]
+       -- (frame.north west-|title.west) ;
+       \filldraw[fill=gray,draw=gray]
+       (frame.north east) -- +(0pt,-#3*2pt) -- +(-#3*2pt,-#3*2pt) -- +(-#3*2pt,0pt) -- cycle;
+       \filldraw[fill=gray,draw=gray]
+       (frame.south east) -- +(-#3*2pt,0pt) -- +(-#3*2pt,#3*2pt) -- +(0pt,#3*2pt) -- cycle;
+       \filldraw[fill=gray,draw=gray]
+       (frame.south west) -- +(0pt,#3*2pt) -- +(#3*2pt,#3*2pt) -- +(#3*2pt,0pt) -- cycle;
+       \filldraw[fill=gray,draw=gray]
+       (frame.north west) -- +(0pt,-#3*2pt) -- +(#3*2pt,-#3*2pt) -- +(#3*2pt,0pt) -- cycle;
+       },
+underlay first={\draw[black,line width=.5pt]
+       (title.east|-frame.north east)--([xshift=-#3*4pt]frame.north east)
+       arc [start angle=180, end angle=270, radius=#3*4pt]
+       -- (frame.south east) ;
+       \draw[black,line width=.5pt]
+       (frame.south west)
+       -- ([yshift=-#3*4pt]frame.north west)
+       arc [start angle=270, end angle=360, radius=#3*4pt]
+       -- (frame.north west-|title.west) ;
+       \filldraw[fill=gray,draw=gray]
+       (frame.north east) -- +(0pt,-#3*2pt) -- +(-#3*2pt,-#3*2pt) -- +(-#3*2pt,0pt) -- cycle;
+       \filldraw[fill=gray,draw=gray]
+       (frame.north west) -- +(0pt,-#3*2pt) -- +(#3*2pt,-#3*2pt) -- +(#3*2pt,0pt) -- cycle;
+       },
+underlay middle={\draw[black,line width=.5pt]
+       (frame.north east)--(frame.south east) ;
+       \draw[black,line width=.5pt]
+       (frame.south west)--(frame.north west) ;
+       },
+underlay last={\draw[black,line width=.5pt]
+       (frame.north east) -- ([yshift=#3*4pt]frame.south east)
+       arc [start angle=90, end angle=180, radius=#3*4pt]
+       -- ([xshift=#3*4pt]frame.south west)
+       arc [start angle=0, end angle=90, radius=#3*4pt]
+       -- (frame.north west);
+              \filldraw[fill=gray,draw=gray]
+       (frame.south east) -- +(-#3*2pt,0pt) -- +(-#3*2pt,#3*2pt) -- +(0pt,#3*2pt) -- cycle;
+       \filldraw[fill=gray,draw=gray]
+       (frame.south west) -- +(0pt,#3*2pt) -- +(#3*2pt,#3*2pt) -- +(#3*2pt,0pt) -- cycle;
+       },
+IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
+
+
+\DeclareTColorBox{ascolorbox5}{ O{} m O{black} O{} }%
+{enhanced,colback=white, colframe=white, coltext=#3, attach boxed title to top left={xshift=1mm,yshift=0mm}, fonttitle=\bfseries\sffamily,varwidth boxed title=0.7\linewidth, colbacktitle=black!45!white, breakable,
+enlarge top by=3mm, enlarge bottom by=3mm,
+   boxed title style={empty,arc=0pt,outer arc=0pt,boxrule=0pt},
+   underlay boxed title={\fill[#3] (title.north west)
+      -- (title.north east) --node[right=3mm]{\textsf{#1}}+(0,-\tcboxedtitleheight+.5mm)
+      -- ([xshift=-1mm,yshift=.5mm]frame.north east)
+      -- +(0mm,-.5mm) -- (title.south west) -- cycle;
+      \draw[#3] ([yshift=-.5mm]title.south west) --
+      ([xshift=-1mm,yshift=-.5mm]frame.north east);},
+   underlay unbroken={\draw[#3, ultra thick] ([xshift=1mm,yshift=-.3mm]frame.south west)
+      -- ([xshift=-1mm,yshift=-.3mm]frame.south east);
+      \draw[#3] ([xshift=1mm,yshift=.5mm]frame.south west)
+      -- ([xshift=-1mm,yshift=.5mm]frame.south east);
+      \draw[#3,thick,dotted] ([yshift=\tcboxedtitleheight+1mm]frame.north west)
+      -- ([yshift=\tcboxedtitleheight+1mm]frame.north east)
+      -- ([yshift=-2mm]frame.south east) -- ([yshift=-2mm]frame.south west) -- cycle;},
+   underlay first={\draw[#3,thick,dotted] ([yshift=\tcboxedtitleheight+1mm]frame.north west)
+      -- ([yshift=\tcboxedtitleheight+1mm]frame.north east)
+      -- (frame.south east);
+      \draw[#3,thick,dotted] (frame.south west)
+      -- ([yshift=\tcboxedtitleheight+1mm]frame.north west);},
+   underlay middle={\draw[#3,thick,dotted] (frame.north east) -- (frame.south east);
+      \draw[#3,thick,dotted] (frame.south west) -- (frame.north west);},
+   underlay last={\draw[#3,thick,dotted] (frame.north east) -- ([yshift=-2mm]frame.south east)
+   -- ([yshift=-2mm]frame.south west) -- (frame.north west);
+   \draw[#3, ultra thick] ([xshift=1mm,yshift=-.3mm]frame.south west)
+   -- ([xshift=-1mm,yshift=-.3mm]frame.south east);
+   \draw[#3] ([xshift=1mm,yshift=.5mm]frame.south west)
+   -- ([xshift=-1mm,yshift=.5mm]frame.south east);},
+   title={#2},#4}
+
+
+\DeclareTColorBox{ascolorbox8}{m O{} }%
+{enhanced,colframe=black,colback=white,coltitle=black, fonttitle=\bfseries,breakable,
+underlay unbroken={\begin{tcbclipinterior}
+       \shade[inner color=black!50!white,outer color=white]
+         (interior.north west) circle (2.5cm);
+       \draw[help lines,step=5mm,white!90!black,shift={(interior.north west)}]
+         (interior.south west) grid (interior.north east);
+         \end{tcbclipinterior}},
+underlay first={\begin{tcbclipinterior}
+       \shade[inner color=black!50!white,outer color=white]
+         (interior.north west) circle (2.5cm);
+        \draw[help lines,step=5mm,white!90!black,shift={(interior.north west)}]
+        (interior.south west) grid (interior.north east);
+        \end{tcbclipinterior}},
+underlay last={\begin{tcbclipinterior}
+        \draw[help lines,step=5mm,white!90!black,shift={(interior.north west)}]
+        (interior.south west) grid (interior.north east);
+        \end{tcbclipinterior}}, title={#1},
+attach title to upper=\quad, #2
+}
+
+
+\DeclareTColorBox{ascolorbox9}{m O{3} O{} }%
+{enhanced, colframe=white,
+attach boxed title to top left={xshift=-1mm,yshift=0mm}, fonttitle=\bfseries,varwidth boxed title=0.7\linewidth, colbacktitle=black!45!white, coltitle=black,
+enlarge top by=2mm, enlarge bottom by=2mm,
+arc=0mm, boxrule=.001pt, interior style={left color=white, right color=black!30!white},
+boxed title style={size=small,colback=white},
+segmentation code={\path[thick, dotted, draw=black]
+              ([xshift=5pt]segmentation.west) -- ([xshift=-5pt]segmentation.east);},
+underlay ={\draw[black,line width=1pt]
+       ([xshift=32pt]frame.north west)--(frame.north east)
+       -- (frame.south east)
+       -- (frame.south west)
+       -- (frame.north west);
+       \draw[black!70!white, line width=1pt]
+       ([yshift=4pt]title.east|-frame.north east)--([yshift=4pt]frame.north east);
+       \draw[black!40!white, line width=1pt]
+       ([xshift=4pt,yshift=8pt]title.east|-frame.north east)--([yshift=8pt]frame.north east);
+       \draw[black!10!white, line width=1pt]
+       ([xshift=8pt,yshift=12pt]title.east|-frame.north east)--([yshift=12pt]frame.north east);
+       \fill[top color=black!10!white, bottom color=black]
+       ([xshift=.5pt]frame.north east) -- ++ (-1mm,0mm) -- ++ (0pt,12.5pt) -- ++ (1mm,0mm) -- cycle;
+       \foreach \n in {1,...,#2}{%
+       \filldraw[black!10!white]
+       ([xshift=-(\linewidth-\tcboxedtitlewidth)*4*\n/(#2*4+1),yshift=12pt]frame.north east) circle (2pt);
+       \filldraw[black!40!white]
+       ([xshift=-(\linewidth-\tcboxedtitlewidth)*(-1+4*\n)/(#2*4+1),yshift=8pt]frame.north east) circle (2pt);
+       \filldraw[black!70!white]
+       ([xshift=-(\linewidth-\tcboxedtitlewidth)*(-2+4*\n)/(#2*4+1),yshift=4pt]frame.north east) circle (2pt);
+       \filldraw[black]
+       ([xshift=-(\linewidth-\tcboxedtitlewidth)*(-3+4*\n)/(#2*4+1)]frame.north east) circle (2pt);}
+       },
+title={#1},#3}
+
+
+\DeclareTColorBox{ascolorbox10}{ o m O{.8} O{} }%
+{enhanced, interior hidden, colframe=white,
+attach boxed title to top left={xshift=6mm,yshift*=-1.5mm}, fonttitle=\sffamily, coltitle=black,
+, left=1mm, right=1mm,breakable,top=0mm,
+boxed title style={empty,left=-2mm,right=-2mm},
+underlay unbroken={\draw[black!40!white,line width=1pt, dotted]
+       ([xshift=3pt,yshift=-3pt]title.east) -- ([yshift=-3pt]title.east-|frame.east);
+       \draw[black,line width=#3pt]
+       (title.east) -- (title.east-|frame.east);
+       \draw[black!40!white,line width=1pt, dotted]
+       ([xshift=-3pt,yshift=-3pt]title.west) -- ([yshift=-3pt]title.west-|frame.west);
+       \draw[black,line width=#3pt]
+       (title.west) -- (title.west-|frame.west);
+       \draw[black,line width=#3pt]
+       (frame.south west) -- (frame.south east);
+       \draw[black!40!white,line width=1pt, dotted]
+       ([yshift=3pt]frame.south west) -- ([yshift=3pt]frame.south east);
+       },
+underlay first={\draw[black!40!white,line width=1pt, dotted]
+       ([xshift=3pt,yshift=-3pt]title.east) -- ([yshift=-3pt]title.east-|frame.east);
+       \draw[black,line width=#3pt]
+       (title.east) -- (title.east-|frame.east);
+       \draw[black!40!white,line width=1pt, dotted]
+       ([xshift=-3pt,yshift=-3pt]title.west) -- ([yshift=-3pt]title.west-|frame.west);
+       \draw[black,line width=#3pt]
+       (title.west) -- (title.west-|frame.west);},
+underlay last={\draw[black,line width=#3pt]
+       (frame.south west) -- (frame.south east);
+       \draw[black!40!white,line width=1pt, dotted]
+       ([yshift=3pt]frame.south west) -- ([yshift=3pt]frame.south east);
+       },
+IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
+
+
+\DeclareTColorBox{ascolorbox11}{ o m O{4} O{} }%
+{enhanced, colback=white, colframe=white,
+attach boxed title to top left={xshift=1cm,yshift=-3mm}, fonttitle=\sffamily,
+boxed title style={empty,left=-2mm,right=-2mm}, coltitle=black,breakable,
+underlay unbroken={\draw[gray!40!white,line width=.5pt]
+       ([yshift=-#3*0.5pt]title.east)--([yshift=-#3*0.5pt]title.east-|frame.east) -- ++ (0pt,#3pt) -- ++ (-#3pt,0pt)
+       -- ([xshift=-#3pt]frame.south east) - ++ (#3pt,0pt) -- ++ (#3pt,#3pt)
+       -- ([yshift=#3pt]frame.south west) - ++ (0pt,-#3pt) -- ++ (#3pt,-#3pt)
+       -- ([xshift=#3pt,yshift=#3*0.5pt]title.west-|frame.west) - ++ (-#3pt,0pt) -- ++ (-#3pt,-#3pt)
+       -- ([yshift=-#3*0.5pt]title.west) ;
+       \draw[black,line width=.5pt]
+       ([yshift=#3*0.5pt]title.east)--([xshift=-#3*2pt,yshift=#3*0.5pt]title.east-|frame.east) -- ++ (0pt,-#3*2pt)
+       --  ++ (#3*2pt,0pt)
+       -- ([yshift=#3*2pt]frame.south east) -- ++ (-#3*2pt,0pt)
+       -- ([xshift=-#3*2pt]frame.south east)
+       -- ([xshift=#3*2pt]frame.south west) -- ++ (0pt,#3*2pt)
+       -- ([yshift=#3*2pt]frame.south west)
+       -- ([yshift=-#3*1.5pt]title.west-|frame.west) -- ++ (#3*2pt,0pt)
+       -- ++ (0pt,#3*2pt)
+       -- ([yshift=#3*0.5pt]title.west);},
+underlay first={\draw[gray!40!white,line width=.5pt]
+       ([yshift=-#3*0.5pt]title.east)--([yshift=-#3*0.5pt]title.east-|frame.east) -- ++ (0pt,#3pt) -- ++ (-#3pt,0pt)
+       -- ([xshift=-#3pt]frame.south east);
+       \draw[gray!40!white,line width=.5pt]
+       ([xshift=#3pt]frame.south west)
+       -- ([xshift=#3pt,yshift=#3*0.5pt]title.west-|frame.west) - ++ (-#3pt,0pt) -- ++ (-#3pt,-#3pt)
+       -- ([yshift=-#3*0.5pt]title.west) ;
+       \draw[black,line width=.5pt]
+       ([yshift=#3*0.5pt]title.east)--([xshift=-#3*2pt,yshift=#3*0.5pt]title.east-|frame.east)
+       -- ++ (0pt,-#3*2pt)
+       -- ++ (#3*2pt,0pt)
+       -- (frame.south east);
+       \draw[black,line width=.5pt]
+       (frame.south west)
+       -- ([yshift=-#3*1.5pt]title.west-|frame.west) -- ++ (#3*2pt,0pt)
+       -- ++ (0pt,#3*2pt)
+       -- ([yshift=#3*0.5pt]title.west);},
+underlay middle={\draw[gray!40!white,line width=.5pt]
+       ([xshift=-#3pt]frame.north east)
+       -- ([xshift=-#3pt]frame.south east);
+       \draw[gray!40!white,line width=.5pt]
+       ([xshift=#3pt]frame.north west)
+       -- ([xshift=#3pt]frame.south west);
+       \draw[black,line width=.5pt]
+       (frame.north east)
+       -- (frame.south east);
+       \draw[black,line width=.5pt]
+       (frame.north west)
+       -- (frame.south west);},
+underlay last={\draw[gray!40!white,line width=.5pt]
+       ([xshift=-#3pt]frame.north east)
+       -- ([xshift=-#3pt]frame.south east) - ++ (#3pt,0pt) -- ++ (#3pt,#3pt)
+       -- ([yshift=#3pt]frame.south west) - ++ (0pt,-#3pt) -- ++ (#3pt,-#3pt)
+       -- ([xshift=#3pt]frame.north west);
+       \draw[black,line width=.5pt]
+       (frame.north east)
+       -- ([yshift=#3*2pt]frame.south east) -- ++ (-#3*2pt,0pt)
+       -- ([xshift=-#3*2pt]frame.south east)
+       -- ([xshift=#3*2pt]frame.south west) -- ++ (0pt,#3*2pt)
+       -- ([yshift=#3*2pt]frame.south west)
+       -- (frame.north west);},
+IfValueTF={#1}{title={【#2】〈#1〉}}{title=【#2】},#4}
+
+
+\DeclareTColorBox{ascolorbox12}{ o m O{} }%
+{enhanced, colback=white, colframe=black, sharp corners,boxrule=2pt,
+attach boxed title to top left={xshift=1cm,yshift=-9pt}, fonttitle=\bfseries,varwidth boxed title=0.7\linewidth, coltitle=black, breakable,
+ enlarge top by=2mm, top=4mm,
+boxed title style={colframe=black, size=small,colback=gray!20!white},
+underlay unbroken={\fill[black]
+       ([xshift=2pt,yshift=-2pt]frame.north west) -- ++ (0pt,-8pt)
+       arc [start angle=270, end angle=360, radius=8pt] -- cycle;
+       \fill[black]
+       ([xshift=-2pt,yshift=-2pt]frame.north east) -- ++ (-8pt,0pt)
+       arc [start angle=180, end angle=270, radius=8pt] -- cycle;
+       \fill[black]
+       ([xshift=-2pt,yshift=2pt]frame.south east) -- ++ (0pt,8pt)
+       arc [start angle=90, end angle=180, radius=8pt] -- cycle;
+       \fill[black]
+       ([xshift=2pt,yshift=2pt]frame.south west) -- ++ (8pt,0pt)
+       arc [start angle=0, end angle=90, radius=8pt] -- cycle;
+       \draw[black!50!white,line width=.5pt]
+       ([yshift=-4pt]title.east|-frame.north east) -- ([xshift=-12pt,yshift=-4pt]frame.north east)
+       arc [start angle=180, end angle=270, radius=8pt]
+       -- ([xshift=-4pt,yshift=12pt]frame.south east)
+       arc [start angle=90, end angle=180, radius=8pt]
+       -- ([xshift=12pt,yshift=4pt]frame.south west)
+       arc [start angle=0, end angle=90, radius=8pt]
+       -- ([xshift=4pt,yshift=-12pt]frame.north west)
+       arc [start angle=270, end angle=360, radius=8pt]
+       -- ([yshift=-4pt]frame.north west-|title.west) ;},
+underlay first={\fill[black]
+       ([xshift=2pt,yshift=-2pt]frame.north west) -- ++ (0pt,-8pt)
+       arc [start angle=270, end angle=360, radius=8pt] -- cycle;
+       \fill[black]
+       ([xshift=-2pt,yshift=-2pt]frame.north east) -- ++ (-8pt,0pt)
+       arc [start angle=180, end angle=270, radius=8pt] -- cycle;
+       \draw[black!50!white,line width=.5pt]
+       ([yshift=-4pt]title.east|-frame.north east) -- ([xshift=-12pt,yshift=-4pt]frame.north east)
+       arc [start angle=180, end angle=270, radius=8pt]
+       -- ([xshift=-4pt]frame.south east);
+       \draw[black!50!white,line width=.5pt]
+       ([xshift=4pt]frame.south west)
+       -- ([xshift=4pt,yshift=-12pt]frame.north west)
+       arc [start angle=270, end angle=360, radius=8pt]
+       -- ([yshift=-4pt]frame.north west-|title.west) ;},
+underlay middle={       \draw[black!50!white,line width=.5pt]
+       ([xshift=-4pt]frame.north east)
+       -- ([xshift=-4pt]frame.south east);
+       \draw[black!50!white,line width=.5pt]
+       ([xshift=4pt]frame.south west)
+       -- ([xshift=4pt]frame.north west);},
+underlay last={\fill[black]
+       ([xshift=-2pt,yshift=2pt]frame.south east) -- ++ (0pt,8pt)
+       arc [start angle=90, end angle=180, radius=8pt] -- cycle;
+       \fill[black]
+       ([xshift=2pt,yshift=2pt]frame.south west) -- ++ (8pt,0pt)
+       arc [start angle=0, end angle=90, radius=8pt] -- cycle;
+       \draw[black!50!white,line width=.5pt]
+       ([xshift=-4pt]frame.north east)
+       -- ([xshift=-4pt,yshift=12pt]frame.south east)
+       arc [start angle=90, end angle=180, radius=8pt]
+       -- ([xshift=12pt,yshift=4pt]frame.south west)
+       arc [start angle=0, end angle=90, radius=8pt]
+       -- ([xshift=4pt]frame.north west);},
+IfValueTF={#1}{title=#2〈#1〉}{title=#2},#3}
+
+
+\DeclareTColorBox{ascolorbox13}{ o m O{} }%
+{enhanced,frame empty,colback=white,colframe=black!50!white,
+  coltitle=black!50!black,fonttitle=\bfseries,colbacktitle=black!15!white, enlarge top by=2mm,breakable,
+  borderline={0.5mm}{0mm}{black!15!white},
+  borderline={0.5mm}{0mm}{black!50!white,dashed},
+  attach boxed title to top left={xshift=7mm, yshift=-2mm},
+  boxed title style={boxrule=0.4pt},varwidth boxed title,
+  IfValueTF={#1}{title=#2〈#1〉}{title=#2},#3}
+
+
+\def\ascolorbox@singlering#1#2#3{\fill[black!30!gray] ([xshift=-5pt,yshift=#1pt]$ (#2)!.5!(#3) $) -- ++ (19pt,-1.5pt) circle (4pt);
+\fill[black] ([xshift=-5pt,yshift=#1pt]$ (#2)!.5!(#3) $) -- ++ (20pt,-1.5pt) circle (4pt);
+\fill[left color=black!70!white,right color=white] ([xshift=-5pt,yshift=#1pt]$ (#2)!.5!(#3) $) arc [start angle=90, end angle=180, radius=1pt] -- ++ (0pt,-1pt) arc [start angle=180, end angle=270, radius=1pt] -- ++ (10pt,0pt) -- ++ (0pt,3pt) -- cycle;
+\fill[left color=white,right color=black!70!white] ([xshift=5pt,yshift=#1pt]$ (#2)!.5!(#3) $) -- ++ (0pt,-3pt) -- ++ (10pt,0pt) arc [start angle=270, end angle=360, radius=1pt] -- ++ (0pt,1pt) arc [start angle=0, end angle=90, radius=1pt] -- cycle;}
+
+\def\ascolorbox@triplesinglering#1{\ascolorbox@singlering{12}{#1}{B}%
+       \ascolorbox@singlering{0}{#1}{B}%
+       \ascolorbox@singlering{-12}{#1}{B}}
+
+\DeclareTColorBox{ascolorbox14}{ o m O{} }%
+{enhanced, colback=white, colframe=black!30!gray,
+attach boxed title to top left={xshift=1cm,yshift=-22pt}, fonttitle=\bfseries, coltitle=black,
+enlarge top by=2mm, top=7mm, left=7mm,
+leftrule=2mm, rightrule=3mm, toprule=1mm, bottomrule=1mm,
+boxed title style={size=small,colback=white,colframe=white},
+underlay ={
+       \coordinate (A) at (frame.north west);
+       \coordinate (B) at (frame.west);
+       \coordinate (C) at (frame.south west);
+       \ascolorbox@triplesinglering{A}
+       \ascolorbox@triplesinglering{C}},
+IfValueTF={#1}{title=#2〈#1〉}{title=#2},#3}
+
+
+
+\def\ascolorbox@centerring#1#2#3{\fill[black!30!gray] ([xshift=-5pt,yshift=#1pt]$ (#2)!.5!(#3) $) -- ++ (19pt,-1.5pt) circle (4pt);
+\fill[black] ([xshift=-5pt,yshift=#1pt]$ (#2)!.5!(#3) $) -- ++ (20pt,-1.5pt) circle (4pt);
+\fill[black!30!gray] ([xshift=-25pt,yshift=#1pt]$ (#2)!.5!(#3) $) -- ++ (21pt,-1.5pt) circle (4pt);
+\fill[black] ([xshift=-25pt,yshift=#1pt]$ (#2)!.5!(#3) $) -- ++ (20pt,-1.5pt) circle (4pt);
+\fill[left color=black!70!white,right color=white] ([xshift=-5pt,yshift=#1pt]$ (#2)!.5!(#3) $) arc [start angle=90, end angle=180, radius=1pt] -- ++ (0pt,-1pt) arc [start angle=180, end angle=270, radius=1pt] -- ++ (10pt,0pt) -- ++ (0pt,3pt) -- cycle;
+\fill[left color=white,right color=black!70!white] ([xshift=5pt,yshift=#1pt]$ (#2)!.5!(#3) $) -- ++ (0pt,-3pt) -- ++ (10pt,0pt) arc [start angle=270, end angle=360, radius=1pt] -- ++ (0pt,1pt) arc [start angle=0, end angle=90, radius=1pt] -- cycle;}
+
+\def\ascolorbox@triplecenterring#1{\ascolorbox@centerring{12}{#1}{B}%
+       \ascolorbox@centerring{0}{#1}{B}%
+       \ascolorbox@centerring{-12}{#1}{B}}
+
+\def\ascolorbox@pageline#1{\draw[black,thin] ([xshift=#1pt,yshift=5pt]interior.south west) -- ([xshift=#1pt,yshift=-5pt]interior.north west) arc [start angle=180, end angle=90, radius=5pt];
+\draw[black,thin] ([xshift=#1pt,yshift=5pt]interior.south west) arc [start angle=180, end angle=270, radius=5pt];
+\draw[black,thin] ([xshift=-#1pt,yshift=5pt]interior.south east) -- ([xshift=-#1pt,yshift=-5pt]interior.north east) arc [start angle=0, end angle=90, radius=5pt];
+\draw[black,thin] ([xshift=-#1pt,yshift=5pt]interior.south east) arc [start angle=360, end angle=270, radius=5pt];}
+
+\newtcolorbox{ascolorbox@originalascolorbox15}[2][]{enhanced, arc=5pt, outer arc=2pt, colback=white, colframe=black!30!gray,
+attach boxed title to top left={xshift=1cm,yshift=-28pt}, fonttitle=\bfseries, coltitle=black,
+enlarge top by=2mm, enlarge bottom by=2mm, top=8mm, left=7mm, right=7mm, bottom=5mm,
+leftrule=3mm, rightrule=3mm, toprule=1.5mm, bottomrule=1.5mm,
+boxed title style={size=small,colback=white,colframe=white},
+underlay ={\draw[black!60!white,line width=3pt]([yshift=-1.5mm]frame.north) -- ([yshift=1.5mm]frame.south);
+       \draw[black!80!white,line width=2pt]([yshift=-1.5mm]frame.north) -- ([yshift=1.5mm]frame.south);
+       \draw[black,line width=1pt]([yshift=-1.5mm]frame.north) -- ([yshift=1.5mm]frame.south);
+       \draw[black,thick]([yshift=5pt]interior.south west) --
+       ([yshift=-5pt]interior.north west) arc [start angle=180, end angle=90, radius=5pt] -- ([xshift=-5pt]interior.north east) arc [start angle=90, end angle=0, radius=5pt] -- ([yshift=5pt]interior.south east) arc [start angle=360, end angle=270, radius=5pt] -- ([xshift=5pt]interior.south west) arc [start angle=270, end angle=180, radius=5pt] -- cycle;
+       \ascolorbox@pageline{1.5}
+       \ascolorbox@pageline{3}
+       \ascolorbox@pageline{4.5}
+       \coordinate (A) at ([xshift=-5pt]frame.north);
+       \coordinate (C) at ([xshift=-5pt]frame.south);
+       \coordinate (B) at ($(A)!.5!(C)$);
+       \ascolorbox@triplecenterring{A}
+       \ascolorbox@triplecenterring{C}},
+title={#2},#1}
+
+\newenvironment{ascolorbox15}[2][]{%
+\begin{ascolorbox@originalascolorbox15}[#1]{#2}%
+\setlength{\columnseprule}{0pt}%
+\columnsep=5.5zw
+\begin{multicols}{2}%
+}{%
+\end{multicols}%
+\end{ascolorbox@originalascolorbox15}%
+}
+
+\DeclareTColorBox{ascolorbox16}{ o m O{} }%
+{empty, breakable, left=1mm, right=1mm, bottom=1mm, top=1mm,  attach boxed title to top left, coltitle=black, boxed title style={empty,top=-.5mm,bottom=-.5mm},
+underlay unbroken and first={\fill[black](title.north west) -- ++ (0,-2mm) -- ++ (2mm, 2mm) -- cycle;
+\fill[black](title.south east) -- ++ (0,2mm) -- ++ (-2mm, -2mm) -- cycle;
+\draw[black](title.north west) -- (title.north east);
+\draw[black](title.south west) -- (title.south east);
+\draw[black]([xshift=1mm,yshift=.5mm]title.east) -- ([yshift=.5mm]title.east-|frame.east);
+\draw[gray,thick,dotted]([xshift=1mm,yshift=-.5mm]title.east) -- ([yshift=-.5mm]title.east-|frame.east);},
+underlay unbroken and last={\draw[black]([yshift=-.5mm]frame.south east) -- ([yshift=-.5mm]frame.south west);
+\draw[gray,thick,dotted]([yshift=.5mm]frame.south west) -- ([yshift=.5mm]frame.south east);},
+IfValueTF={#1}{title={#2〈#1〉}}{title=#2},#3}
+
+
+\DeclareTColorBox{ascolorbox17}{ o m O{gray} O{}}%
+{enhanced, colback=white, colframe=white,
+attach boxed title to top left={xshift=1.5cm,yshift=-\tcboxedtitleheight/2}, fonttitle=\bfseries,varwidth boxed title=0.7\linewidth, coltitle=black, fonttitle=\sffamily,
+enlarge top by=2mm, enlarge bottom by=2mm, breakable,
+boxed title style={colback=white,left=0mm,right=0mm},
+underlay={\draw[fill=black, draw=black]
+          (frame.north west) -- ++ (10mm,0mm) -- ++ (-.5mm,-.5mm) -- ++ (-9mm,0mm) -- ++ (0mm, -9mm) -- ++ (-.5mm,-.5mm) -- cycle;
+          \draw[fill=black, draw=black]
+          (frame.south east) -- ++ (-10mm,0mm) -- ++ (.5mm,.5mm) -- ++ (9mm,0mm) -- ++ (0mm, 9mm) -- ++ (.5mm,.5mm) -- cycle;
+          \draw[#3, thick] (title.east) -- (frame.north east) -- ([yshift=11mm]frame.south east)-- ++ (-1.2mm,-1.2mm) -- ([xshift=-1.2mm,yshift=1.2mm]frame.south east) -- ++ (-8.6mm,0mm) -- ++ (-1.2mm,-1.2mm) -- (frame.south west) -- ([yshift=-11mm]frame.north west)-- ++ (1.2mm,1.2mm) -- ([xshift=1.2mm,yshift=-1.2mm]frame.north west) -- ++ (8.6mm,0mm) -- ++ (1.2mm,1.2mm) -- (title.west);},
+IfValueTF={#1}{title=【#2】〈#1〉}{title=【#2】},#4}
+
+
+\DeclareTColorBox{ascolorbox18}{ m O{} }%
+{enhanced,colback=white,boxsep=0pt,colframe=black,coltitle=white!50!black, fonttitle=\footnotesize\bfseries\sffamily,
+attach boxed title to bottom right={xshift=-1.2cm},sharp corners,coltitle=white,
+  boxed title style={empty,boxrule=0.5mm,top=-1mm,bottom=0mm},drop fuzzy shadow,
+  varwidth boxed title=0.5\linewidth,boxrule=.5pt,
+  underlay boxed title={
+\draw[white,line width=.5pt] ([xshift=0.3mm-\tcboxedtitleheight*2,yshift=.5pt]title.north west) --([xshift=-0.3mm+\tcboxedtitleheight*2,yshift=.5pt]title.north east);
+\path[draw=black,top color=white,bottom color=black!80!white,line width=.5pt] ([xshift=0.25mm-\tcboxedtitleheight*2,yshift=.25pt]title.north west)
+cos +(\tcboxedtitleheight,-\tcboxedtitleheight/2)
+sin +(\tcboxedtitleheight,-\tcboxedtitleheight/2)
+-- ([xshift=0.25mm,yshift=.25pt]title.south west) -- ([yshift=.25pt]title.south east)
+cos +(\tcboxedtitleheight,\tcboxedtitleheight/2) sin +(\tcboxedtitleheight,\tcboxedtitleheight/2); },
+  title={#1},#2}
+
+
+
+%%%%%%ascbox
+\tcbset{rectangle@ascboxA/.style={underlay={\fill[gray] ([xshift=.5mm,yshift=.5mm]frame.#1) -- ++ (-1mm,0mm) -- ++ (0mm,-1mm) -- ++ (1mm,0mm) -- cycle;}},
+rectangle@ascboxA/.default={north east},
+horizontalline@ascboxA/.style={underlay={\draw ([xshift=1mm]frame.#1 west) -- ([xshift=-1mm]frame.#1 east);}},
+horizontalline@ascboxA/.default={north}}
+
+\DeclareTCBox{\ascboxA}{ O{} }%
+{enhanced,colframe=white,colback=white,top=-.5mm,bottom=-.5mm,left=2mm,right=2mm,
+rectangle@ascboxA,rectangle@ascboxA={north west},rectangle@ascboxA={south west},rectangle@ascboxA={south east},horizontalline@ascboxA,horizontalline@ascboxA={south},
+#1}
+
+\endinput

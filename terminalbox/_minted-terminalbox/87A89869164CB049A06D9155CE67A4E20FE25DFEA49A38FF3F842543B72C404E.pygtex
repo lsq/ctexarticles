@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+TensorFlow@xubuntu:\PYGZti{}\PYGZdl{}
+\PYG{o}{[}\PYG{l+m}{2017}\PYGZhy{}05\PYGZhy{}15 \PYG{l+m}{15}:48:47,348\PYG{o}{]} Making new env: Breakout\PYGZhy{}v0
+Trying to restore last checkpoint ...
+INFO:tensorflow:Restoring parameters from checkpoints\PYGZus{}tutorial16/Breakout\PYGZhy{}v0/checkpoint\PYGZhy{}127639066
+\PYG{o}{[}\PYG{l+m}{2017}\PYGZhy{}05\PYGZhy{}15 \PYG{l+m}{15}:48:47,868\PYG{o}{]} Restoring parameters from checkpoints\PYGZus{}tutorial16/Breakout\PYGZhy{}v0/checkpoint\PYGZhy{}127639066
+Restored checkpoint from: checkpoints\PYGZus{}tutorial16/Breakout\PYGZhy{}v0/checkpoint\PYGZhy{}127639066
+\end{Verbatim}

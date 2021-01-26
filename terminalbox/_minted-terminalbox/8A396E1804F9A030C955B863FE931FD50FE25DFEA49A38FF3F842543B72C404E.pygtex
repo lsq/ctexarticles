@@ -1,0 +1,27 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+TensorFlow@xubuntu:\PYGZti{}\PYGZdl{} agent.run\PYG{o}{(}\PYG{n+nv}{num\PYGZus{}episodes}\PYG{o}{=}\PYG{l+m}{1}\PYG{o}{)}
+\PYG{l+m}{87586}:127639767  Q\PYGZhy{}min: \PYG{l+m}{1}.765  Q\PYGZhy{}max: \PYG{l+m}{1}.783  Lives: \PYG{l+m}{5}  Reward: \PYG{l+m}{1}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127639820  Q\PYGZhy{}min: \PYG{l+m}{1}.608  Q\PYGZhy{}max: \PYG{l+m}{1}.619  Lives: \PYG{l+m}{5}  Reward: \PYG{l+m}{2}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127639882  Q\PYGZhy{}min: \PYG{l+m}{1}.712  Q\PYGZhy{}max: \PYG{l+m}{1}.734  Lives: \PYG{l+m}{5}  Reward: \PYG{l+m}{3}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127639931  Q\PYGZhy{}min: \PYG{l+m}{1}.968  Q\PYGZhy{}max: \PYG{l+m}{1}.998  Lives: \PYG{l+m}{5}  Reward: \PYG{l+m}{4}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127639963  Q\PYGZhy{}min: \PYG{l+m}{1}.953  Q\PYGZhy{}max: \PYG{l+m}{1}.988  Lives: \PYG{l+m}{5}  Reward: \PYG{l+m}{5}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127639985  Q\PYGZhy{}min: \PYG{l+m}{0}.013  Q\PYGZhy{}max: \PYG{l+m}{0}.184  Lives: \PYG{l+m}{4}  Reward: \PYG{l+m}{5}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127640039  Q\PYGZhy{}min: \PYG{l+m}{1}.651  Q\PYGZhy{}max: \PYG{l+m}{1}.664  Lives: \PYG{l+m}{4}  Reward: \PYG{l+m}{6}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127640090  Q\PYGZhy{}min: \PYG{l+m}{1}.902  Q\PYGZhy{}max: \PYG{l+m}{1}.919  Lives: \PYG{l+m}{4}  Reward: \PYG{l+m}{7}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127640130  Q\PYGZhy{}min: \PYG{l+m}{1}.960  Q\PYGZhy{}max: \PYG{l+m}{1}.968  Lives: \PYG{l+m}{4}  Reward: \PYG{l+m}{8}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127640166  Q\PYGZhy{}min: \PYG{l+m}{1}.915  Q\PYGZhy{}max: \PYG{l+m}{1}.929  Lives: \PYG{l+m}{4}  Reward: \PYG{l+m}{9}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127640197  Q\PYGZhy{}min: \PYG{l+m}{2}.002  Q\PYGZhy{}max: \PYG{l+m}{2}.022  Lives: \PYG{l+m}{4}  Reward: \PYG{l+m}{10}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127640228  Q\PYGZhy{}min: \PYG{l+m}{1}.952  Q\PYGZhy{}max: \PYG{l+m}{1}.982  Lives: \PYG{l+m}{4}  Reward: \PYG{l+m}{11}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127640260  Q\PYGZhy{}min: \PYG{l+m}{2}.031  Q\PYGZhy{}max: \PYG{l+m}{2}.050  Lives: \PYG{l+m}{4}  Reward: \PYG{l+m}{12}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127640306  Q\PYGZhy{}min: \PYG{l+m}{1}.682  Q\PYGZhy{}max: \PYG{l+m}{1}.737  Lives: \PYG{l+m}{4}  Reward: \PYG{l+m}{13}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127640371  Q\PYGZhy{}min: \PYG{l+m}{1}.700  Q\PYGZhy{}max: \PYG{l+m}{1}.726  Lives: \PYG{l+m}{4}  Reward: \PYG{l+m}{14}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127640439  Q\PYGZhy{}min: \PYG{l+m}{1}.555  Q\PYGZhy{}max: \PYG{l+m}{1}.665  Lives: \PYG{l+m}{4}  Reward: \PYG{l+m}{15}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127640510  Q\PYGZhy{}min: \PYG{l+m}{1}.619  Q\PYGZhy{}max: \PYG{l+m}{1}.699  Lives: \PYG{l+m}{4}  Reward: \PYG{l+m}{16}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127640552  Q\PYGZhy{}min: \PYGZhy{}0.068  Q\PYGZhy{}max: \PYG{l+m}{0}.219  Lives: \PYG{l+m}{3}  Reward: \PYG{l+m}{16}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127640595  Q\PYGZhy{}min: \PYG{l+m}{1}.868  Q\PYGZhy{}max: \PYG{l+m}{1}.893  Lives: \PYG{l+m}{3}  Reward: \PYG{l+m}{17}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127640639  Q\PYGZhy{}min: \PYG{l+m}{1}.975  Q\PYGZhy{}max: \PYG{l+m}{1}.996  Lives: \PYG{l+m}{3}  Reward: \PYG{l+m}{18}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127640681  Q\PYGZhy{}min: \PYG{l+m}{1}.918  Q\PYGZhy{}max: \PYG{l+m}{1}.947  Lives: \PYG{l+m}{3}  Reward: \PYG{l+m}{19}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127640718  Q\PYGZhy{}min: \PYG{l+m}{2}.025  Q\PYGZhy{}max: \PYG{l+m}{2}.090  Lives: \PYG{l+m}{3}  Reward: \PYG{l+m}{20}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127640751  Q\PYGZhy{}min: \PYG{l+m}{1}.981  Q\PYGZhy{}max: \PYG{l+m}{2}.006  Lives: \PYG{l+m}{3}  Reward: \PYG{l+m}{21}.0  Episode Mean: \PYG{l+m}{0}.0
+\PYG{l+m}{87586}:127640785  Q\PYGZhy{}min: \PYG{l+m}{2}.041  Q\PYGZhy{}max: \PYG{l+m}{2}.072  Lives: \PYG{l+m}{3}  Reward: \PYG{l+m}{25}.0  Episode Mean: \PYG{l+m}{0}.0
+\end{Verbatim}

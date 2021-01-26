@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+TensorFlow@xubuntu:\PYGZti{}\PYGZdl{}
+Action:     Q\PYGZhy{}Value:
+\PYG{o}{====================}
+NOOP        \PYG{l+m}{2}.008
+FIRE        \PYG{l+m}{2}.006 \PYG{o}{(}Action Taken\PYG{o}{)}
+RIGHT       \PYG{l+m}{1}.995
+LEFT        \PYG{l+m}{2}.014
+RIGHTFIRE   \PYG{l+m}{1}.996
+LEFTFIRE    \PYG{l+m}{2}.006
+\end{Verbatim}

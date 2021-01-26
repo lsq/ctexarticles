@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nb}{\PYGZca{}\PYGZca{}}I\PYG{n+nb}{\PYGZca{}\PYGZca{}}I\PYG{k}{\PYGZbs{}begin}\PYG{n+nb}{\PYGZob{}}ascolorbox18\PYG{n+nb}{\PYGZcb{}\PYGZob{}}标题\PYG{n+nb}{\PYGZcb{}}[attach boxed title to bottom left=\PYG{n+nb}{\PYGZob{}}xshift=1.2cm\PYG{n+nb}{\PYGZcb{}}]
+\PYG{n+nb}{\PYGZca{}\PYGZca{}}I\PYG{n+nb}{\PYGZca{}\PYGZca{}}I\PYG{n+nb}{\PYGZca{}\PYGZca{}}I\PYG{k}{\PYGZbs{}zhlipsum}\PYG{n+na}{[1]}
+\PYG{n+nb}{\PYGZca{}\PYGZca{}}I\PYG{n+nb}{\PYGZca{}\PYGZca{}}I\PYG{k}{\PYGZbs{}end}\PYG{n+nb}{\PYGZob{}}ascolorbox18\PYG{n+nb}{\PYGZcb{}}
+\PYG{n+nb}{\PYGZca{}\PYGZca{}}I
+\end{Verbatim}

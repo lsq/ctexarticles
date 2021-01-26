@@ -1,0 +1,35 @@
+% !TeX encoding = utf-8
+% !TEX spellcheck = en-us
+% !TeX program = xelatex
+
+% ---------------------------------
+% 作者: TeX白兔
+% 邮箱: faithbetter@outlook.com
+% 时间: 2020-12-19 17:33:44
+% 描述: shadowtext 宏包的使用
+% ---------------------------------
+
+\documentclass{ctexart}
+
+\usepackage{shadowtext}
+\usepackage{xcolor}
+\usepackage[a5paper]{geometry}
+
+\title{\shadowtext{\texttt{shadowtext} 产生阴影文字的宏包}}
+
+\author{\TeX{}白兔}
+\begin{document}
+	
+	\maketitle
+	
+	基本命令 \verb|\shadowtext{}|
+	
+	\verb|\shadowoffset{2pt}| 控制阴影的距离
+	
+	\shadowtext{这是一段阴影文字}
+	
+	\verb|\shadowcolor{blue! 40! white}| 设置阴影的颜色
+	
+	\shadowcolor{blue!40!white}
+	
+	\shadowtext{\color{red}这是一段阴影文字}

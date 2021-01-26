@@ -1,0 +1,591 @@
+ % !Mode:: "TeX:UTF-8"
+\documentclass{article}
+\usepackage{hyperref}
+\hypersetup{breaklinks,colorlinks=true}
+\usepackage[T1]{fontenc}
+% Nicer default font (+ math font) than Computer Modern for most use cases
+\usepackage{mathpazo}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=1.5cm,top=2.5cm,bottom=2.5cm}
+\usepackage{amssymb, amsmath}
+%% fontsize definition
+\makeatletter
+\def\thu@def@fontsize#1#2{%
+	\expandafter\newcommand\csname #1\endcsname[1][1.3]{%
+		\fontsize{#2}{##1\dimexpr #2}\selectfont}}
+
+
+\thu@def@fontsize{chuhao}{42bp}
+\thu@def@fontsize{xiaochu}{36bp}
+\thu@def@fontsize{yihao}{26bp}
+\thu@def@fontsize{xiaoyi}{24bp}
+\thu@def@fontsize{erhao}{22bp}
+\thu@def@fontsize{xiaoer}{18bp}
+\thu@def@fontsize{sanhao}{16bp}
+\thu@def@fontsize{xiaosan}{15bp}
+\thu@def@fontsize{sihao}{14bp}
+\thu@def@fontsize{banxiaosi}{13bp}
+\thu@def@fontsize{xiaosi}{12bp}
+\thu@def@fontsize{dawu}{11bp}
+\thu@def@fontsize{wuhao}{10.5bp}
+\thu@def@fontsize{xiaowu}{9bp}
+\thu@def@fontsize{liuhao}{7.5bp}
+\thu@def@fontsize{xiaoliu}{6.5bp}
+\thu@def@fontsize{qihao}{5.5bp}
+\thu@def@fontsize{bahao}{5bp}
+\makeatother
+
+\providecommand{\tightlist}{%
+	\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% tcolorbox
+\usepackage[dvipsnames, svgnames]{xcolor}
+\usepackage[minted]{tcolorbox}
+\tcbuselibrary{skins, listings, xparse, breakable}
+
+\usepackage{varwidth}
+
+\definecolor{termimal}{RGB}{80,78,70}
+\usepackage{fontawesome}
+\definecolor{linux}{RGB}{0,39,51}
+
+\newcommand{\UbuntuMin}{%
+	\begin{tikzpicture}[x=2.4ex,y=2.4ex,line width=0.15ex,scale=1]
+	\fill[gray!80](0,0) circle (0.5);
+	\draw[termimal](-0.3,0)--(0.3,0);
+	\end{tikzpicture}
+}
+\newcommand{\UbuntuClose}{%
+	\begin{tikzpicture}[x=2.4ex,y=2.4ex,line width=0.15ex,scale=1]
+	\fill[orange](0,0) circle (0.5);
+	\draw[termimal](-0.25,-0.25)--(0.25,0.25);
+	\draw[termimal](-0.25,0.25)--(0.25,-0.25);
+	\end{tikzpicture}
+}
+\newcommand{\UbuntuMax}{%
+	\begin{tikzpicture}[x=2.4ex,y=2.4ex,line width=0.15ex,scale=1]
+	\fill[gray!80](0,0) circle (0.5);
+	\draw[termimal](-0.25,-0.2)rectangle(0.25,0.2);
+	\end{tikzpicture}
+}
+
+\tcbset{skin=enhanced,
+	gitexample/.style={
+		halign title=center,
+		%comment={#1},
+		skin=bicolor,
+		boxrule=1mm,
+		fonttitle=\bfseries,
+		coltitle=linux,
+		frame style={draw=linux,left color=termimal,right color=termimal},
+		colback=linux,
+		colupper=white,
+		breakable,
+		colframe=termimal,
+		colbacktitle=termimal,
+		listing engine=minted,
+		minted style=trac,
+		minted language=bash,
+		minted options={autogobble,breaklines,fontsize=\wuhao,numbersep=3mm},
+		overlay unbroken={
+			\node[inner sep=0pt,anchor=north west,yshift=-5pt,xshift=10pt,text=white] at (frame.north west){\UbuntuClose~\UbuntuMin~\UbuntuMax};},
+		overlay first={
+			\node[inner sep=0pt,anchor=north west,yshift=-5pt,xshift=10pt,text=white] at (frame.north west){\UbuntuClose~\UbuntuMin~\UbuntuMax};}
+}}
+
+
+\DeclareTCBListing{GitExample}{ m m }{%
+	listing and comment,
+	colbacklower=tcbcolback!5!yellow!10!white,
+	collower=linux,
+	gitexample,
+	title={#2},
+	comment={\small\sffamily#1}}
+\DeclareTCBListing{GitExampla}{ m }{%
+	listing only,
+	gitexample,
+	title={#1}}
+		
+\tcbset{skin=enhanced,
+	lang/.style={
+		breakable,drop shadow,listing engine=minted,minted style=trac,
+		minted options={breaklines,fontsize=\wuhao,linenos,
+			numbersep=3mm},
+		colback=blue!5!white,colframe=blue!75!black,
+		left=6mm,enhanced,title={#1},
+		colframe=tcbcolback!60!black,colback=tcbcolback!30!white,colbacktitle=tcbcolback!5!yellow!10!white,
+		fonttitle=\bfseries,coltitle=black,attach boxed title to top center=
+		{yshift=-0.25mm-\tcboxedtitleheight/2,yshifttext=2mm-\tcboxedtitleheight/2},
+		attach boxed title to top left={xshift=1cm,yshift*=1mm-\tcboxedtitleheight},
+		varwidth boxed title*=-3cm,
+		boxed title style={frame code={
+				\path[fill=tcbcolback!30!black]
+				([yshift=-1mm,xshift=-1mm]frame.north west)
+				arc[start angle=0,end angle=180,radius=1mm]
+				([yshift=-1mm,xshift=1mm]frame.north east)
+				arc[start angle=180,end angle=0,radius=1mm];
+				\path[left color=tcbcolback!60!black,right color=tcbcolback!60!black,
+				middle color=tcbcolback!80!black]
+				([xshift=-2mm]frame.north west) -- ([xshift=2mm]frame.north east)
+				[rounded corners=1mm]-- ([xshift=1mm,yshift=-1mm]frame.north east)
+				-- (frame.south east) -- (frame.south west)
+				-- ([xshift=-1mm,yshift=-1mm]frame.north west)
+				[sharp corners]-- cycle;
+			},interior engine=empty,
+		},
+		overlay={\begin{tcbclipinterior}\fill[tcbcolback!80!black] (frame.south west)
+				rectangle ([xshift=5mm]frame.north west);\end{tcbclipinterior}}
+}}
+
+\DeclareTCBListing{langPyTwo}{ m m }{%
+	listing and comment,
+	colbacklower=tcbcolback!5!yellow!10!white,
+	collower=tcbcolback!60!black,
+	lang,
+	title={#2},
+	comment={\small\sffamily#1}}
+\DeclareTCBListing{langPyOne}{ m }{%
+	listing only,
+	lang,
+	title={#1}}
+
+\title{Reinforcement Learning (Q-Learning)}
+\author{Magnus Erik Hvass Pedersen\\ \url{https://github.com/Hvass-Labs/TensorFlow-Tutorials}}		
+\begin{document}
+\maketitle
+\section{Introduction}
+This tutorial is about so-called Reinforcement Learning in which an agent is learning how to navigate some environment, in this case Atari games from the 1970-80's. The agent does not know anything about the game and must learn how to play it from trial and error. The only information that is available to the agent is the screen output of the game, and whether the previous action resulted in a reward or penalty.
+
+%This is a very difficult problem in Machine Learning / Artificial Intelligence, because the agent must both learn to distinguish features in the game-images, and then connect the occurence of certain features in the game-images with its own actions and a reward or penalty that may be deferred many steps into the future.
+%
+%This problem was first solved by the researchers from Google DeepMind. This tutorial is based on the main ideas from their early research papers (especially \hyperlink{https://arxiv.org/abs/1312.5602}{this} and \hyperlink{http://www.nature.com/nature/journal/v518/n7540/full/nature14236.html}{this}), although we make several changes because the original DeepMind algorithm was awkward and over-complicated in some ways. But it turns out that you still need several tricks in order to stabilize the training of the agent, so the implementation in this tutorial is unfortunately also somewhat complicated.
+%
+%The basic idea is to have the agent estimate so-called Q-values whenever it sees an image from the game-environment. The Q-values tell the agent which action is most likely to lead to the highest cumulative reward in the future. The problem is then reduced to finding these Q-values and storing them for later retrieval using a function approximator.
+%
+%This builds on some of the previous tutorials. You should be familiar with TensorFlow and Convolutional Neural Networks from Tutorial \#01 and \#02. It will also be helpful if you are familiar with one of the builder APIs in Tutorials \#03 or \#03-B.
+%
+%\section{The Problem}
+%
+%This tutorial uses the Atari game Breakout, where the player or agent is supposed to hit a ball with a paddle, thus avoiding death while scoring points when the ball smashes pieces of a wall.
+%
+%When a human learns to play a game like this, the first thing to figure out is what part of the game environment you are controlling - in this case the paddle at the bottom. If you move right on the joystick then the paddle moves right and vice versa. The next thing is to figure out what the goal of the game is - in this case to smash as many bricks in the wall as possible so as to maximize the score. Finally you need to learn what to avoid - in this case you must avoid dying by letting the ball pass beside the paddle.
+%
+%Below are shown 3 images from the game that demonstrate what we need our agent to learn. In the image to the left, the ball is going downwards and the agent must learn to move the paddle so as to hit the ball and avoid death. The image in the middle shows the paddle hitting the ball, which eventually leads to the image on the right where the ball smashes some bricks and scores points. The ball then continues downwards and the process repeats.
+%\begin{center}
+%\includegraphics[width=0.9\textwidth]{16_problem.png}
+%\end{center}
+%The problem is that there are 10 states between the ball going downwards and the paddle hitting the ball, and there are an additional 18 states before the reward is obtained when the ball hits the wall and smashes some bricks. How can we teach an agent to connect these three situations and generalize to similar situations? The answer is to use so-called Reinforcement Learning with a Neural Network, as shown in this tutorial.
+%
+%\section{Q-Learning}
+%
+%One of the simplest ways of doing Reinforcement Learning is called Q-learning. Here we want to estimate so-called Q-values which are also called action-values, because they map a state of the game-environment to a numerical value for each possible action that the agent may take. The Q-values indicate which action is expected to result in the highest future reward, thus telling the agent which action to take.
+%
+%Unfortunately we do not know what the Q-values are supposed to be, so we have to estimate them somehow. The Q-values are all initialized to zero and then updated repeatedly as new information is collected from the agent playing the game. When the agent scores a point then the Q-value must be updated with the new information.
+%
+%There are different formulas for updating Q-values, but the simplest is to set the new Q-value to the reward that was observed, plus the maximum Q-value for the following state of the game. This gives the total reward that the agent can expect from the current game-state and onwards. Typically we also multiply the max Q-value for the following state by a so-called discount-factor slightly below 1. This causes more distant rewards to contribute less to the Q-value, thus making the agent favour rewards that are closer in time.
+%
+%The formula for updating the Q-value is:
+%
+%\begin{align*}
+%\text{Q-value for state and action} = \text{reward} + \text{discount} \times \text{max Q-value for next state}
+%\end{align*}
+%
+%In academic papers, this is typically written with mathematical symbols like this:
+%\begin{align*}
+%Q(s_{t},a_{t}) \leftarrow \underbrace{r_{t}}_{\rm reward} + \underbrace{\gamma}_{\rm discount} \cdot \underbrace{\max_{a}Q(s_{t+1}, a)}_{\rm estimate~of~future~rewards}
+%\end{align*}
+%
+%Furthermore, when the agent loses a life, then we know that the future reward is zero because the agent is dead, so we set the Q-value for that state to zero.
+%
+%\section{Simple Example}
+%
+%The images below demonstrate how Q-values are updated in a backwards sweep through the game-states that have previously been visited. In this simple example we assume all Q-values have been initialized to zero. The agent gets a reward of 1 point in the right-most image. This reward is then propagated backwards to the previous game-states, so when we see similar game-states in the future, we know that the given actions resulted in that reward.
+%
+%The discounting is an exponentially decreasing function. This example uses a discount-factor of 0.97 so the Q-value for the 3rd image is about $0.885 \simeq 0.97^4$ because it is 4 states prior to the state that actually received the reward. Similarly for the other states. This example only shows one Q-value per state, but in reality there is one Q-value for each possible action in the state, and the Q-values are updated in a backwards-sweep using the formula above. This is shown in the next section.
+%\begin{center}
+%\includegraphics[width=0.9\textwidth]{16_q-values-simple.png}
+%\end{center}
+%
+%\section{Detailed Example}
+%
+%This is a more detailed example showing the Q-values for two successive states of the game-environment and how to update them.
+%\begin{center}
+%	\includegraphics[width=0.9\textwidth]{16_q-values-details.png}
+%\end{center}
+%
+%The Q-values for the possible actions have been estimated by a Neural Network. For the action NOOP in state t the Q-value is estimated to be 2.900, which is the highest Q-value for that state so the agent takes that action, i.e. the agent does not do anything between state t and t+1 because NOOP means "No Operation".
+%
+%In state $t+1$ the agent scores 4 points, but this is limited to 1 point in this implementation so as to stabilize the training. The maximum Q-value for state $t+1$ is 1.830 for the action RIGHTFIRE. So if we select that action and continue to select the actions proposed by the Q-values estimated by the Neural Network, then the discounted sum of all the future rewards is expected to be 1.830.
+%
+%Now that we know the reward of taking the NOOP action from state t to t+1, we can update the Q-value to incorporate this new information. This uses the formula above:
+%\begin{align*}
+%Q(state_{t},NOOP) \leftarrow \underbrace{r_{t}}_{\rm reward} + \underbrace{\gamma}_{\rm discount} \cdot \underbrace{\max_{a}Q(state_{t+1}, a)}_{\rm estimate~of~future~rewards} = 1.0 + 0.97 \cdot 1.830 \simeq 2.775
+%\end{align*}
+%The new Q-value is 2.775 which is slightly lower than the previous estimate of 2.900. This Neural Network has already been trained for 150 hours so it is quite good at estimating Q-values, but earlier during the training, the estimated Q-values would be more different.
+%
+%The idea is to have the agent play many, many games and repeatedly update the estimates of the Q-values as more information about rewards and penalties becomes available. This will eventually lead to good estimates of the Q-values, provided the training is numerically stable, as discussed further below. By doing this, we create a connection between rewards and prior actions.
+%
+%\section{Motion Trace}
+%If we only use a single image from the game-environment then we cannot tell which direction the ball is moving. The typical solution is to use multiple consecutive images to represent the state of the game-environment.
+%
+%This implementation uses another approach by processing the images from the game-environment in a motion-tracer that outputs two images as shown below. The left image is from the game-environment and the right image is the processed image, which shows traces of recent movements in the game-environment. In this case we can see that the ball is going downwards and has bounced off the right wall, and that the paddle has moved from the left to the right side of the screen.
+%
+%Note that the motion-tracer has only been tested for Breakout and partially tested for Space Invaders, so it may not work for games with more complicated graphics such as Doom.
+%\begin{center}
+%	\includegraphics[width=0.9\textwidth]{16_motion-trace.png}
+%\end{center}
+%\section{Training Stability}
+%
+%We need a function approximator that can take a state of the game-environment as input and produce as output an estimate of the Q-values for that state. We will use a Convolutional Neural Network for this. Although they have achieved great fame in recent years, they are actually a quite old technologies with many problems - one of which is training stability. A significant part of the research for this tutorial was spent on tuning and stabilizing the training of the Neural Network.
+%
+%To understand why training stability is a problem, consider the 3 images below which show the game-environment in 3 consecutive states. At state t the agent is about to score a point, which happens in the following state $t+1$. Assuming all Q-values were zero prior to this, we should now set the Q-value for state $t+1$ to be 1.0 and it should be 0.97 for state $t$ if the discount-value is 0.97, according to the formula above for updating Q-values.
+%\begin{center}
+%	\includegraphics[width=0.9\textwidth]{16_training_stability.png}
+%\end{center}
+%
+%\section{Flowchart}\label{flowchart}
+%
+%This flowchart shows roughly how Reinforcement Learning is implemented
+%in this tutorial. There are two main loops which are run sequentially
+%until the Neural Network is sufficiently accurate at estimating
+%Q-values.
+%
+%The first loop is for playing the game and recording data. This uses the
+%Neural Network to estimate Q-values from a game-state. It then stores
+%the game-state along with the corresponding Q-values and reward/penalty
+%in the Replay Memory for later use.
+%
+%The other loop is activated when the Replay Memory is sufficiently full.
+%First it makes a full backwards sweep through the Replay Memory to
+%update the Q-values with the new rewards and penalties that have been
+%observed. Then it performs an optimization run so as to train the Neural
+%Network to better estimate these updated Q-values.
+%
+%There are many more details in the implementation, such as decreasing
+%the learning-rate and increasing the fraction of the Replay Memory being
+%used during training, but this flowchart shows the main ideas.
+%
+%\begin{figure}
+%	\includegraphics[width=0.9\textwidth]{16_flowchart.png}
+%\end{figure}
+%
+%\section{Neural Network
+%	Architecture}\label{neural-network-architecture}
+%
+%The Neural Network used in this implementation has 3 convolutional
+%layers, all of which have filter-size 3x3. The layers have 16, 32, and
+%64 output channels, respectively. The stride is 2 in the first two
+%convolutional layers and 1 in the last layer.
+%
+%Following the 3 convolutional layers there are 4 fully-connected layers
+%each with 1024 units and ReLU-activation. Then there is a single
+%fully-connected layer with linear activation used as the output of the
+%Neural Network.
+%
+%This architecture is different from those typically used in research
+%papers from DeepMind and others. They often have large convolutional
+%filter-sizes of 8x8 and 4x4 with high stride-values. This causes more
+%aggressive down-sampling of the game-state images. They also typically
+%have only a single fully-connected layer with 256 or 512 ReLU units.
+%
+%During the research for this tutorial, it was found that smaller
+%filter-sizes and strides in the convolutional layers, combined with
+%several fully-connected layers having more units, were necessary in
+%order to have sufficiently accurate Q-values. The Neural Network
+%architectures originally used by DeepMind appear to distort the Q-values
+%quite significantly. A reason that their approach still worked, is
+%possibly due to their use of a very large Replay Memory with 1 million
+%states, and that the Neural Network did one mini-batch of training for
+%each step of the game-environment, and some other tricks.
+%
+%The architecture used here is probably excessive but it takes several
+%days of training to test each architecture, so it is left as an exercise
+%for the reader to try and find a smaller Neural Network architecture
+%that still performs well.
+%
+%\subsection{Installation}\label{installation}
+%
+%The \href{https://github.com/openai/gym}{documentation} for OpenAI Gym
+%currently suggests that you need to build it in order to install it. But
+%if you just want to install the Atari games, then you only need to
+%install a single pip-package by typing the following commands in a
+%terminal.
+%
+%\begin{itemize}
+%	\tightlist
+%	\item
+%	conda create --name tf-gym --clone tf
+%	\item
+%	source activate tf-gym
+%	\item
+%	pip install gym{[}atari{]}
+%\end{itemize}
+%
+%This assumes you already have an Anaconda environment named \texttt{tf}
+%which has TensorFlow installed, it will then be cloned to another
+%environment named \texttt{tf-gym} where OpenAI Gym is also installed.
+%This allows you to easily switch between your normal TensorFlow
+%environment and another one which also contains OpenAI Gym.
+%
+%You can also have two environments named \texttt{tf-gpu} and
+%\texttt{tf-gpu-gym} for the GPU versions of TensorFlow.
+
+\section{Imports}\label{imports}
+
+\begin{langPyOne}{Imports}
+%matplotlib inline
+import matplotlib.pyplot as plt
+import tensorflow as tf
+import gym
+import numpy as np
+import math
+
+# The main source-code for Reinforcement Learning is located in the following module:
+
+import reinforcement_learning as rl
+
+# This was developed using Python 3.6.0 (Anaconda) with package versions:
+
+# TensorFlow
+tf.__version__
+# '1.1.0'
+
+# OpenAI Gym
+gym.__version__
+# '0.8.1'
+\end{langPyOne}
+
+%\section{Game Environment}\label{game-environment}
+%
+%This is the name of the game-environment that we want to use in OpenAI
+%Gym.
+%\begin{langPyOne}{Imports}
+%env_name = 'Breakout-v0'
+%# env_name = 'SpaceInvaders-v0'
+%
+%# This is the base-directory for the TensorFlow checkpoints as well as various log-files.
+%
+%rl.checkpoint_base_dir = 'checkpoints_tutorial16/'
+%
+%# Once the base-dir has been set, you need to call this function to set all the paths that will be used. This will also create the checkpoint-dir if it does not already exist.
+%
+%rl.update_paths(env_name=env_name)
+%\end{langPyOne}
+%
+%\section{Download Pre-Trained Model}\label{download-pre-trained-model}
+%
+%The original version of this tutorial provided some TensorFlow checkpoints with pre-trained models for download. But due to changes in both TensorFlow and OpenAI Gym, these pre-trained models cannot be loaded anymore so they have been deleted from the web-server. You will therefore have to train your own model further below.
+%
+%\section{Create Agent}\label{create-agent}
+%
+%The Agent-class implements the main loop for playing the game, recording
+%data and optimizing the Neural Network. We create an object-instance and
+%need to set \texttt{training=True} because we want to use the
+%replay-memory to record states and Q-values for plotting further below.
+%We disable logging so this does not corrupt the logs from the actual
+%training that was done previously. We can also set \texttt{render=True}
+%but it will have no effect as long as \texttt{training==True}.
+
+\begin{langPyOne}{training==true}
+agent = rl.Agent(env_name=env_name,
+                 training=True,
+                 render=True,
+                 use_logging=False)
+\end{langPyOne}
+\begin{GitExample}{The Neural Network is automatically instantiated by the Agent-class. We will create a direct reference for convenience.}{TensorFlow@xubuntu:$\sim$}
+TensorFlow@xubuntu:~$
+[2017-05-15 15:48:47,348] Making new env: Breakout-v0
+Trying to restore last checkpoint ...
+INFO:tensorflow:Restoring parameters from checkpoints_tutorial16/Breakout-v0/checkpoint-127639066
+[2017-05-15 15:48:47,868] Restoring parameters from checkpoints_tutorial16/Breakout-v0/checkpoint-127639066
+Restored checkpoint from: checkpoints_tutorial16/Breakout-v0/checkpoint-127639066
+\end{GitExample}
+\begin{langPyOne}{Coding}
+model = agent.model
+\end{langPyOne}
+
+Similarly, the Agent-class also allocates the replay-memory when
+\texttt{training==True}. The replay-memory will require more than 3 GB
+of RAM, so it should only be allocated when needed. We will need the
+replay-memory in this Notebook to record the states and Q-values we
+observe, so they can be plotted further below.
+\begin{langPyOne}{Coding}
+replay_memory = agent.replay_memory
+\end{langPyOne}
+
+\section{Example: Highest Q-Value}
+
+This example shows the states surrounding the one with the highest Q-values. This means that the agent has high expectation that several points will be scored in the following steps.
+\begin{langPyTwo}{Note that the Q-values decrease significantly after the points have been scored.}{Coding}
+idx = np.argmax(q_values_max)
+idx
+
+# 161
+
+for i in range(0, 5):
+    plot_state(idx=idx+i)
+\end{langPyTwo}
+
+\begin{GitExampla}{TensorFlow@xubuntu:$\sim$}
+TensorFlow@xubuntu:~$
+Action:     Q-Value:
+====================
+NOOP        2.008
+FIRE        2.006 (Action Taken)
+RIGHT       1.995
+LEFT        2.014
+RIGHTFIRE   1.996
+LEFTFIRE    2.006
+\end{GitExampla}
+
+
+
+
+
+\begin{GitExampla}{TensorFlow@xubuntu:$\sim$}
+TensorFlow@xubuntu:~$ agent.run(num_episodes=1)
+87586:127639767  Q-min: 1.765  Q-max: 1.783  Lives: 5  Reward: 1.0  Episode Mean: 0.0
+87586:127639820  Q-min: 1.608  Q-max: 1.619  Lives: 5  Reward: 2.0  Episode Mean: 0.0
+87586:127639882  Q-min: 1.712  Q-max: 1.734  Lives: 5  Reward: 3.0  Episode Mean: 0.0
+87586:127639931  Q-min: 1.968  Q-max: 1.998  Lives: 5  Reward: 4.0  Episode Mean: 0.0
+87586:127639963  Q-min: 1.953  Q-max: 1.988  Lives: 5  Reward: 5.0  Episode Mean: 0.0
+87586:127639985  Q-min: 0.013  Q-max: 0.184  Lives: 4  Reward: 5.0  Episode Mean: 0.0
+87586:127640039  Q-min: 1.651  Q-max: 1.664  Lives: 4  Reward: 6.0  Episode Mean: 0.0
+87586:127640090  Q-min: 1.902  Q-max: 1.919  Lives: 4  Reward: 7.0  Episode Mean: 0.0
+87586:127640130  Q-min: 1.960  Q-max: 1.968  Lives: 4  Reward: 8.0  Episode Mean: 0.0
+87586:127640166  Q-min: 1.915  Q-max: 1.929  Lives: 4  Reward: 9.0  Episode Mean: 0.0
+87586:127640197  Q-min: 2.002  Q-max: 2.022  Lives: 4  Reward: 10.0  Episode Mean: 0.0
+87586:127640228  Q-min: 1.952  Q-max: 1.982  Lives: 4  Reward: 11.0  Episode Mean: 0.0
+87586:127640260  Q-min: 2.031  Q-max: 2.050  Lives: 4  Reward: 12.0  Episode Mean: 0.0
+87586:127640306  Q-min: 1.682  Q-max: 1.737  Lives: 4  Reward: 13.0  Episode Mean: 0.0
+87586:127640371  Q-min: 1.700  Q-max: 1.726  Lives: 4  Reward: 14.0  Episode Mean: 0.0
+87586:127640439  Q-min: 1.555  Q-max: 1.665  Lives: 4  Reward: 15.0  Episode Mean: 0.0
+87586:127640510  Q-min: 1.619  Q-max: 1.699  Lives: 4  Reward: 16.0  Episode Mean: 0.0
+87586:127640552  Q-min: -0.068  Q-max: 0.219  Lives: 3  Reward: 16.0  Episode Mean: 0.0
+87586:127640595  Q-min: 1.868  Q-max: 1.893  Lives: 3  Reward: 17.0  Episode Mean: 0.0
+87586:127640639  Q-min: 1.975  Q-max: 1.996  Lives: 3  Reward: 18.0  Episode Mean: 0.0
+87586:127640681  Q-min: 1.918  Q-max: 1.947  Lives: 3  Reward: 19.0  Episode Mean: 0.0
+87586:127640718  Q-min: 2.025  Q-max: 2.090  Lives: 3  Reward: 20.0  Episode Mean: 0.0
+87586:127640751  Q-min: 1.981  Q-max: 2.006  Lives: 3  Reward: 21.0  Episode Mean: 0.0
+87586:127640785  Q-min: 2.041  Q-max: 2.072  Lives: 3  Reward: 25.0  Episode Mean: 0.0
+\end{GitExampla}
+
+%\begin{langPyTwo}{Single GPU computation time: 0:00:11.833497\\Multi GPU computation time: 0:00:07.085913}{Multi-GPU Basics}
+%import numpy as np
+%import tensorflow as tf
+%import datetime
+%
+%#Processing Units logs
+%log_device_placement = True
+%
+%#num of multiplications to perform
+%n = 10
+%
+%# Example: compute A^n + B^n on 2 GPUs
+%
+%# Create random large matrix
+%A = np.random.rand(1e4, 1e4).astype('float32')
+%B = np.random.rand(1e4, 1e4).astype('float32')
+%
+%# Creates a graph to store results
+%c1 = []
+%c2 = []
+%
+%# Define matrix power
+%def matpow(M, n):
+%    if n < 1: #Abstract cases where n < 1
+%        return M
+%    else:
+%        return tf.matmul(M, matpow(M, n-1))
+%
+%# Single GPU computing
+%
+%with tf.device('/gpu:0'):
+%    a = tf.constant(A)
+%    b = tf.constant(B)
+%#compute A^n and B^n and store results in c1
+%c1.append(matpow(a, n))
+%c1.append(matpow(b, n))
+%
+%with tf.device('/cpu:0'):
+%    sum = tf.add_n(c1) #Addition of all elements in c1, i.e. A^n + B^n
+%
+%t1_1 = datetime.datetime.now()
+%with tf.Session(config=tf.ConfigProto(log_device_placement=log_device_placement)) as sess:
+%# Runs the op.
+%    sess.run(sum)
+%    t2_1 = datetime.datetime.now()
+%
+%# Multi GPU computing
+%# GPU:0 computes A^n
+%with tf.device('/gpu:0'):
+%#compute A^n and store result in c2
+%    a = tf.constant(A)
+%    c2.append(matpow(a, n))
+%
+%#GPU:1 computes B^n
+%with tf.device('/gpu:1'):
+%#compute B^n and store result in c2
+%b = tf.constant(B)
+%c2.append(matpow(b, n))
+%
+%with tf.device('/cpu:0'):
+%    sum = tf.add_n(c2) #Addition of all elements in c2, i.e. A^n + B^n
+%
+%t1_2 = datetime.datetime.now()
+%    with tf.Session(config=tf.ConfigProto(log_device_placement=log_device_placement)) as sess:
+%# Runs the op.
+%sess.run(sum)
+%t2_2 = datetime.datetime.now()
+%
+%print "Single GPU computation time: " + str(t2_1-t1_1)
+%print "Multi GPU computation time: " + str(t2_2-t1_2)
+%\end{langPyTwo}
+\begin{GitExample}{Output Data}{TensorFlow@xubuntu:$\sim$}
+TensorFlow@xubuntu:~$ python3 test.py
+Extracting data/train-images-idx3-ubyte.gz
+Extracting data/train-labels-idx1-ubyte.gz
+Extracting data/t10k-images-idx3-ubyte.gz
+Extracting data/t10k-labels-idx1-ubyte.gz
+train shape: (55000, 784) (55000, 10)
+test  shape: (10000, 784) (10000, 10)
+----------MNIST loaded----------------
+NeuralNetwork Ready!
+2018-08-02 00:11:15.818190: I tensorflow/core/platform/cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+2018-08-02 00:11:16.044897: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1030] Found device 0 with properties:
+name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.582
+pciBusID: 0000:0a:00.0
+totalMemory: 10.92GiB freeMemory: 3.04GiB
+2018-08-02 00:11:16.044948: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1120] Creating TensorFlow device (/device:GPU:0) -> (device: 0, name: GeForce GTX 1080 Ti, pci bus id: 0000:0a:00.0, compute capability: 6.1)
+---------- TRAINING -------------
+Epoch: 004/020 cost: 1.41867 train_accuray:0.63000 test_accuray:0.62820
+Epoch: 008/020 cost: 0.98922 train_accuray:0.71000 test_accuray:0.72040
+Epoch: 012/020 cost: 0.81536 train_accuray:0.70000 test_accuray:0.76270
+Epoch: 016/020 cost: 0.71605 train_accuray:0.83000 test_accuray:0.78570
+Epoch: 020/020 cost: 0.65017 train_accuray:0.82000 test_accuray:0.80130
+
+Extracting data/train-images-idx3-ubyte.gz
+Extracting data/train-labels-idx1-ubyte.gz
+Extracting data/t10k-images-idx3-ubyte.gz
+Extracting data/t10k-labels-idx1-ubyte.gz
+train shape: (55000, 784) (55000, 10)
+test  shape: (10000, 784) (10000, 10)
+----------MNIST loaded----------------
+NeuralNetwork Ready!
+2018-08-02 00:11:15.818190: I tensorflow/core/platform/cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+2018-08-02 00:11:16.044897: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1030] Found device 0 with properties:
+name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.582
+pciBusID: 0000:0a:00.0
+totalMemory: 10.92GiB freeMemory: 3.04GiB
+2018-08-02 00:11:16.044948: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1120] Creating TensorFlow device (/device:GPU:0) -> (device: 0, name: GeForce GTX 1080 Ti, pci bus id: 0000:0a:00.0, compute capability: 6.1)
+\end{GitExample}
+\begin{GitExample}{Output Data}{TensorFlow@xubuntu:$\sim$}
+	TensorFlow@xubuntu:~$
+---------- TRAINING -------------
+Epoch: 004/020 cost: 1.41867 train_accuray:0.63000 test_accuray:0.62820
+Epoch: 008/020 cost: 0.98922 train_accuray:0.71000 test_accuray:0.72040
+Epoch: 012/020 cost: 0.81536 train_accuray:0.70000 test_accuray:0.76270
+Epoch: 016/020 cost: 0.71605 train_accuray:0.83000 test_accuray:0.78570
+Epoch: 020/020 cost: 0.65017 train_accuray:0.82000 test_accuray:0.80130
+\end{GitExample}
+\end{document}

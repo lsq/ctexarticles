@@ -1,0 +1,33 @@
+\documentclass[tikz,border=3mm]{standalone}
+\newif\iftikzepitrochoidhasxis
+\tikzepitrochoidhasxistrue
+\tikzset{pics/epitrochoid/.style={code={%
+			\tikzset{epitrochoid/.cd,#1}
+			\def\pv##1{\pgfkeysvalueof{/tikz/epitrochoid/##1}}
+			\pgfmathsetmacro{\mymax}{2*max(abs(\pv{r}),abs(\pv{d}))+abs(\pv{R})+0.5}
+			\iftikzepitrochoidhasxis
+			\draw[-stealth] (-\mymax,0) -- (\mymax,0) node[below left]{$x$};
+			\draw[-stealth] (0,-\mymax) -- (0,\mymax) node[below left]{$y$};
+			\else 
+			\path (-\mymax,-\mymax) rectangle (\mymax,\mymax);
+			\fi 
+			\draw[blue,semithick] circle[radius=\pv{R}];
+			\draw[semithick] ({deg(\pv{t})}:{abs(\pv{r})+abs(\pv{R})}) coordinate (c) circle[radius=\pv{r}];
+			\pgfmathtruncatemacro\itest{(\pv{t}>0?1:0)}
+			\ifnum\itest=1
+			\pgfmathsetmacro{\isamples}{5+2*(\pv{R}+\pv{r})*int(\pv{t})}
+			\draw[red,thick] plot[smooth,samples=\isamples,domain=0:\pv{t},variable=\t,smooth]
+			({(\pv{R}+\pv{r})*cos(deg(\t))-\pv{d}*cos((\pv{R}+\pv{r})*deg(\t)/\pv{r})},
+			{(\pv{R}+\pv{r})*sin(deg(\t))-\pv{d}*sin((\pv{R}+\pv{r})*deg(\t)/\pv{r})})
+			node[circle,inner sep=1.2pt,fill](e){};
+			\draw  (c) node[circle,inner sep=1.2pt,fill]{}  -- (e); 
+			\fi
+	}},
+	epitrochoid/.cd,R/.initial=3,r/.initial=1,d/.initial=0.5,t/.initial=1,
+	axis/.is if=tikzepitrochoidhasxis,axis/.default=true}
+\begin{document}
+	\foreach \Time in {0,0.1,...,6.2}
+	{\begin{tikzpicture}
+			\pic{epitrochoid={t=\Time}};
+	\end{tikzpicture}}
+\end{document}

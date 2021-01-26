@@ -1,0 +1,562 @@
+%!TEX program = xelatex
+\documentclass[cn,hazy,blue,14pt,screen]{elegantnote}
+\makeatletter
+\def\pgfutil@insertatbegincurrentpagefrombox#1{%
+	\edef\pgf@temp{\the\wd\pgfutil@abb}%
+	\global\setbox\pgfutil@abb\hbox{%
+		\unhbox\pgfutil@abb%
+		\hskip\dimexpr2in-2\hoffset-\pgf@temp\relax% changed
+		#1%
+		\hskip\dimexpr-2in-2\hoffset\relax% new
+	}%
+}
+\makeatother
+\title{GB18030编码研究}
+
+\author{\href{http://www.fmddlmyy.cn/text30.html}{fmddlmyy}}
+\institute{GBK、GB18030与Unicode的映射}
+
+\version{1.0}
+\date{\zhtoday}
+
+\usepackage{array}
+
+\begin{document}
+
+\maketitle
+
+\centerline{
+	\includegraphics[width=0.2\textwidth]{logo.png}
+}
+
+
+GB18030有两个版本：GB18030-2000和GB18030-2005。在本文中，没有指明版本的GB18030是指GB18030-2005。本文讨论了以下问题：
+
+\begin{enumerate}
+\item
+  GB2312有682个图形符号，都放在1区。GBK的1区有717个图形符号，5区有166个图形符号，一共有883个图形符号。GB18030的1区有728个图形符号，5区还是166个符号。那么，GBK的1区在GB2312基础上增加了哪35个符号？GB18030又增加了哪些符号？
+\item
+  GBK支持21003个汉字与883个图形符号，一共21886个字符。这21886个字符究竟是哪些字符？这21886个字符的编码在GB18030中有什么变化？
+\item
+  GB18030是怎样映射Unicode的全部0x110000个码位的？
+\item
+  GB18030-2000和GB18030-2005在字汇上有什么区别，在编码上有什么区别？
+\item
+  GB18030-2005的双字节区中有2067个码位被映射到Unicode
+  BMP的PUA。这些码位有什么规律？这些码位中定义了多少字符？其实这2067个码位中只定义了24个字符。
+\item
+  GBK的21886个字符中有95个字符被映射到Unicode
+  BMP的PUA。在GB18030中这95个字符的编码有哪些变化？哪些字符保持了原来的编码？
+\item
+  GBK的23940个码位中有多少码位被映射到Unicode
+  BMP的PUA？在GB18030中这些码位的编码有什么变化？
+\end{enumerate}
+
+在讨论这些问题前，我们先约定一下码位空间的表示方法。
+
+
+\section{码位空间}
+
+
+\subsection{约定}
+
+GBK是双字节编码，每个字符用两个字节表示。GB18030是多字节字符集，它的字符可以用一个、两个或四个字节表示。码位空间由各字节的范围确定。例如：GB18030的四字节字符码位空间是：
+
+\begin{itemize}
+
+\item  第一字节在0x81\textasciitilde0xFE之间
+\item  第二字节在0x30\textasciitilde0x39之间
+\item  第三字节在0x81\textasciitilde0xFE之间
+\item  第四字节在0x30\textasciitilde0x39之间
+\end{itemize}
+
+为了表述方便，我们用0x81308130\textasciitilde0xFE39FE39表示这个码位空间。也就是说：在本文中0x81308130到0xFE39FE39所指的并\textcolor{red}{\textbf{不}}是从0x81308130到0xFE39FE39的连续2097773834(0xFE39FE39-0x81308130+1)个字节。在本文中，0x81308130\textasciitilde0xFE39FE39所指的是编码的各字节在对应范围内的码位空间，这个码位空间的码位数目是：
+
+(0xFE-0x81+1)*(0x39-0x30+1)*(0xFE-0x81+1)*(0x39-0x30+1)=126*10*126*10=1587600
+
+同理，0xB0A1\textasciitilde0xF7FE代表的码位空间是第一字节在0xB0\textasciitilde0xF7之间，第二字节在0xA1\textasciitilde0xFE之间的所有码位。这个码位空间的码位数目是：
+
+(0xF7-0xB0+1)*(0xFE-0xA1+1)=72*94=6768
+
+这个码位空间就是GBK和GB18030的2区，在这6768个码位中定义了6763个字符。
+
+本文用\textasciitilde 表示上述码位空间，用-表示一般的范围，即：
+
+\begin{itemize}
+
+\item
+  0xA1A1\textasciitilde0xA9FE
+  表示第一字节在0xA1到0xA9之间，第二字节在0xA1\textasciitilde0xFE之间的846（(0xA9-0xA1+1)*(0xFE-0xA1+1)=9*94）个码位。
+\item
+  0xE000-0xF8FF 表示从0xE000-0xF8FF的连续6400（0xF8FF-0xE000+1）个码位。
+\end{itemize}
+
+
+\subsection{习题\label{1.2}}
+
+读者如果已经理解了上面的约定，请完成下面两个习题：
+
+\begin{enumerate}
+
+\item
+  习题一：求码位空间0x8140\textasciitilde0xFE7E的码位数目。
+\item
+  习题二：求码位空间0x8180\textasciitilde0xFEFE的码位数目。
+\end{enumerate}
+
+
+\subsection{答案}
+
+以下是习题\hyperlink{1.2}{1.2}的答案：
+
+\begin{enumerate}
+
+\item
+  习题一：(0xFE-0x81+1)*(0x7E-0x40+1)=126*63=7938
+\item
+  习题二：(0xFE-0x81+1)*(0xFE-0x80+1)=126*127=16002
+\end{enumerate}
+
+GB18030双字节字符的码位空间就是0x8140\textasciitilde0xFE7E和0x8180\textasciitilde0xFEFE，双字节字符的码位数目是7938+16002=23940。0x8140\textasciitilde0xFE7E和0x8180\textasciitilde0xFEFE也是GBK的全部码位空间。GBK在这23940个码位中定义了21886个字符。
+
+\hypertarget{gbkux56deux987e}{%
+\section{GBK回顾}\label{gbkux56deux987e}}
+
+\hypertarget{ux7b80ux4ecb}{%
+\subsection{简介}\label{ux7b80ux4ecb}}
+
+GBK是双字节\hyperref{1.2}{linktext}编码方案。它的码位空间就是前面所说的0x8140\textasciitilde0xFE7E和0x8180\textasciitilde0xFEFE，一共23940个码位。在这23940个码位上定义了21886个字符，包括21003个汉字和883个图形符号。\href{text24.html}{《Unicode、GB2312、GBK和GB18030中的汉字》}详细讨论了这21003个汉字。
+本文的第3节会讨论GB2312、GBK和GB18030的图形符号。
+
+GBK的码位空间可以划分为以下区域：
+
+类别
+
+区名
+
+码位范围
+
+码位数
+
+字符数
+
+符号区
+
+1区
+
+0xA1A1\textasciitilde0xA9FE
+
+846
+
+717
+
+5区
+
+0xA840\textasciitilde0xA97E和0xA880\textasciitilde0xA9A0
+
+192
+
+166
+
+汉字区
+
+2区
+
+0xB0A1\textasciitilde0xF7FE
+
+6768
+
+6763
+
+3区
+
+0x8140\textasciitilde0xA07E和0x8180\textasciitilde0xA0FE
+
+6080
+
+6080
+
+4区
+
+0xAA40\textasciitilde0xFE7E和0xAA80\textasciitilde0xFEA0
+
+8160
+
+8160
+
+用户自定义区
+
+用户区1
+
+0xAAA1\textasciitilde0xAFFE
+
+564
+
+用户区2
+
+0xF8A1\textasciitilde0xFEFE
+
+658
+
+用户区3
+
+0xA140\textasciitilde0xA77E和0xA180\textasciitilde0xA7A0
+
+672
+
+\hypertarget{gbkux5b57ux7b26ux4e0eunicodeux7684ux6620ux5c04}{%
+\subsection{GBK字符与Unicode的映射}\label{gbkux5b57ux7b26ux4e0eunicodeux7684ux6620ux5c04}}
+
+我制作了一个Excel文件：\href{samples/gbk.zip}{附件1}。这个文件包含3张表格：
+
+\begin{enumerate}
+
+\item
+  按照GBK编码排序的GBK全部21886字符码表。这个表格有3列：字符、GBK编码、Unicode编码。
+\item
+  按照Unicode编码排序的GBK全部21886字符码表。这个表格有3列：字符、Unicode编码、GBK编码。
+\item
+  从按Unicode编码排序的表格中，很容易找到被映射到PUA（0xE000-0xF8FF）的字符。GBK的21886个字符中有95个字符属于PUA。第三张表格列出了这95个字符（A列）的GBK编码（B列）、Unicode编码（C列）以及这些字符在GB18030中对应的Unicode编码（D列）。\\
+  其中D列可能不太容易理解，我再解释一下。GB18030是兼容GBK的，所以这些字符的GBK编码和GB18030编码是相同的。例如的GBK编码和GB18030编码都是0xA8BF。但是在GBK和GB18030中，被映射到不同的Unicode码位。在GBK中，0xA8BF被映射到Unicode的0xE7C8。在Unicode中，码位0xE7C8是一个PUA码位，保留给用户使用。在GB18030中，0xA8BF被映射到Unicode的0x01F9。在Unicode中，码位0x01F9属于``拉丁字母扩充-B''这个Block，这个码位定义的字符是``带抑音符的拉丁文小写字母N''，字形就是。
+\end{enumerate}
+
+\hypertarget{gbkux7801ux4f4dux4e0eunicodeux7684ux6620ux5c04}{%
+\subsection{GBK码位与Unicode的映射}\label{gbkux7801ux4f4dux4e0eunicodeux7684ux6620ux5c04}}
+
+GBK的23940个码位定义了21886个字符，还有23940-21886=2054个空闲码位，这2054个码位都被映射到Unicode的PUA。在设计GBK时，GBK的21886个字符中有95个在Unicode中没有对应字符，所以这95个字符也被映射到Unicode的PUA。在GBK的23940个码位中，一共有2054+95=2149个码位被映射到PUA，对应的PUA编码是0xE000-0xE864。0xE000-0xE864就是2149个码位。这2149个码位的分配有以下规律：
+
+%\begin{longtable}[]{@{}lll@{}}
+%\toprule
+%\endhead
+%码位所在区域 & 码位数量 & 映射到的PUA范围\tabularnewline
+%用户区1：0xAAA1\textasciitilde0xAFFE & 564 &
+%0xE000-0xE233\tabularnewline
+%用户区2：0xF8A1\textasciitilde0xFEFE & 658 &
+%0xE234-0xE4C5\tabularnewline
+%用户区3：0xA140\textasciitilde0xA77E和A180-A7A0 & 672 &
+%0xE4C6-0xE765\tabularnewline
+%符号区（1区和5区）的170个空闲码位 & 170 & 0xE766-0xE80F\tabularnewline
+%2区的5个空闲码位：0xD7FA-0xD7FE & 5 & 0xE810-0xE814\tabularnewline
+%4区的80个Unicode当时没有定义的字符：FE50-FE7E和FE80-FEA0 & 80 &
+%0xE815-0xE864\tabularnewline
+%\bottomrule
+%\end{longtable}
+
+\href{samples/gbkcode.zip}{附件2}包含两张表格：
+
+\begin{enumerate}
+
+\item
+  23940个GBK码位与Unicode的映射。两组数据分别按GBK和Unicode排序。
+\item
+  2149个映射到PUA的码位，按Unicode顺序排列。
+\end{enumerate}
+
+\hypertarget{gb18030ux7f16ux7801}{%
+\section{GB18030编码}\label{gb18030ux7f16ux7801}}
+
+\hypertarget{ux6982ux8ff0}{%
+\subsection{概述}\label{ux6982ux8ff0}}
+
+GB18030是多字节字符集，它的字符可以用一个、两个或四个字节表示。GB18030的码位定义如下：
+
+%\begin{longtable}[]{@{}llll@{}}
+%\toprule
+%\endhead
+%字节数 & 码位空间 & 码位数 & 字符数\tabularnewline
+%单字节 & 0x00\textasciitilde0x7F & 128 & 128\tabularnewline
+%双字节 & 0x8140\textasciitilde0xFE7E和0x8180\textasciitilde0xFEFE &
+%23940 & 21897\tabularnewline
+%四字节 & 0x81308130\textasciitilde0xFE39FE39 & 1587600 &
+%54531\tabularnewline
+%\bottomrule
+%\end{longtable}
+
+GB18030有128+23940+1587600=1611668个码位。Unicode的码位数目是0x110000（1114112），少于GB18030。所以，GB18030有足够的空间映射Unicode的所有码位。
+
+GB18030的1611668个码位目前定义了128+21897+54531=76556个字符。Unicode
+5.0定义了99089个字符。
+
+\hypertarget{ux8bbeux8ba1ux601dux8def}{%
+\subsection{设计思路}\label{ux8bbeux8ba1ux601dux8def}}
+
+GB18030编码可以分为：单字节部分、双字节部分和四字节部分。单字节部分与Unicode的0x00-0x7f完全相同。双字节部分与GBK有两点差异：
+
+\begin{enumerate}
+
+\item
+  在1区增加了11个字符。这样1区就有717+11=728个字符。增加的11个字符是：一个欧元符号（0xA2E3）和10个竖排标点符号（0xA6D9-0xA6DF、0xA6EC-0xA6ED和0xA6F3）。
+\item
+  原来因为Unicode没有收录而映射到PUA的字符中的部分字符被新版本的Unicode收录，所以将这些字符映射到非PUA的码位。
+\end{enumerate}
+
+Unicode的BMP一共有65536个码位。其中代理区（0xD800-0xDFFF）有2048个码位，这2048个码位是不能定义字符的。GB18030的单字节部分映射了128个码位，GB18030的双字节部分映射了23940个码位。还剩下65536-2048-128-23940=39420个码位。
+
+GB18030将这39420个码位顺序映射到从0x81308130开始的码位空间。GB18030将Unicode的16个辅助平面（0x10000-0x10FFFF，一共1048576个码位）顺序映射到从0x90308130开始的码位空间。GB18030四字节部分中只有这两个区域定义了字符，其它空间都是保留区和自定义区。本文的第3节和第4节还会详细讨论GB18030的双字节和四字节部分。
+
+GB18030的设计思路可以概括到以下几点：
+
+\begin{enumerate}
+
+\item
+  单字节部分与Unicode一致。
+\item
+  双字节部分与GBK兼容。适当调整一些字符与Unicode的映射。这些字符原来因为Unicode没有收录而被映射到PUA，现在因为Unicode已经收录而调整到非PUA的Unicode码位。
+\item
+  将Unicode
+  BMP部分还没有映射的39420个码位顺序映射到从0x81308130开始的四字节部分。
+\item
+  将Unicode
+  BMP以外的16个辅助平面映射到39420个码位顺序映射到从0x90308130开始的四字节部分。
+\end{enumerate}
+
+在GB18030目前定义的76556个字符中，只有24个字符被定义到Unicode的PUA区。这24个字符包括1区的10个竖排标点符号（0xA6D9-0xA6DF、0xA6EC-0xA6ED和0xA6F3）和4区的14个汉字（0xFE51、0xFE52、0xFE53、0xFE59、0xFE61、0xFE66、0xFE67、0xFE6C、0xFE6D、0xFE76、0xFE7E、0xFE90、0xFE91、0xFEA0）。4区的14个汉字在Unicode
+5.0中其实也可以找到非PUA的编码，详见\href{text24.html}{《Unicode、GB2312、GBK和GB18030中的汉字》}。但按照GB18030，它们还是应该映射到PUA码位。
+
+\hypertarget{gb18030-2000ux548cgb18030-2005ux7684ux533aux522bux53caux4ee5ux540eux7248ux672c}{%
+\subsection{GB18030-2000和GB18030-2005的区别及以后版本}\label{gb18030-2000ux548cgb18030-2005ux7684ux533aux522bux53caux4ee5ux540eux7248ux672c}}
+
+GB18030-2005与GB18030-2000的编码体系结构是完全相同的。GB18030-2005相对于GB18030-2000主要有以下变化:
+
+\begin{enumerate}
+
+\item
+  在四字节字符表中增加CJK统一汉字扩充B和已经在GB13000中编码的我国少数民族文字字符的字形。其实GB18030-2000已经映射了这些码位，但GB18030-2000没有给出这些字符的字形。
+\item
+  调整字符的编码。
+\end{enumerate}
+
+其中的编码调整比较有意思。的GB18030编码是0xA8BC，在Unicode
+5.0的编码是0x1E3F。
+在GB18030-2000中0xA8BC被映射到Unicode的0xE7C7，因为双字节部分没有映射0x1E3F，所以它作为BMP的未映射字符被放到四字节部分的0x8135F437。GB18030-2005将0xA8BC映射到0x1E3F，那么Unicode码位0xE7C7怎么办呢？为了最小化对原来编码的影响，设计者将Unicode码位0xE7C7映射到本来映射0x1E3F的0x8135F437。
+
+GB18030已经映射了Unicode的所有码位，所以不管Unicode怎么变化，GB18030不过就是在现在的码位上增加一些字形而已，编码不会变化。只有现在还映射到PUA的24个字符以后可能会调整到非PUA码位。调整方法应该与的调整方法相同。
+
+\hypertarget{gb18030ux53ccux5b57ux8282ux90e8ux5206}{%
+\subsection{GB18030双字节部分}\label{gb18030ux53ccux5b57ux8282ux90e8ux5206}}
+
+前面已经介绍过GB18030双字节部分与GBK的区别，本小节再提一些细节。前面也说过，GB18030映射了Unicode除代理区外的所有码位。所以，Unicode BMP的6400个PUA码位在GB18030中都有对应的码位。GB18030双字节部分映射了2067个PUA码位。
+
+前面说过，GBK映射了2149个PUA码位。现在GB18030双字节部分映射了2067个PUA码位。所以有2149-2067=82个字符的映射发生了变化。GBK原来有95个字符映射到PUA，其中81个字符在GB18030中被映射到非PUA码位。余下的14个汉字就是\href{text24.html}{《Unicode、GB2312、GBK和GB18030中的汉字》}提到的那14个汉字（0xFE51、0xFE52、0xFE53、0xFE59、0xFE61、0xFE66、0xFE67、0xFE6C、0xFE6D、0xFE76、0xFE7E、0xFE90、0xFE91、0xFEA0）。\href{samples/gbk.zip}{附件1}列出了这些字符的编码变化。82个映射变化的码位，除了这81个外，还有一个就是欧元符号：GB18030编码是0xA2E3，Unicode编码是0x20AC。码位0xA2E3在GBK中被映射到0xE76C，GBK的码位0xA2E3没有定义字符。
+
+GB18030双字节部分与Unicode的映射没有规律，只能通过查表方法映射。
+
+\hypertarget{gb18030ux56dbux5b57ux8282ux90e8ux5206}{%
+\subsection{GB18030四字节部分}\label{gb18030ux56dbux5b57ux8282ux90e8ux5206}}
+
+GB18030四字节部分的字符可以见GB18030-2005的``表3
+四字节部分的码位安排''，一共54531个字符。GB18030四字节部分的码位可以见GB18030-2005的``7.3
+四字节部分字符的排列顺序''。其中定义字符的只有两个区域：
+
+\begin{itemize}
+
+\item
+  GB18030用码位0x81308130\textasciitilde0x8439FE39共50400个码位映射该标准单字节和双字节部分没有映射过的39420个Unicode
+  BMP码位。
+\item
+  GB18030用码位0x90308130\textasciitilde0xE339FE39共1058400个码位映射Unicode
+  16个辅助平面（平面1到平面16）的65536*16=1048576个码位。
+\end{itemize}
+
+为了叙述方便，本文将0x81308130\textasciitilde0x8439FE39称作``BMP扩展部分''，将0x90308130\textasciitilde0xE339FE39称作``辅助平面部分''。GB18030四字节部分的码位空间是0x81308130\textasciitilde0xFE39FE39。第二字节有(0x39-0x30+1)=10个可能值。第三字节有(0xFE-0x81+1)=126个可能值。第四字节也是(0x39-0x30+1)=10个可能值。为了方便下面的演算，本文为这个码位空间定义几个名词：
+
+\begin{itemize}
+
+\item
+  我们将四字节码位空间中第一字节相同的区域称作\textbf{一级区}。每个一级区有12600个码位，即：10*126*10。
+\item
+  我们将四字节码位空间中第一字节和第二字节相同的区域称作\textbf{二级区}。每个二级区有1260个码位，即：126*10。
+\item
+  我们将四字节码位空间中前三个字节相同的区域称作\textbf{三级区}，每个三级区有10个码位。
+\end{itemize}
+
+四字节部分一共有(0xFE-0x81+1)=126个一级区。BMP扩展部分有4个一级区。辅助平面部分有84个一级区。还有38个一级区是保留区或自定义区。
+
+\hypertarget{bmpux6269ux5c55ux90e8ux5206}{%
+\paragraph{BMP扩展部分}\label{bmpux6269ux5c55ux90e8ux5206}}
+
+BMP扩展部分占据四字节部分开头的4个一级区，一共有4*12600=50400个码位。这段空间的Unicode映射说起来还是很简单的，就是顺序映射单字节、双字节没有映射过的BMP码位。这些映射关系在GB18030-2000中确定下来。以后的调整（例如）只是个别字符，不会影响其它字符的位置。但是因为双字节字符已经映射过的BMP码位没有什么规律，所以造成BMP扩展部分的Unicode映射也不能用公式换算，还是要查表解决。
+
+显然这50400个码位中只用到了39420个码位，其余码位都是保留的。出于好玩，我们来计算一下最后一个非保留码位（0xFFFF）的位置，计算过程如下：
+
+\begin{itemize}
+
+\item
+  m1=(39420-1)/12600=3
+\item
+  n1=(39420-1)\%12600=1619
+\item
+  m2=n1/1260=1619/1260=1
+\item
+  n2=n1\%1260=1619\%1260=359
+\item
+  m3=n2/10=359/10=35
+\item
+  n3=n2\%10=359\%10=9
+\item
+  第一字节的位置是：0x81+m1=0x81+3=0x84
+\item
+  第二字节的位置是：0x30+m2=0x30+1=0x31
+\item
+  第三字节的位置是：0x81+m3=0x81+35=0xA4
+\item
+  第四字节的位置是：0x30+n3=0x30+9=0x39
+\end{itemize}
+
+所以Unicode编码0xFFFF映射的GB18030码位是0x8431A439。在BMP扩展部分中，0x8431A439以后的码位都是保留码位。上述计算中，/表示整除（例如5/3=1），\%表示取余（例如5\%3=2）。
+
+\hypertarget{ux8f85ux52a9ux5e73ux9762ux90e8ux5206}{%
+\paragraph{辅助平面部分}\label{ux8f85ux52a9ux5e73ux9762ux90e8ux5206}}
+
+辅助平面部分用84个一级区（0x90308130\textasciitilde0xE339FE39）直接映射Unicode的16个辅助平面。这部分映射是可以直接用公式计算的。让我们看看怎么计算。
+
+\begin{itemize}
+
+\item
+  从Unicode编码到GB18030编码的映射方法如下：\\
+
+  \begin{itemize}
+  
+  \item
+    U=Unicode编码-0x10000
+  \item
+    m1=U/12600
+  \item
+    n1=U\%12600
+  \item
+    m2=n1/1260
+  \item
+    n2=n1\%1260
+  \item
+    m3=n2/10
+  \item
+    n3=n2\%10
+  \item
+    第一字节b1=m1+0x90
+  \item
+    第二字节b2=m2+0x30
+  \item
+    第三字节b3=m3+0x81
+  \item
+    第四字节b4=n3+0x30
+  \end{itemize}
+
+  按照上述方法可以计算出0x10FFFF被映射到0xE3329A35。在辅助平面部分，0xE3329A35以后的码位都是保留码位。以上所写的算法可以很容易写成C/C++代码。对于不会编程的读者，也可以用Excel公式计算。假设Unicode编码放在单元格A12，计算方法如下：\\
+
+  \begin{itemize}
+  
+  \item
+    将m1放在B12，B12=INT((HEX2DEC(A12)-65536)/12600)
+  \item
+    将n1放在C12，C12=MOD((HEX2DEC(A12)-65536),12600)
+  \item
+    将m2放在D12，D12=INT(C12/1260)
+  \item
+    将n2放在E12，E12=MOD(C12,1260)
+  \item
+    将m3放在F12，F12=INT(E12/10)
+  \item
+    将n3放在G12，G12=MOD(E12,10)
+  \item
+    将第一字节放在H12，H12=DEC2HEX(B12+144)
+  \item
+    将第二字节放在I12，I12=DEC2HEX(D12+48)
+  \item
+    将第三字节放在J12，J12=DEC2HEX(F12+129)
+  \item
+    将第四字节放在K12，K12=DEC2HEX(G12+48)
+  \end{itemize}
+
+  \href{samples/gb18030.zip}{附件3}中有写好上述公式的Excel表格。使用函数HEX2DEC/DEC2HEX需要通过``工具-\textgreater 加载宏''钩上``分析工具库''。
+\item
+  从GB18030编码到Unicode编码的映射方法如下：
+
+  \begin{itemize}
+  
+  \item
+    设GB18030编码的四个字节依次为：b1、b2、b3、b4，则\\
+    Unicode编码=0x10000+(b1-0x90)*12600+(b2-0x30)*1260+(b3-0x81)*10+b4-0x30
+  \end{itemize}
+
+  假设b1、b2、b3、b4分别放在A4、B4、C4、D4，Unicode编码放在E4，则Excel计算公式为：
+
+  \begin{itemize}
+  
+  \item
+    E4 =
+    =DEC2HEX((HEX2DEC(A4)-144)*12600+(HEX2DEC(B4)-48)*1260+(HEX2DEC(C4)-129)*10+(HEX2DEC(D4)-48)+65536)
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{gb18030ux548cunicodeux7684ux6620ux5c04ux8868}{%
+\subsection{GB18030和Unicode的映射表}\label{gb18030ux548cunicodeux7684ux6620ux5c04ux8868}}
+
+\href{samples/gb18030.zip}{附件3}给出了GB18030和Unicode的映射表。这个Excel文件是在网友谢振斌先生的\href{http://www.pkucn.com/viewthread.php?tid=188399\&extra=page\%3D1}{映射表}基础上制作的，包含3张表格：
+
+\begin{enumerate}
+
+\item
+  双字节部分23940个码位与Unicode的映射。两组数据分别按GB18030和Unicode排序。
+\item
+  BMP扩展部分39420个码位与Unicode的映射。两组数据分别按GB18030和Unicode排序。
+\item
+  辅助平面部分，GB18030编码和Unicode编码的映射公式。
+\end{enumerate}
+
+\hypertarget{gb2312gbkux548cgb18030ux4e2dux7684ux56feux5f62ux7b26ux53f7}{%
+\section{GB2312、GBK和GB18030中的图形符号}\label{gb2312gbkux548cgb18030ux4e2dux7684ux56feux5f62ux7b26ux53f7}}
+
+在研究GB18030编码的过程中，我整理了GB2312、GBK和GB18030在1区和5区的图形符号，制作了\href{samples/sym.zip}{附件4}。这个Excel文件包含3张表格：
+
+\begin{enumerate}
+
+\item
+  GB2312的1区字符表。GBK和GB18030的1区、5区字符表。用不同颜色标注了GBK增加的35个字符和GB18030增加的11个字符。
+\item
+  GB2312 1区682个符号的编码。
+\item
+  GBK 1区717个符号的编码。
+\end{enumerate}
+
+\hypertarget{ux7ed3ux675fux8bed}{%
+\section{结束语}\label{ux7ed3ux675fux8bed}}
+
+通过本文的介绍，读者可以回答开头的问题了吗？
+
+无论是Windows
+XP还是Vista，中文（中国）区域对应的默认代码页还是GBK。我们只能设置区域，并不能设置区域对应的默认代码页。
+所以在Windows世界，只要微软不愿意，GB18030就只是一张普通的代码页。目前的简体中文文档使用的编码主要是Unicode和GBK，应该没有什么文档会用GB18030保存。本文只是出于程序员的好奇而对GB18030编码所作的一些研究，希望能对同样好奇的读者有所助益。
+
+~
+
+%\begin{longtable}[]{@{}ll@{}}
+%\toprule
+%\endhead
+%\begin{minipage}[t]{0.47\columnwidth}\raggedright
+%\href{http://www.google.com/}{\includegraphics{http://www.google.com/logos/Logo_25wht.gif}}\strut
+%\end{minipage} & \begin{minipage}[t]{0.47\columnwidth}\raggedright
+%输入您的搜索字词 提交搜索表单\strut
+%\end{minipage}\tabularnewline
+%\begin{minipage}[t]{0.47\columnwidth}\raggedright
+%~\strut
+%\end{minipage} & \begin{minipage}[t]{0.47\columnwidth}\raggedright
+%\begin{longtable}[]{@{}ll@{}}
+%\toprule
+%\endhead
+%Web & www.fmddlmyy.cn\tabularnewline
+%\bottomrule
+%\end{longtable}\strut
+%\end{minipage}\tabularnewline
+%\bottomrule
+%\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\href{index.html}{个人主页} \textbar~
+\href{http://post.baidu.com/f?kw=fmddlmyy}{留言本} \textbar~
+\href{http://hi.baidu.com/fmddlmyy}{我的空间} \textbar~
+\href{myprog.html}{我的程序} \textbar~
+\includegraphics[width=0.29167in,height=0.21875in]{logo.png}
+\href{mailto:fmdd@263.net}{\nolinkurl{fmdd@263.net}}
+
+\end{document}

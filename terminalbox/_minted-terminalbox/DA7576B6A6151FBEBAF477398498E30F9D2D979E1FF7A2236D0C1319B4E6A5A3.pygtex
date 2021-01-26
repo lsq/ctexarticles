@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+idx = np.argmax(q\PYG{n+nb}{\PYGZus{}}values\PYG{n+nb}{\PYGZus{}}max)
+idx
+
+\PYGZsh{} 161
+
+for i in range(0, 5):
+    plot\PYG{n+nb}{\PYGZus{}}state(idx=idx+i)
+\end{Verbatim}

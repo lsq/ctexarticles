@@ -1,0 +1,340 @@
+%example.tex
+
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[fontset=fandol]{ctex}
+\usepackage{graphicx}
+\usepackage{lazylatex}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\tcbuselibrary{documentation}
+\graphicspath{{img/}}
+\begin{document}
+%
+\begin{titlepage}
+ \begingroup
+ \vspace*{5\baselineskip}%
+  \thispagestyle{empty}% 
+  {\hfill\huge\bfseries 一个用户定制的懒人文档写作宏包 }%
+  \par \vskip \fboxsep
+  \noindent\rule{\linewidth}{.4pt}\\[-4pt]
+  \noindent\rule{\linewidth}{10.4pt}\\[-15pt]
+  \noindent\rule{\linewidth}{.4pt}  \par \vskip .5\baselineskip
+  \begin{flushright}%
+  作者：anoop chandran\\
+   {\LaTeX Studio 汉化修订}\\
+   {第~0.8~版}\\
+   {\today}%
+  \end{flushright}%
+  \vfill
+  \centerline{\includegraphics[width=.7\textwidth]{lion}}
+  \vfill
+  \begin{flushleft}%
+    \includegraphics[width=5cm]{latexstudio}\\
+    \url{https://www.latexstudio.net}
+  \end{flushleft}%
+ \endgroup
+ \clearpage
+\end{titlepage}
+\tableofcontents
+
+\section{简介}
+\lib{lazylatex} 受 sphinx-rtd-theme 启发制作的 {\LaTeX} 宏包. 主要使用了 tcolorbox, minted, tikz, 等等宏包制作. 当然没有完全模仿该宏包。大家可以看看  \fname{example.tex} 源代码来看看代码详情使用方法.
+\section{所使用到的宏包}
+\begin{itemize}
+	\item \lib{geometry} - 版式设置的宏包
+	\item \lib{xcolor} - 用于颜色文本和颜色定义
+	\item \lib{tcolorbox} - 文本框设计
+	\item \lib{minted} - 代码高亮显示
+	\item \lib{tikz} - 图片绘制，文本位置摆放
+	\item \lib{warapfig} - 用于图文混排
+	\item \lib{tabularx}, \lib{array}, \lib{colortbl} - 格式化表格
+	\item \lib{hyperref} - 超级链接设置.
+	\item \lib{setspace} - 用于文本行间距调整.
+\end{itemize}
+
+\section{结构元素}
+ 
+使用自带的\LaTeX{}结构元素（\verb|\part|，\verb|\section|等）。 即使每个部分的第一段都有段落缩进，都可以使用 \pre{setlength} \LaTeX{}命令轻松关闭。
+\section{段落样式}
+
+\subsection{文本样式}
+文档包含文本可以通过如下的命令进行格式化: \pre{inline literals}, \emph{emphasis}, \textbf{strong emphasis}, 单独的链接 (\url{https://www.wikibooks.org}), 外部链接 (\href{https://www.wikibooks.org}{wikibooks home}), 内部引用(Eq:\ref{eqn:euler}, 代码引用:\ref{myCodeLabel} 使用 \nameref{myCodeLabel}) 和 \guilabel{some action}. 一些宏包和库的引用 \lib{PackageName} 而文件名的表示用 \fname{filename.ext}
+
+\subsection{数学公式}
+一般公式,
+\begin{equation}
+  e^{i\pi}+1=0
+  \label{eqn:euler}
+\end{equation}
+
+\subsection{文本框}
+线框主要包括缩进文本框和悬挂文本框。缩进文本框可以根据自己的需要定义缩进的尺寸。如下是各个例子
+\subsubsection{缩进文本框}
+\begin{docCommand}%
+	[]{indentBlock}{\oarg{optional left width}\marg{content}}\tcbdocmarginnote{syntax}
+	这里 \meta{optional left width} 的单位是厘米 \emph{cm}，定义了向右缩进的尺寸，其可以为空，会有默认的缩进尺寸.
+\end{docCommand}
+\noindent
+\textbf{例如:}	
+
+\indentBlock{3}{is is an indent block tas. Mauris ut leo. Cras viverra this is an indent block tas. Mauris ut leo. Cras viverra metus rhoncus sem. Nulla et lectus vestibulum urna fringilla ultrices. Phasellus eu tellus sit}
+\subsubsection{悬挂文本框}
+\begin{docCommand}%
+	[]{indentHang}{\marg{content}}
+	这里 \meta{conent} 是文本内容.
+\end{docCommand}
+\noindent
+\textbf{例如:}
+
+\indentHang{this is an indent block tas. Mauris ut leo. Cras viverra metus rhoncus sem. Nulla et lectus vestibulum urna fringilla ultrices. Phasellus eu tellus sit amet tortor gravida placerat. Integer sapien est, iaculis in, preti}
+
+\begin{note}
+这两个命令 \cs{indentBlock} 和 \cs{indentHang} 必须在之前有换行符或者是空行。
+\end{note}
+
+
+\subsection{代码框}
+这宏包 \lib{lazylatex} 共有三种样式的代码块, 1) 带编号的代码块,  2) 普通文本代码块,  3) 带标题和引用标签的代码块. 例如:
+
+\noindent
+\textbf{一般代码框}
+\begin{code}{go}
+package main
+
+import "fmt"
+
+func main() {
+  var x int = 7
+  fmt.Println(x)
+  fmt.Println(&x)
+}
+\end{code}\\
+
+\noindent
+\textbf{文本代码块}\\
+If we run the above program
+\begin{literal}
+>> go run pointers.go
+7
+0xc00001c0a8
+\end{literal}\\
+
+\noindent
+\textbf{带标题的代码块}
+\begin{lazycode}[Code Caption,label={myCodeLabel},nameref={code caption}]{go}
+package main
+
+import "fmt"
+
+func main() {
+  var x int = 73
+  fmt.Println(x)
+  fmt.Println(&x)
+}
+\end{lazycode}
+
+\subsection{提示框}
+这里制作了四个提示框分别是： \pre{note}, \pre{tip}, \pre{warning} 和 \pre{error}. 这几个提示框都是有可选参数可以指定的，如果不指定这些参数，默认显示为： \textbf{!Note}, \textbf{!Tip}, \textbf{!Warning} and \textbf{!Error}. 例如:
+
+\begin{note}
+	Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu lib ero, nonummy eget, consectetuer id, vulputate a, magna. Donec vehicula augue eu neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris ut leo. Cras viverra metus rhoncus sem. Nulla et lectus vestibulum urna fringilla ultrices.
+\end{note}
+\begin{tip}
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu lib ero, nonummy eget, consectetuer id, vulputate a, magna. Donec vehicula augue eu neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris ut leo. Cras viverra metus rhoncus sem.
+\end{tip}
+\begin{warning}
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu lib ero, nonummy eget, consectetuer id, vulputate a, magna. Donec vehicula augue eu neque.
+\end{warning}
+\begin{error}
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu lib ero, nonummy eget, consectetuer id, vulputate a, magna. Donec vehicula augue eu neque.
+\end{error}
+\begin{note}[注意]
+	Nam arcu lib ero, nonummy eget, consectetuer id, vulputate a, magna. Donec vehicula augue eu neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris ut leo. Cras viverra metus rhoncus sem. Nulla et lectus vestibulum urna fringilla ultrices.
+\end{note}
+\begin{tip}[This Hint is cool]
+Donec vehicula augue eu neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris ut leo. Cras viverra metus rhoncus sem.
+\end{tip}
+
+\subsection{图文混排}
+  \pre{sidebar}是使用 \lib{wrapfig} 宏包定义的，也可以将其放置在文档中的任何位置，可以保持边栏的宽度， 也可以添加标题和标签。 文字将环绕在侧边栏, \textbf{例如}:\\
+
+\lipsum[1]
+\begin{wrapfigure}{r!}{0.6\textwidth}
+	\begin{sidebar}{My Heading}
+		Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu lib ero, nonummy eget, consectetuer id, vulputate a, magna. Donec vehicula augue eu neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+	\end{sidebar}
+\end{wrapfigure}
+\lipsum[2]
+
+\section{列表和表格}
+\label{listntables}
+无编号和带编号的列表都是支持的，这里又制作了两个环境：  \textbf{Field lists} 和 \textbf{Hlists}. 这两个具体使用见后文样例.  \pre{lazytable}提供了表格制作的环境. 环境提供两个参数可以定义修改， 一个是宽度参数，一个是 \marg{alignment} 规定了对齐方式.\\
+\begin{tip}[Command]
+\begin{docEnvironment}%
+	[doclang/environment content=content]%
+	{llist or lazytable}{\oarg{optional width}\marg{alignment}}
+	Where:\\
+	\oarg{optional width} is specified in the units of \cs{pagewidth}\\
+	\noindent	
+ 	\marg{alignment} is specified using a combination of \pre{X},\pre{Y},\pre{Z}, \pre{L\marg{column width}}, \pre{R\marg{column width}}, \pre{C\marg{column width}}.\\
+ 	\noindent
+	\marg{column width} option for \pre{L,R,C} are specified with a real number indicating the width each column must take within the specified \oarg{optional width}\\
+	\noindent
+	\pre{X} and \pre{L} - align the column content to left, \pre{Y} and \pre{R} aligns the content to right and \pre{Z} and \pre{C} aligns the content to center
+\end{docEnvironment}
+\end{tip}
+	
+\subsection{自带的 {\LaTeX} 列表}
+\begin{itemize}
+	\item Item A
+	\item Item B
+	\item Item C	
+\end{itemize}
+
+\subsection{Hlists}
+\begin{tip}[Example]
+\begin{docEnvironment}%
+	[doclang/environment content=content]%
+	{llist}{\oarg{optional width}\marg{alignment}}
+	Where \meta{content} is a set of \cs{litem}  separated by \&. \oarg{optional width} is [0.5\cs{textwidth}] and \marg{alignment} is \brackets{XXX}\\
+	Refer Section ~\ref{listntables} for values each option can take.
+\end{docEnvironment}
+\end{tip}
+\bigskip
+
+\begin{llist}[0.5\textwidth]{XXX}
+  \litem{item 00} & \litem{item 01} & \litem{item 02}\\
+  \litem{item 10}  & \litem{item 11} & \litem{item 12}\\
+  \litem{item 20}  & \litem{item 21} & \litem{item 22}\\
+\end{llist}
+
+\subsection{Field List}
+\begin{tip}[Example]
+\begin{docEnvironment}%
+	[doclang/environment content=content]%
+	{llist}{\oarg{optional width}\marg{alignment}}
+	Where \meta{content} is a set of text  separated by \&. \oarg{optional width} is default i.e \cs{textwidth} and \marg{alignment} is \brackets{L\brackets{0.35}X}\\
+	Refer Section ~\ref{listntables} for values each option can take.
+\end{docEnvironment}
+\end{tip}
+\bigskip
+
+\begin{llist}{L{0.35}X}
+	\textbf{Author:} &	Anoop Chandran \\
+	\textbf{Address:} & 123 Example Street, Example, Example \\
+	\textbf{Contact:}	& strivetobelazy@gmail.com \\
+	\textbf{Authors:} & Me; Myself; I \\
+	\textbf{Organization:} & humankind \\
+	\textbf{Date:} & \today \\
+	\textbf{Status:}	& This is a ``work in progress" \\
+	\textbf{Revision:} &	Revision: 100001  \\
+	\textbf{Version:} & 0.01 \\
+	\textbf{Copyright:}	& This document has been placed in the public domain. You may do with it as you wish.
+ \end{llist}
+
+\subsection{表格样例}
+Three examples are shown for Tables however one can combine the features of all the tables in different ways.
+\begin{tip}[Example 1]
+\begin{docEnvironment}%
+	[doclang/environment content=content]%
+	{lazytable}{\oarg{optional width}\marg{alignment}}
+	Where \meta{content} is a set of text  separated by \&. \oarg{optional width} is default i.e \cs{textwidth} and \marg{alignment} is \brackets{L\brackets{1}$\vert$ R\brackets{0.5}$\vert$ R\brackets{0.5}$\vert$ C\brackets{2}}, argument sum, $1+0.5+0.5+2=$num columns\\
+	Refer Section ~\ref{listntables} for values each option can take.
+\end{docEnvironment}
+\end{tip}
+\bigskip
+
+\tcbdocmarginnote{variable width columns}
+\begin{lazytable}{L{1}|R{0.5}|R{0.5}|C{2}}
+  label 00 & label 01 & label 02 & label 03 \\
+  item 10  & item 11  & item 12  & item 13  \\
+  item 20  & item 21  & item 22  & item 23  \\
+\end{lazytable}
+
+The following examples have captions, to do this one has to wrap \pre{lazytable} inside a \pre{table} environment. Caption and lablel would be the contents of this table but outside \pre{lazytable}\\
+
+\begin{tip}[Example 2]
+\begin{docEnvironment}%
+	[doclang/environment content=content]%
+	{lazytable}{\oarg{optional width}\marg{alignment}}
+	\oarg{optional width} is default i.e \cs{textwidth} and \marg{alignment} is \brackets{X$\vert$$\vert$Y$\vert$Y$\vert$Y$\vert$Y$\vert$}
+	Refer Section ~\ref{listntables} for values each option can take.
+\end{docEnvironment}
+\end{tip}
+\bigskip
+
+\tcbdocmarginnote{fixed width columns}
+\begin{table}[h!]
+	\begin{lazytable}{X||Y|Y|Y|Y|Y}
+	\bf Group & \bf One     & \bf Two     & \bf Three    & \bf Four     & \bf Sum\\
+	\hline
+	\hline
+	Red   & 1000.00 & 2000.00 &  3000.00 &  4000.00 & 10000.00\\
+	\hline
+	Green & 2000.00 & 3000.00 &  4000.00 &  5000.00 & 14000.00\\
+	\hline
+	Blue  & 3000.00 & 4000.00 &  5000.00 &  6000.00 & 18000.00\\
+	\hline
+	Sum   & 6000.00 & 9000.00 & 12000.00 & 15000.00 & 42000.00
+	\end{lazytable}
+	\caption{this is a table}
+	\label{mytable}
+\end{table}
+To align a table with reduced with at the center of the page, wrap the \pre{lazytable} inside a \pre{center} environment.\\
+
+\begin{tip}[Example 3]
+\begin{docEnvironment}%
+	[doclang/environment content=content]%
+	{lazytable}{\oarg{optional width}\marg{alignment}}
+	\oarg{optional width} is  0.6\cs{textwidth} and \marg{alignment} is \brackets{Z$\vert$Z$\vert$Z$\vert$Z}\\
+	Refer Section ~\ref{listntables} for values each option can take.
+\end{docEnvironment}
+\end{tip}
+\bigskip
+
+\begin{table}[h!]
+\begin{center}
+	\begin{lazytable}[0.6\textwidth]{Z|Z|Z|Z}
+	\bf Group & \bf One     & \bf Two     & \bf Three\\
+	\hline
+	\hline
+	Red & 1000.00 & 2000.00   & 10000.00\\
+	\hline
+	Green & 2000.00 & 3000.00   & 14000.00\\
+	\hline
+	Blue  & 3000.00 & 4000.00   & 18000.00\\
+	\hline
+	Sum   & 6000.00 & 9000.00   & 42000.00\\
+	\hline
+	Blue  & 3000.00 & 4000.00   & 18000.00\\
+	\hline
+	Gray  & 3000.00 & 4000.00  & 18000.00\\
+	\end{lazytable}
+	\caption{this is a table2}
+	\label{mytable2}
+\end{center}
+\end{table}
+%
+\noindent
+\textbf{Example 4:}\\
+
+\begin{table}[h!]
+	\begin{lazytable}{L{1.25}|C{0.75}|C{0.5}|C{0.5}}
+		\bf Header row,(header rows optional) & \bf Header 2     & \bf Header 3     & \bf Header 4\\
+		\hline\hline
+		body row 1, column 1 & column 2 & column 3   & column 4\\
+		\hline
+		body row 2 & \multicolumn{3}{c}{Cells may span columns}\\
+		\hline
+		body row 3  & & & \\
+		\hline
+		body row 4  & & & \\
+		\hline
+		body row 5  & \multicolumn{3}{c}{Cells may also be empty}\\
+	\end{lazytable}
+	\caption{this is a table2}
+	\label{mytable2}
+\end{table}
+
+\end{document}

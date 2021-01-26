@@ -1,0 +1,44 @@
+
+\documentclass{ctexart}
+\usepackage{xparse}
+\usepackage[a5paper]{geometry}
+
+\title{\LaTeX3 中局部(locally)定义和全局(global)定义示例}
+
+\begin{document}
+	\maketitle
+	
+	\ExplSyntaxOn
+	\medskip
+	\par 组内定义(set)\verb|\l_tmpa_tl|为B
+	\par 组外定义(set)\verb|\l_tmpa_tl|为A
+	
+	\tl_set:Nn \l_tmpa_tl {A}
+	\group_begin:
+	\tl_set:Nn \l_tmpa_tl {B} 
+	\par value~inside~group:~\tl_use:N \l_tmpa_tl
+	\group_end:
+	\par value~outside~group:~\tl_use:N \l_tmpa_tl
+	
+	\medskip
+	\par 组内全局定义(gset)\verb|\l_tmpa_tl|为B
+	\par 组外定义(set)\verb|\l_tmpa_tl|为A
+	\tl_set:Nn \l_tmpb_tl {A}
+	\group_begin:
+	\tl_gset:Nn \l_tmpb_tl {B}
+	\par value~inside~group:~\tl_use:N \l_tmpb_tl
+	\group_end:
+	\par value~outside~group:~\tl_use:N \l_tmpb_tl
+	
+	\medskip
+	\par 组内定义(set)\verb|\l_tmpa_tl|为B
+	\par 组外全局定义(gset)\verb|\l_tmpa_tl|为A
+	\tl_gset:Nn \l_tmpc_tl {A}
+	\group_begin:
+	\tl_set:Nn \l_tmpc_tl {B}
+	\par value~inside~group:~\tl_use:N \l_tmpc_tl
+	\group_end:
+	\par value~outside~group:~\tl_use:N \l_tmpc_tl
+	
+	\ExplSyntaxOff
+\end{document}

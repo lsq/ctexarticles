@@ -1,0 +1,274 @@
+% !Mode:: "TeX:UTF-8"%保证文档的utf-8编码
+% Copyright (C) 2018 by latexstudio <http://www.latexstudio.net>
+%
+\documentclass[fontset=none]{ctexart}
+\usepackage{amsfonts}
+\usepackage{bbding}
+\usepackage[x11names,svgnames,dvipsnames]{xcolor}
+\usepackage{booktabs}
+\usepackage{fontawesome}
+
+\setmainfont{TeX Gyre Pagella}
+%=======中文字体下载：https://www.latexstudio.net/fonts/font.zip勿商用=========
+\setCJKmainfont{Source Han Serif CN}
+[
+  UprightFont = *-Regular,
+  BoldFont = *-Bold,
+  ItalicFont = *-Regular,
+  BoldItalicFont = *-Bold
+]
+\setCJKsansfont{Noto Sans CJK SC}
+[
+  UprightFont = *-Regular,
+  BoldFont = *-Bold,
+  ItalicFont = *-Regular,
+  BoldItalicFont = *-Bold
+]
+\setCJKmonofont{Noto Sans Mono CJK SC}
+[
+  UprightFont = *-Regular,
+  BoldFont = *-Bold,
+  AutoFakeSlant = 0.2
+]
+
+%=======中文字体下载：https://www.latexstudio.net/fonts/font.zip勿商用=========
+
+\usepackage[skip=2pt]{caption}
+\usepackage{pifont,xhfill}
+
+\usepackage{geometry}
+\geometry{hmargin=.5in,vmargin=.6in,headheight=10pt}
+
+
+\usepackage{showexpl}
+\usepackage{listings}
+
+\definecolor{gbblue}{RGB}{23,74,117}
+\definecolor{qqcolor}{RGB}{18,183,245}
+\lstnewenvironment{texlist}{%
+    \lstset{% general command to set parameter(s)
+    %name=#1,
+    %label=#2,
+    %caption=\lstname,
+    xleftmargin=2em,%\parindent
+    linewidth=\linewidth,
+    breaklines=true,
+    %showspaces=true,
+    extendedchars=false,
+    columns=fullflexible,%flexible,
+    %aboveskip=2pt,
+    boxpos=t,
+    rulesep=0pt,
+    frame=tb,
+    framesep=0pt,
+    rulecolor=\color{gbblue},
+    fontadjust=true,
+    language=[LaTeX]TeX,
+    backgroundcolor=\color{gray!5}, %背景颜色
+    numbers=left,
+    numberstyle=\tiny\color{gbblue},
+    basicstyle=\footnotesize\ttfamily, % print whole listing small
+    keywordstyle=\color{blue}\bfseries,%\underbar,
+    % underlined bold black keywords
+    emph={UTF8},
+    alsoletter={8},
+    emphstyle=\bfseries\color{red},
+    identifierstyle=, % nothing happens
+    commentstyle=\color{green!50!black}, % white comments
+    stringstyle=\ttfamily, % typewriter type for strings
+    showstringspaces=false}% no special string spaces
+}{}
+\lstnewenvironment{texdos}{%
+    \lstset{
+    backgroundcolor=\color{black},
+    basicstyle=\scriptsize\color{white}\ttfamily
+}}{}
+\definecolor{light-gray}{gray}{0.95}
+\definecolor{mgreen}{HTML}{009901}
+\lstdefinestyle{texstyle}{ %
+  backgroundcolor=\color{light-gray},   % choose the background color; you must add upquote,keepspaces=true,columns=spaceflexible,
+  basicstyle=\ttfamily\scriptsize,%
+  belowskip=-0.2 \baselineskip,%
+  aboveskip=5pt,%
+  breaklines=true,breakindent=0pt,xleftmargin=0pt, xrightmargin=6pt,%
+  language=[LaTeX]TeX, texcsstyle=*\bfseries\color{Maroon}, commentstyle=\sffamily\itshape\color{SeaGreen4},
+  emphstyle=\bfseries\color{RoyalBlue3},escapechar={:},
+  emphstyle={[2]{\bfseries\color{Sienna2}}},
+  postbreak=\mbox{{\color{gray}$\hookrightarrow$}}
+}
+\lstdefinestyle{lstStyleBase}{%
+basicstyle=\footnotesize\ttfamily,
+aboveskip=\medskipamount,
+belowskip=\medskipamount,
+lineskip=0pt,
+boxpos=c,
+showlines=false,
+extendedchars=true,
+upquote=true,
+tabsize=2,
+showtabs=false,
+showspaces=false,
+showstringspaces=false,
+numbers=none,
+linewidth=\linewidth,
+xleftmargin=4pt,
+xrightmargin=0pt,
+resetmargins=false,
+breaklines=true,
+breakatwhitespace=false,
+breakindent=0pt,
+breakautoindent=true,
+columns=flexible,
+keepspaces=true,
+framesep=3pt,
+rulesep=2pt,
+framerule=1pt,
+backgroundcolor=\color{gray!5},
+stringstyle=\color{green!40!black!100},
+keywordstyle=\bfseries\color{blue!50!black},
+commentstyle=\slshape\color{black!60}}
+\lstdefinestyle{lstStyleCplus}{%
+style=lstStyleBase,
+frame=l,
+rulecolor=\color{blue},
+language=C++}
+\lstdefinestyle{lstStylePython}{%
+style=lstStyleBase,
+frame=l,
+rulecolor=\color{cyan},
+language=Python}
+\lstnewenvironment{C++}{\lstset{style=lstStyleCplus}}{}
+\lstnewenvironment{Cplus}{\lstset{style=lstStyleCplus}}{}
+\lstnewenvironment{Python}{\lstset{style=lstStylePython}}{}
+\lstnewenvironment{latexcode}{\lstset{style=texstyle}}{}
+\lstset{%     %explpreset below will affect LTX only.
+ backgroundcolor=\color{Lavender},   % choose the background color; you must add upquote,keepspaces=true,columns=spaceflexible,
+  basicstyle=\ttfamily\scriptsize,%
+  numbers=none,frame=single,framesep=1pt,rulesep=1pt,rulecolor=\color{Silver},
+  breaklines=true,breakindent=0pt,xleftmargin=-2pt, xrightmargin=6pt,%
+  language=[LaTeX]TeX, texcsstyle=*\bfseries\color{blue},
+  commentstyle=\sffamily\itshape\color{SeaGreen4},
+  emphstyle=\bfseries\color{RoyalBlue3},escapechar={:},
+  emphstyle={[2]{\bfseries\color{Sienna2}}},
+  postbreak=\mbox{{\color{gray}$\hookrightarrow$}},
+  explpreset={numbers=left,numberstyle=\tiny,numbersep=.8em,xleftmargin=1em,columns=flexible,language=[LaTeX]TEX,pos=l,width=-99pt,
+ overhang=0pt,hsep=\columnsep,vsep=\bigskipamount,rframe=single}
+}
+\usepackage{hologo}
+\def\pdfTeX{\hologo{pdfTeX}}
+\def\XeTeX{\hologo{XeTeX}}
+\def\XeLaTeX{\hologo{XeLaTeX}}
+\def\LuaLaTeX{\hologo{LuaLaTeX}}
+\def\pdfLaTeX{\hologo{pdfLaTeX}}
+\def\LaTeX{\hologo{LaTeX}}
+\def\LaTeXe{\hologo{LaTeX2e}}
+\def\LaTeXiii{\hologo{LaTeX3}}
+\def\dvipdfmx{DVIPDFM\textit{x}}
+\def\TeX{\hologo{TeX}}
+\def\ApTeX{Ap\TeX}
+\def\ApLaTeX{Ap\LaTeX}
+\def\upTeX{up\TeX}
+\def\upLaTeX{up\LaTeX}
+\def\BibTeX{\hologo{BibTeX}}
+\def\bashcmd{\texttt}
+\def\TeXLive{\TeX\ Live}
+\def\MiKTeX{\hologo{MiKTeX}}
+%\newcommand{\CTeX}{\ensuremath{\mathbb{C}}\!\!\TeX}
+
+
+\usepackage[most]{tcolorbox}
+
+\usepackage{ascolorbox}
+\usetikzlibrary{shadows}
+\tcbset{
+myexample/.style={
+  enhanced,
+  colback=white,
+  colframe=gray!20,
+  fonttitle=\bfseries,
+  breakable,
+  arc=2pt,
+  %line width=.5pt,
+  %line width = .5pt,
+  drop shadow={gray!15,opacity=1},
+  %sharp corners,
+  titlerule=0pt,
+  title style={fill=white},
+  coltitle=gray,
+  drop shadow,
+  highlight math style={reset,colback=white,colframe=black}
+  }
+}
+
+\newtcolorbox{EducBox}{myexample}
+\usepackage{enumitem}
+\setlist[itemize]{noitemsep,nolistsep}
+\setlist[enumerate]{noitemsep,nolistsep}
+\newcommand{\fancyline}[2][\ding{36}]{\noindent\ \xdotfill{1pt}[blue]\ding{#2}\xdotfill{1pt}[blue]\ding{#2}\xdotfill{1pt}[blue]#1\xdotfill{1pt}[blue]\ding{#2}\xdotfill{1pt}[blue]\ding{#2}\xdotfill{1pt}[blue]\
+}
+
+\newcommand{\keypoint}[1]{\smallskip\noindent\bgroup\color{blue}\bfseries #1\egroup\par}
+
+\def\Vhrulefill{\leavevmode\leaders\hrule height .8ex depth \dimexpr0.8pt-.2ex\hfill\kern0pt}
+\definecolor{linebreak}{HTML}{2F50AD}
+\newcommand{\xuanchuan}[1][\ding{36}]{\noindent\ \xdotfill[.6ex]{1pt}[linebreak]\PencilRightDown \xdotfill[.6ex]{1pt}[linebreak]\PencilRightDown\xdotfill[.6ex]{1pt}[linebreak]#1\xdotfill[.6ex]{1pt}[linebreak]\PencilLeftDown\xdotfill[.6ex]{1pt}[linebreak]\PencilLeftDown\xdotfill[.6ex]{1pt}[linebreak]\
+}
+\usepackage{hyperref}
+\hypersetup{
+pdftitle={LaTeX工作室-每天一分钟},
+pdfauthor={http://www.latexstudio.net}
+}%
+\title{\vspace{-4em}\bfseries\LaTeX{} 每天一分钟\\[-.2em]
+Begin \LaTeX{} in minute everyday}
+\author{\href{http://www.latexstudio.net}{\includegraphics[width=3cm]{latexstudio.pdf}}}
+\date{\vspace{-1em}\today--第二十一天\vspace{-1em}}
+%\DeclareMathOperator*{\esssup}{ess\,sup}
+
+\begin{document}
+\renewcommand{\lstlistingname}{示例}
+\maketitle
+\begin{ascolorbox1}{一个好习惯拯救你的代码记忆难}
+\smallskip
+\parindent2\ccwd
+
+ {\color{blue}\ding{45}} {\bfseries \LaTeX{}入门用户需要经历三个关口，第一个是从可视化软件使用习惯切换到不可见使用习惯。第二个是记忆关，记住常用的命令，环境，基本使用等。第三个就是错误关，能够排除掉日常遇到的简单问题，适应解决过程。第一个关口是循序渐进的过程，第二和第三个关口是最让入门用户非常痛苦的过程，往往让很多用户慢慢就放弃了。这里给大家分享我的习惯。}
+
+\fancyline[\ding{72}]{104}
+
+
+\keypoint{好记性不如烂笔头}
+
+人的记忆知识遗忘时长取决于我们记忆的时候所调度的感官数量。
+由于\LaTeX{}学习过程需要很多电子化阅读，感官刺激少一些，老办法新工具，会解决这些问题，我自己用的就是云笔记。
+
+如下是我在使用过程里，从各个文档里摘录好用的命令，好用的代码，常见错误等。
+每次我进行编写遇到类似的代码时候，直接就拷贝过来了，不用再去翻资料。很多宏包最常用的就几个地方，抓住了代码，随意修改即可。后续准备把这些代码整理出来给大家，如果你也是高频用户，这些代码会让你的使用速度飙升。
+
+\begin{center}
+  {\includegraphics[width=11cm]{note}}
+\end{center}
+ 
+
+%关注我们公众号吧，天天给你好资料好模板好资讯。
+%
+%\centerline{\includegraphics[width=3cm]{gongzhonghao}}
+
+\smallskip
+
+
+
+\xuanchuan[\sffamily 常来做客，很有帮助]
+
+ \smallskip
+\begin{EducBox}
+\begin{center}
+\noindent\footnotesize\begin{tabular}{@{}l@{ }l|l@{ }l@{}}
+\textcolor[RGB]{18,183,245}{\faQq}：&91940767/478023327--好群，很多大神 & \textcolor[RGB]{9,187,7}{\faWeixin}：&\verb|LaTeX工作室|--好公众号，知识与资源一号俱全 \\
+\textcolor[RGB]{0,194,255}{\faInternetExplorer}：&\url{www.latexstudio.net}--好网站，应有尽有 & {\textcolor[RGB]{39,165,188}{\faVideoCamera}}：&\href{https://item.taobao.com/item.htm?spm=a1z10.1-c.w4004-3473795048.4.ThFQCG&id=43823508044}{淘宝视频教程}--好视频，大神带着学习，入门就像吃鸡\\[3pt]
+\multicolumn{4}{c}{\textcolor[RGB]{252,74,35}{\faShoppingCart}：\url{http://shop240512713.taobao.com}（\LaTeX 工作室全新淘宝店）--好店铺，好服务。}\\
+\end{tabular}
+\end{center}
+\end{EducBox}
+\end{ascolorbox1}
+
+\end{document}

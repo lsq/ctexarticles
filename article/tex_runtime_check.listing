@@ -1,0 +1,15 @@
+^^I^^I此文档运行在
+^^I^^I\ifwindows
+^^I^^I\windowsname
+^^I^^I\fi
+^^I^^I\iflinux
+^^I^^I\linuxname
+^^I^^I\fi
+^^I^^I\ifmacosx
+^^I^^I\macosxname
+^^I^^I\fi
+^^I^^I\ifcygwin
+^^I^^I\cygwinname
+^^I^^I\fi
+^^I^^I系统下
+^^I

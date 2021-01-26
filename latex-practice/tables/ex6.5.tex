@@ -1,0 +1,62 @@
+\documentclass{ctexart}
+\usepackage{color}
+\usepackage{dashbox}
+
+\begin{document}
+
+This example 6.5
+
+\begin{tabular}{|l|c|r|}
+	\hline
+	\multicolumn{3}{|c|}{Sample Tablular}\\\hline
+	col head & col head & col head \\\hline
+	Left & centered & right\\\cline{1-2}
+	aligned & items & aligned\\\cline{2-3}
+	items & items & items\\\cline{1-2}
+	left item & centered & right\\\hline
+\end{tabular}
+
+example 6.6
+
+\begin{tabular}{c r @{.} l}
+	\hline
+	太阳系中的行星 & \multicolumn{2}{c}{赤道半径km}\\\hline
+	水星 & 2 & 44\\
+	金星 & 6 & 1\\
+	地球 & 6\:378 & 142\\\hline
+\end{tabular}
+
+example 6.7
+
+\newcommand{\bb}[1]{\raisebox{-7ex}[0pt][0pt]{\shortstack{#1}}}
+%\bb{原子\\序数}
+
+\begin{tabular}{|c|c|c|c|}
+	\hline
+	\multicolumn{4}{|c|}{\parbox[c][9mm]{0pt}{}%
+	\kaishu\bfseries 前5种化学元素的电子状态分布}\\\hline
+	\bb{原子\\序数}   & \bb{元素\\符号} & \multicolumn{2}{c|}{各电子层上的电子数}\\\cline{3-4}
+	& & K层，$n=1$ 	& L层，$n=2$ \\\cline{3-4}
+	& & $s$ 亚层	 	& $s$ 亚层 $p$亚层\\\cline{3-4}
+	& & $l=0$        & $l=0$\quad $l=1$ \\\hline
+	1 & H 			 & 1 & \\
+	2 & He 			 & 2 & \\\cline{2-3}
+	3 & Li		     & 2 & 1\qquad ~\\
+	4 & Be	         & 2 & 2\qquad ~\\
+	5 & B		     & 2 & 2\qquad 1\\\hline
+	
+\end{tabular}
+
+For emphasis, you may wish to \raisebox{2.5ex}[12pt]{raise} or \raisebox{-1.0ex}{lower} certain text inside your documents.
+
+\noindent \makebox[0pt][r]{\fbox{注意}}\qquad 如果重新安装操作系统，则系统盘中所有数据将被删除！
+
+\newlength{\Mylen}
+\settowidth{\Mylen}{勾股定理}
+勾股定理：
+\makebox[0pt][l]{	%
+\color{blue}\rule[-0.9ex]{\Mylen}{1pt}}
+直角三角形两直角边的平方和等于斜边的平方。
+
+\fbox{系统}\dbox{系统}\dashbox[80mm][c]{系统}
+\end{document}

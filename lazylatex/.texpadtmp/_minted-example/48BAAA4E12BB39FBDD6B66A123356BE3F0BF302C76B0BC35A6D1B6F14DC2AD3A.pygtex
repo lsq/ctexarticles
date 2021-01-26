@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZgt{}\PYGZgt{} go run pointers.go
+7
+0xc00001c0a8
+\end{Verbatim}

@@ -1,0 +1,250 @@
+% Done by Walid LAOUIDJI 
+% gmail: walidlaouidji28@gmail.com
+%d'ont compile here !!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ProvidesPackage{sexam}[15/08/2018]
+\NeedsTeXFormat{LaTeX2e}
+\RequirePackage{amsmath,amsfonts,amssymb,mathtools}
+\RequirePackage{fmtcount}
+\RequirePackage{ifthen}
+\RequirePackage{calc}
+\usepackage[skins,breakable]{tcolorbox}
+\RequirePackage{titlesec, graphicx, titlecaps}
+\RequirePackage{pdfrender}
+\RequirePackage{pgfkeys}
+\RequirePackage{etoolbox}
+\RequirePackage[left=1.5cm,right=1.5cm,top=1cm,bottom=1.7cm]{geometry}
+\RequirePackage{setspace,fontawesome}
+\RequirePackage{mathpazo}
+\RequirePackage{listings}
+\RequirePackage[inline]{enumitem}
+\RequirePackage{pgffor}
+\RequirePackage{pgfplots}
+\RequirePackage{tikz}
+\RequirePackage[tikz]{bclogo}
+\RequirePackage{fancybox}
+\RequirePackage{tikzsymbols}
+\RequirePackage[tikz]{bclogo}
+\usetikzlibrary{patterns,snakes}
+ \RequirePackage{multicol}
+\usetikzlibrary{shapes,calc,snakes,arrows,shadows,shadings}
+\usetikzlibrary{backgrounds,decorations.pathmorphing,fit,arrows.meta,bending}
+\usetikzlibrary{shadows.blur}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.symbols,patterns,decorations.shapes}
+\usetikzlibrary{backgrounds,decorations.pathmorphing,fit,arrows.meta,bending}
+\RequirePackage{moreenum}
+\RequirePackage{yagusylo}
+\RequirePackage{wasysym}
+%\RequirePackage{eulervm}
+\RequirePackage{pifont}
+\RequirePackage{polyglossia}
+\RequirePackage{ulem}
+\mathversion{bold}
+%
+\definecolor{myblue}{RGB}{0,163,243}
+\usetikzlibrary{shapes,calc,snakes,arrows,shadows}
+\usetikzlibrary{shadows.blur}
+\usetikzlibrary{shapes.symbols}
+\definecolor{blue}{rgb}{0.1,0.5,0.4}
+% desactiver message d'erreur bidi package 
+%-------------------
+\makeatletter 
+\AtBeginDocument{\bidi@isloaded[]{arabxetex}}
+\makeatother
+%===============================================================
+% \setdefaultlanguage[calendar=gregorian,,locale=algeria]{arabic}
+%%%%%%
+\newfontfamily\ley[Script=Arabic,Scale=0.9]{Aljazeera}
+%-----------------------------------------------------------------------------
+\RequirePackage[novoc]{arabxetex}
+
+\newcommand{\blankline}{＿＿＿＿}
+
+% ------------------
+\def\cn#1{\begin{center}
+\hrulefill\,\textbf{#1 }\,\hrulefill
+\end{center}}
+%
+\newlist{MyHChoices}{enumerate*}{2}
+\newlist{MyVChoices}{enumerate}{2}
+\setlist*[MyHChoices]{
+ itemsep=1ex, 
+    leftmargin=5ex,
+label=\fcolorbox{myblue}{myblue!10}{\textcolor{blue}{\Alph*}}, itemjoin={\hspace*{2cm}}}
+\setlist*[MyVChoices]{label=\Alph*}
+\setlist[enumerate,1]
+{
+itemsep=1ex, 
+leftmargin=5ex, 
+label=\fcolorbox{myblue}{myblue!10}{\textcolor{blue}{\bfseries$\arabic*$}}
+}
+
+
+\setlist[enumerate,2]
+{
+itemsep=1ex, 
+leftmargin=4.08ex, 
+label=\fcolorbox{myblue}{myblue!10}{\textcolor{blue}{\Alph*}}
+}
+
+%*-----------------------
+\newtoks\gInlineToks
+\newcommand*{\hchoices}[1]{%
+    \global\gInlineToks{}%
+    \foreach \Choice in {#1} {%
+        \global\gInlineToks\expandafter{%
+            \the\expandafter\gInlineToks
+            \expandafter\item\Choice
+        }%
+    }%
+    \par%
+    \begin{MyHChoices}\the\gInlineToks\end{MyHChoices}%
+}%
+
+
+\def\vchoices#1{%
+    \begin{MyVChoices}
+    \foreach \Choice in {#1} {%
+        \item \Choice
+    }%
+    \end{MyVChoices}
+}%
+%---------------------------------------------------------------------------------------
+
+
+\renewcommand{\thequestion}{\arabic{question}}
+
+
+
+%***
+\tikzset{
+    shade border west to east/.style args={#1 to #2}{
+        preaction={draw, very thick, path fading=east, #1},
+        preaction={draw, very thick, path fading=west, #2}
+    },
+    shade fill west to east/.style args={#1 to #2}{
+        left color=#1,
+        right color=#2
+    }
+}
+\newcommand{\dil}[1]{
+\begin{tikzpicture}
+\node[opacity=.6] at (0.02,-0.1) {
+\scalebox{1.4}{
+\textpdfrender{%
+TextRenderingMode=2,
+LineWidth=.1ex,
+StrokeColor=darkgray!50,
+FillColor=darkgray!50,
+}{#1}}};
+\node at (0,-0.1) {
+\scalebox{1.4}{%
+\textpdfrender{%
+TextRenderingMode=2,
+LineWidth=.1ex,
+StrokeColor=blue!30!black,
+FillColor=orange!90,
+}{ \textcolor{myblue}{{#1}}}}};
+\end{tikzpicture}
+}
+%
+\def\Wal#1{%
+\begin{tikzpicture}[overlay]
+  \fill[ shade fill west to east=myblue!50 to white ] (23,0.15) rectangle (-3,0);
+  \node[draw=myblue!50,thick, rounded rectangle,rounded rectangle right arc=convex,inner sep=2.5pt,fill=white!50] at (2,0.18) {{#1}};
+  %	\fill[inner color=myblue,] (0.5,0.0) circle (.17cm);
+  \draw [myblue!50,line width=1.2pt,path picture={ \node at (path picture bounding box.center)
+  {\bcinfo};}] (-0.5,0.07) circle (0.24);
+  %	\node[draw=myblue] at (0.5,0.086){\bcinfo};
+\end{tikzpicture}
+}
+%------------------------------------------------------------------------------
+\singlespacing
+\parindent 0ex
+
+%-------points-----------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pointsinmargin
+%\pointsinrightmargin
+% \marginpointname{}
+\pointformat{\fbox{\bfseries\boldmath\themarginpoints}}
+\setlength{\marginpointssep}{1.8cm}
+\setlength{\rightpointsmargin}{4.5cm}
+\renewcommand{\thepartno}{\arabic{partno}}
+\renewcommand{\thesubpart}{\Alph{subpart}}
+\renewcommand\subpartlabel{\thesubpart)}
+\renewcommand\partlabel{\thepartno)}
+\renewcommand{\partshook}{\setlength{\topsep}{-0.2in}}
+\setlength{\headsep}{1pt}
+\baselineskip = 0.9cm
+\pointpoints{ }{ }
+\qformat{\Wal{{\Large\faPencil}\; \textbf{问题 \thequestion :}\quad {\textcolor{red}{\thepoints}}}\hfill\\}
+
+%---------------------------------------
+\runningheadrule
+\firstpagefootrule
+%\footer{}{Page \thepage\ of \numpages}{}
+\footer{}{第 \thepage{}页 · 共 \numpages{}页}
+\runningheadrule
+\runningfootrule
+
+\lfoot{
+{\iflastpage{\color{myblue}{\faThumbsOUp}}{\color{red}{\faSmileO}}}}
+
+\rfoot{
+{\iflastpage{\color{myblue}{\faCheckCircle}}{\color{myblue}{\faReplyAll}
+}}}
+
+
+%------------------------------------------------------
+\renewcommand{\baselinestretch}{1.35}
+\setlength{\headsep}{8pt}
+\firstpagefootrule
+\extraheadheight[-0.2cm]{0.5cm}
+%-------------------------------------------------
+%%%%%%%%%%%%%
+\makeatletter
+\def\annee#1{\gdef\@annee{#1}}
+\def\duree#1{\gdef\@duree{#1}}
+\def\niveau#1{\gdef\@niveau{#1}}
+\def\school#1{\gdef\@school{#1}}
+\def\exam#1{\gdef\@exam{#1}} 
+\def\warning#1{\gdef\@warning{#1}} 
+\def\runtitle#1{\gdef\@runtitle{#1}} 
+\def\makeInFo{     
+\begin{center}
+\@runtitle
+\end{center}
+\vskip-0.3cm
+\textbf{ 
+{班级}
+:
+\sffamily{\@school} }
+\hfill
+\textbf{   
+{姓名:
+\@niveau }\,\faMortarBoard
+} 
+\\  
+% info---------------------
+   \begin{tikzpicture}[remember picture,overlay]
+\path[preaction={opacity=0.5,fill=myblue!17},draw=myblue!18,
+line width=0.1mm,double distance=0.2mm,
+pattern=fivepointed stars,pattern color=white!65!myblue] (-1\paperwidth,0.3) rectangle+(2\paperwidth,-1.5);
+%
+\node[double,inner xsep=-10pt,top color=yellow!10 , chamfered rectangle,chamfered rectangle xsep=10pt,chamfered rectangle ysep=-3pt,align=center,chamfered rectangle corners={north east, south west}] (e) at (current page.center) [above=11.4cm]{\dil{\sffamily{\@exam}}};
+\node [lower left=green!10, chamfered rectangle,chamfered rectangle corners=north west,right=1.2cm of e] {\small{\faCalendar}\, \textbf{\@annee}};
+\node [lower right=green!10, chamfered rectangle,chamfered rectangle corners=north east,left=1.22cm of e](f) {  {\small \faClockO} \,\bf  	
+时间：\@duree};
+\node [inner sep =0pt,xshift=0cm,below =0.5 cm of f,lower right=green!10,  rounded rectangle,rounded rectangle left arc=none,font=\footnotesize]{
+\textcolor{red}{\faWarning}\, \@warning};
+\end{tikzpicture}
+%  \egroup
+\vspace{2cm}}
+
+% \chead{\@runtitle}
+\makeatother
+%%%%%%%%%%%%%
+ %
+%-----------------------fin

@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{package} \PYG{n+nx}{main}
+
+\PYG{k+kn}{import} \PYG{l+s}{\PYGZdq{}fmt\PYGZdq{}}
+
+\PYG{k+kd}{func} \PYG{n+nx}{main}\PYG{p}{()} \PYG{p}{\PYGZob{}}
+  \PYG{k+kd}{var} \PYG{n+nx}{x} \PYG{k+kt}{int} \PYG{p}{=} \PYG{l+m+mi}{73}
+  \PYG{n+nx}{fmt}\PYG{p}{.}\PYG{n+nx}{Println}\PYG{p}{(}\PYG{n+nx}{x}\PYG{p}{)}
+  \PYG{n+nx}{fmt}\PYG{p}{.}\PYG{n+nx}{Println}\PYG{p}{(}\PYG{o}{\PYGZam{}}\PYG{n+nx}{x}\PYG{p}{)}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
