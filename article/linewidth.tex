@@ -1,0 +1,532 @@
+\documentclass{ctexart}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin= 3em,}
+\usepackage{flowchart}
+\usepackage{hyperref}
+\usepackage{showexpl}
+\lstset{pos=r, overhang=0pt,hsep=.5\columnsep,vsep=\bigskipamount,%
+	rframe=single,numbers=left,numberstyle=\tiny,numbersep=.1em, xleftmargin=0em, backgroundcolor=\color{lightgray!30},%
+	columns=flexible, breakindent = 1em, language=[LaTeX]TEX,breaklines=true,%
+	basicstyle=\small\ttfamily,
+	tabsize=1, width=0.36\linewidth,}
+\renewcommand{\lstlistingname}{代码}
+\usepackage{spverbatim}
+\usepackage{showcharinbox}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes.misc,spy,arrows.meta,quotes}
+\usepackage{xcolor}
+\usepackage{printlen}
+\usepackage{xprintlen}
+\usepackage{todonotes}
+
+\makeatletter
+%横线：行基线，红色
+\newcommand{\baselinerule}{%
+	\leavevmode\rlap{\color{red}\rule{.5\linewidth}{.5pt}}
+}
+%竖线：棕色为字符高度，青色为行间距
+\newcommand{\baselineskiprule}{%
+	\leavevmode{\color{teal}\rule[\dimexpr\f@size pt-\baselineskip\relax]{.5pt}{\baselineskip}}%
+	\llap{\color{brown}\rule{.5pt}{\f@size pt}}\space}
+\makeatletter
+
+%横线：行顶线，
+%\rule[raise]{width}{thickness}
+\newcommand{\toplinerule}{%
+	%  \leavevmode
+	\rlap{\color{brown}\rule[\f@size pt]{.5\linewidth}{.5pt}}
+}
+
+%\newcommand{\toplinerule}{\rule[\f@size pt]{\linewidth}{.5pt}}
+
+%\renewcommand{\baselinestretch}{2}
+
+\newcommand{\pkg}[1]{\textsf{#1}}
+\newcommand{\cmd}[1]{\texttt{\textbackslash #1}}
+\newcommand{\env}[1]{\textsf{#1}}
+\newcommand{\opt}[1]{\textsf{#1}}
+\newcommand{\myemph}[1]{{\heiti{#1}}}
+
+\begin{document}
+	\author{zhangsming}
+	\title{\LaTeX 行距学习笔记}
+	\date{2021年3月1日}
+	\maketitle
+	
+	在国家标准《党政机关公文格式》（GB/T 9704---2012）中，行是标示纵向距离的长度单位。一行指一个汉字的高度加3号汉字高度的7/8的距离。
+	
+	在文字排版中，\myemph{行距}指一行文字的基线（baseline）与另一行文字的基线之间的距离。
+	基线是一条用于将字符基准点对齐的无形的线。
+	为准确地理解行距的概念，有必要了解\TeX 中的字符盒子及基线的概念。
+	
+	\section{基础知识——字符盒子及基线}
+	
+	在\TeX 中，每个字符都是一个“盒子”。
+	盒子是长方形的二维对象，有三个相应的尺寸，分别是高度、宽度和深度。
+	在盒子中，除了高、宽、深的尺寸外，还两个用于对齐盒子重要的元素：基准点和基线。
+	图\ref{fig:TeX中标准盒子示意图}\footnote{图片来源：The \TeX\ Book，高德纳，P63。}是\TeX 中标准盒子的示意图。
+	
+	\begin{figure}[!ht]
+		\centering
+		\begin{tikzpicture}
+			\newcommand{\boxheight}{3cm};
+			\newcommand{\boxwidth}{2cm};
+			\newcommand{\boxdepth}{1cm};
+			\newcommand{\boxindicatorlength}{.5cm}
+			\draw (0, -\boxdepth)  rectangle (\boxwidth, \boxheight);
+			\draw [dashed, red](0, 0) node [anchor = east] {基点} edge ["基线" above] (\boxwidth, 0);
+			\filldraw (0,0) circle[radius = .05cm];
+			\draw [dashed] (\boxwidth, \boxheight) -- +(0, \boxindicatorlength);
+			\draw [dashed] (0, \boxheight) -- +(0, \boxindicatorlength);
+			\draw [dashed] (\boxwidth, 0) -- +(\boxindicatorlength, 0);
+			\draw [dashed] (\boxwidth, \boxheight) -- +(\boxindicatorlength, 0);
+			\draw [dashed] (\boxwidth, -\boxdepth) -- +(\boxindicatorlength, 0);
+			\draw [xshift= .9*\boxindicatorlength](\boxwidth, 0) edge ["高度" right, Latex - Latex] (\boxwidth, \boxheight);
+			\draw [yshift= .9*\boxindicatorlength](0, \boxheight)  edge["宽度" above, Latex - Latex] (\boxwidth, \boxheight);
+			\draw [xshift= .9 *\boxindicatorlength] (\boxwidth, 0) edge["深度" right, Latex - Latex] (\boxwidth, -\boxdepth);
+		\end{tikzpicture}
+		\caption{\TeX 中的“盒子”示意图}
+		\label{fig:TeX中标准盒子示意图}
+	\end{figure}
+	
+	\subsection{字符盒子参数值的获取}
+	字符的高度、宽度和深度由字符设计者给出。综合使用\cmd{setbox}（盒子内容赋值）、\cmd{hbox}（构造水平盒子）、\cmd{wd}（取盒子宽度）、\cmd{ht}（取盒子高度）和\cmd{dp}（取盒子深度）等盒子操作有关命令，字号设置命令\spverb|\fontsize{尺寸}{行距} \selectfont|，以及\cmd{the}（显示数据当前值）命令，可以输出指定尺寸字符的宽度、高度和深度等参数的数值。
+	
+	\begin{LTXexample}[pos = b, width = \linewidth, caption = {字符盒子高度、宽度及深度参数的获取}]
+		\setbox1=\hbox{\fontsize{250}{250}\selectfont g}
+		尺寸为250pt的字符“g”的宽度是\the\wd1，高度是\the\ht1，深度是\the\dp1。
+		\setbox2=\hbox{\fontsize{250}{250}\selectfont Q}\\
+		尺寸为250pt的字符“Q”的宽度是\the\wd2，高度是\the\ht2，深度是\the\dp2。
+	\end{LTXexample}
+	
+	从上述代码的输出结果可以看出，同样的字体，即便字号相同，不同字符的高度、宽度和深度也可能各不相同。
+	
+	\subsection{字符盒子及参数值的可视化输出}
+	\pkg{showcharinbox}宏包能够以类似图\ref{fig:TeX中标准盒子示意图}的方式直观地绘制字符盒子，并输出宽度、高度、深度和基准点、基线等信息。\pkg{showcharinbox}宏包的用法是：
+	
+	\verb*|\ShowCharInBox{<字符>}|
+	
+	“字符”可以是单个字符，也可以是字符串，支持中英文，其他语言未测试。
+	
+	当字符尺寸较小时，盒子的高度、宽度和深度信息会堆叠在一起。在使用\verb*|\ShowCharInBox{<字符>}|命令绘制字符盒子示意图时，应将字符尺寸设置的比较大。因此，比较实用的命令是：
+	
+	\verb|\ShowCharInBox{\fontsize{<尺寸>}{行距}\selectfont <字符>}|
+	
+	
+	图\ref{fig:TeX中字符盒子示意图}
+	%和图\ref{fig:TeX中字符盒子示意图2}
+	是一个用\pkg{showcharinbox}宏包绘制的实际的字符盒子示意图。
+	%例如，在\hologo{plainTeX} 的\cmd{rm}字体（cmr10）中，字母“h”的高度是 6.944 points，宽度为 5.5555 points，深度为零；字母“g”的高度为 4.3055 points，宽度为 5 points, 深度为 1.9444 points。
+	%虽然 cmr10 叫做“10-point”字体, 却只有像圆括号这样的特殊字符的高度加深度正好等于 10 points。
+	
+	\begin{figure}[!ht]
+		\centering
+		\ShowCharInBox{\fontsize{250}{250}\selectfont g}
+		\caption{\TeX 中字符盒子示意图（showcharinbox绘制，字符尺寸250pt）}
+		\label{fig:TeX中字符盒子示意图}
+	\end{figure}
+	图\ref{fig:TeX中字符盒子示意图}的代码是：
+	
+	\verb|\ShowCharInBox{\fontsize{250}{250}\selectfont g}|
+	
+	\subsection{行基线、行距、行间距}
+	\TeX 在排布字符（本质上是“盒子”）时，
+	把不同字符的基准点放在同一水平线上（如果单个盒子没有被升降的话），
+	这样多个小的水平盒子就构成了一个大的水平盒子。
+	为便于行文，与字符盒子相对应，我们将这个大的水平盒子形象地称作“行盒子”。
+	当字符盒子排满一行时，另起一行，重新构建行盒子。
+	
+	行盒子的基线是内部字符盒子的公共基线，也就是\myemph{行基线}。
+	行盒子的高度和深度分别由基线上下的内部字符盒子的最大值确定。
+	（\myemph{注意：}这里行盒子的高度与行高不是同一概念。）
+	\myemph{相邻两个行基线之间的距离称行距}。为进一步讨论方便，这里引入辅助概念——行间距。\myemph{行间距指相邻两行中，靠上一行所有字符的最下沿（由各字符深度的最大值确定，有的资料中也称行底线）与靠下一行所有字符的最上沿（由各字符高度的最大值确定，有的资料中也称行顶线）之间的距离。}行基线、行距及行间距的相对位置关系如图 \ref{fig:行基线、行距、行间距示意图} 示\footnote{类似的图见《\LaTeX\ 2$\epsilon$ 完全学习手册（第二版）》P52，《\LaTeX 入门》（刘海洋） P82、P90，\pkg{kerntest}宏包手册及\pkg{pgfmanual.pdf} 17.5.1 节 Positioning Nodes Using Anchors等。}。
+	
+	\begin{figure}[!ht]
+		\centering
+		\begin{tikzpicture}[scale=3,transform shape]
+			%    \draw [help lines] (0,0) grid (3,1);
+			\tikzset{inner sep= 0pt}
+			\fboxsep=0pt \fboxrule=0.01pt
+			\begin{scope}
+				\draw[anchor=base west, dashed, ultra thin]
+				(0,0) node [name = a]{\fbox{中}\fbox{文}\fbox{ }\fbox{E}\fbox{n}\fbox{g}\fbox{l}\fbox{i}\fbox{s}\fbox{h}};
+				%基线（虚线）
+				\draw[color = red, dashed, ultra thin] (-.1,0) --(2.6,0);
+				\draw (2.5,-.3) node[color = red, scale=.5] {行基线};
+				\draw [-latex] (2.5,-.2) -- (2.5,0);
+				%      \draw [color = green]
+				%行顶线（虚线）,8.43pt的计算方法见图后注释内代码
+				\draw[yshift=8.63pt, color = teal, dashed, ultra thin] (-.1,0) -- (2.2,0);
+				%行顶线文字及箭头标注
+				\draw [-latex, teal](23pt, -6pt) node[scale = .5, anchor = north]{行顶线} -- (23pt, 8.63pt);
+			\end{scope}
+			\begin{scope}[yshift= \baselineskip, spy using overlays ={magnification=4, size=2cm, connect spies}]
+				\draw[anchor=base west, dashed, ultra thin]
+				(0,0) node{\fbox{中}\fbox{文}\fbox{ }\fbox{E}\fbox{n}\fbox{g}\fbox{l}\fbox{i}\fbox{s}\fbox{h}};
+				\draw[color = red, dashed, ultra thin] (-.1,0) --(2.6,0);
+				\draw (2.5,.3) node[color = red, scale=.5] {行基线};
+				\draw [-latex] (2.5,.2) -- (2.5,0);
+				%行底线（虚线）,2.17pt的计算方法见图后注释内代码
+				\draw[yshift=-2.17pt, color = teal, dashed, ultra thin] (-.1,0) --(2.2,0);
+				%行底线文字及箭头标注
+				\draw [latex-, teal, yshift= 3.8pt](23pt, -6pt) -- (23pt, 8.63pt)node[scale = .5, anchor = south]{行底线};
+			\end{scope}
+			%标注行距箭头及文字
+			\draw[latex-latex,color=blue] (2.4,0) -- (2.4, \baselineskip);
+			\draw (2.5,.5\baselineskip) node[color = blue, anchor = west, scale = .5] {行距};
+			%标注行间距箭头及文字
+			\draw[latex-latex,color=teal] (-.05,8.63pt) -- (-.05, \baselineskip-2.17pt);
+			\draw (-.2, 11.77pt) node[color = teal, anchor = east, scale = .5] {行间距};
+			%标注行盒子高度
+			\draw[latex-latex,color = brown] (-.05,0) -- (-0.05, 8.63pt);
+			\draw (-.2, 4.63pt) node[color = brown, anchor = east, scale = .5] {行盒子高度};
+			%标注行盒子深度
+			\draw[color = olive] (-.05,\baselineskip) -- (-0.05, \baselineskip-2.17pt);
+			\draw (-.2, 19.77pt) node[color = olive, anchor = east, scale = .5] {行盒子深度};
+			\draw [-latex, color= olive] (-.2,19.77pt) -- (-.05, 15pt);
+			%    \spy [brown] on (-.05, 20pt) in node at (-.5,20pt);
+		\end{tikzpicture}
+		\caption{行基线、行距、行间距示意图}
+		\label{fig:行基线、行距、行间距示意图}
+	\end{figure}
+	%不要删，用于计算上图中字符盒子的高度、深度
+	%\setbox1=\hbox{中}\the\ht1（8.43149pt）\the\dp1（1.05394pt）
+	%\setbox2=\hbox{g}\the\dp2（2.04932pt）
+	
+	
+	由图\ref{fig:行基线、行距、行间距示意图}可知，行距控制的是两个相邻行基线的相对位置。
+	
+	需要说明的是，在\TeX\ 中，有明确的行基线和行距的概念，没有明确的行顶线、行底线和行间距的概念，此处为了便于说明，使用了“行顶线”、“行底线”和“行间距”的概念。
+	
+	\section{\TeX 对行距的控制}
+	
+	在\TeX 中，影响行距的因素有：前一个行盒子的深度（前一行底线）、当前行盒子的高度（当前行顶线），以及基础行距、行间插空距和最小行间距。
+	
+	\subsection{\TeX 行距控制基本原理}\label{subsec:TeX行距控制基本原理}
+	
+	为方便表述，将有关符号定义如下：
+	
+	$S_{end}$：行距的最终值
+	
+	$D_{pre}$：前一个行盒子的深度（\cmd{prevdepth}），可理解为前一行底线的位置
+	
+	$H_{cur}$：当前行盒子的高度，可理解为当前行顶线的位置
+	
+	
+	$S_{base}$：\TeX 中基础行距命令\cmd{baselineskip}的值
+	
+	$S_{lead}$：\TeX 中行间插空距命令\cmd{lineskip}的值，默认值为1pt
+	
+	$S_{mim}$：\TeX 中最小行间距命令\cmd{lineskiplimit}的值，默认值为0pt
+	
+	其中，$D_{pre}$和$H_{cur}$是变量，由系统逐一计算行内各字符盒子的深度和高度，并取最大值得出，$S_{base}$、$S_{lead}$和$S_{mim}$是常量，由系统或用户指定。
+	
+	在\TeX 中确定行距的基本方法如下：
+	
+	1. 取前一行盒子的深度，计算当前行盒子的高度；
+	
+	2. 将行距设为$S_{base}$；
+	
+	3. 判断：如果$S_{base} - D_{pre} - H_{cur} < S_{mim}$，则$S_{end} = D_{pre} + H_{cur} + S_{lead} $，否则，$S_{end} = S_{base}$。
+	
+	\enlargethispage{2\baselineskip}
+	
+	确定行距的流程可以用图\ref{fig:TeX确定行距流程图}\footnote{注意：这并不是\TeX 中确定行距的实际流程，只是为了便于理解，作成图中的流程。如需准确的流程，请参阅 《The \TeX Book》 P80 或 《\LaTeX 2e 文类和宏包学习手册》P204。}表示。
+	确定行距流程的实际含义是：
+	首先尝试将行距设为基础行距（\cmd{baselineskip}），
+	如果基础行距使得行间距小于最小行间距（\cmd{lineskiplimit}，如最小行间距取默认值0pt，其呈现的效果是上下两个行盒子有部分内容重叠在一起），
+	则在两个行之间插入一段长度为\cmd{lineskip}空白。这样得到的行距是前一行盒子的深度+行间插空的高度+当前行盒子的高度。
+	
+	\begin{figure}[!htpb]
+		\centering
+		\begin{tikzpicture}[>= Latex, node distance = .5cm, every node/.style = {minimum width=\smbwd, minimum height=.5cm, align =center}]
+			\def \smbwd{2cm}
+			%定义流程图的具体形状
+			\node (start) at (0,0) [draw, terminal] {开始}; % 定义开始
+			\node (GetPrevdepth) [draw, below = of start, predproc] {取前一个行盒子的深度数据\\（$D_{prev}$ = \cmd{prevdepth}）};
+			\node (ComputeHeight) [draw, below = of GetPrevdepth, process] {计算当前行盒子的高度\\（$H_{cur}$）};
+			\node (SetBaselineskip) [draw, below = of ComputeHeight, process] {行距赋初值\\（$S_{end} = \cmd{baselineskip}$）};
+			\node (decide) [draw, below = of SetBaselineskip.south, decision, yscale = .7] {当前行间距 < 最小行间距 ?\\（$S_{base} - D_{pre} - H_{cur} < S_{mim}  ?$）\\$S_{mim}$ =\cmd{lineskiplimit}};
+			\node (ReComputeHeight) [draw, below = of decide.south, align = right,  process] {行距=前一行盒子深度\\+最小行间距\\+当前行盒子高度\\（$S_{end} = D_{pre} + H_{cur} + S_{lead} $）\\（$S_{lead}$ = \cmd{lineskip}）};
+			\node (end) [draw, below = of ReComputeHeight, terminal] {结束};
+			
+			%连接定义的形状，绘制流程图--表示垂直线，|表示箭头方向
+			\draw[->] (start) -- (GetPrevdepth);
+			\draw[->] (GetPrevdepth) -- (ComputeHeight);
+			\draw[->] (ComputeHeight) -- (SetBaselineskip);
+			\draw[->] (SetBaselineskip) -- (decide);
+			\draw[->] (decide) -- (ReComputeHeight);
+			\draw[->] (ReComputeHeight) -- (end);
+			\draw[->] (decide.east) -- node[minimum width = 1cm, xshift = .6cm, yshift = -2.3cm, right]{否} +(1cm,0) |-  (end.east);
+			\draw[->] (decide) -- node[minimum width = 1cm, right]{是}(ReComputeHeight);
+		\end{tikzpicture}
+		\caption{\TeX 确定行距流程图}
+		\label{fig:TeX确定行距流程图}
+	\end{figure}
+	
+	\subsection{\TeX 行距控制相关命令}
+	\TeX 主要对行距的绝对值进行控制，具体的命令有\cmd{baselineskip}、\cmd{lineskiplimit}和\cmd{lineskip}，它们分别表示基础行距、最小行间距和行间插空距。
+	
+	以上3个参数的值可通过\pkg{printlen}宏包提供的\cmd{printlength}命令输出。
+	
+	%{\color{red}{
+	%综上，在\TeX 中有3个控制行距绝对值的参数：
+	
+	\subsubsection{\cmd{baselineskip}}
+	\begin{enumerate}
+		\item 基础行距。
+		\item 在\LaTeX\ 中，可用\cmd{f@baselineskip}获取基础行距的值；
+		\item 在英文排版中，通常设为字符尺寸的1.2倍，
+		如大小为10 点（point，中文也常根据其读音译作“磅”）文字的基础行距为 12 点；
+		\item 只能在正文中对\cmd{baselineskip}赋值，在导言区无效；
+		\item 可以修改\cmd{baselineskip}命令所在段落及其后所有行的行距；（\myemph{注意：在段落的任意位置使用，均可改变当前段落中所有行的行距。}）
+		\item \cmd{baselineskip}的值被修改后立即生效；
+		\item \cmd{baselineskip}只改变文本行的行距，不影响图表标题、表格行、小页环境和脚注等的行距。
+	\end{enumerate}
+	%\todo{代码行距结果似乎有问题}
+	\begin{LTXexample}[width = .36\linewidth, caption = \cmd{baselineskip}初值及修改示例]
+		%\usepackage{printlen}
+		初值 = \printlength{\baselineskip}
+		\baselineskip = 2\baselineskip 修改后本段行距扩大\\
+		修改后的值 = \printlength{\baselineskip}
+		\baselineskip = 16.44145pt\\
+		修改后的值 = \printlength{\baselineskip}
+	\end{LTXexample}
+	
+	\subsubsection{\cmd{lineskiplimit}}
+	最小行间距，缺省值0pt。
+	
+	\begin{LTXexample}[width = .35\linewidth, caption = \cmd{lineskiplimit}初值及修改示例]
+		%\usepackage{printlen}
+		初值 = \printlength{\lineskiplimit}
+		\lineskiplimit = 5pt\\
+		修改后的值 = \printlength{\lineskiplimit}
+	\end{LTXexample}
+	
+	\subsubsection{\cmd{lineskip}}
+	行间插空距，缺省值1pt。
+	
+	\begin{LTXexample}[width = .35\linewidth, caption = \cmd{lineskip}初值及修改示例]
+		%\usepackage{printlen}
+		初值 = \printlength{\lineskip}
+		\lineskip = 5pt\\
+		修改后的值 = \printlength{\lineskip}
+	\end{LTXexample}
+	
+	\subsection{\TeX 行距控制实战}
+	根据\ref{subsec:TeX行距控制基本原理}节的分析，可通过将最小行间距\cmd{lineskiplimit}的值设置的较大，而将行间插空距\cmd{lineskip}的值设置为负数，进而将将最终行距变为负数，即实现上下两行部分重叠排布的效果。
+	
+	
+	\begin{LTXexample}[width = .35\linewidth, caption = 行距为负示例、上下两行字符部分重叠]
+		\lineskiplimit = 40pt
+		\lineskip = -2pt
+		行距为负、上下两行字符部分重叠示例行距为负、上下两行字符部分重叠示例行距为负、上下两行字符部分重叠示例行距为负、上下两行字符部分重叠示例
+	\end{LTXexample}
+	
+	\section{\LaTeX 对行距的控制}
+	
+	在\LaTeX 中，与行距直接相关的参数及命令主要有行距伸展（系数）命令、字号设置命令及字体设置命令。
+	
+	\subsection{行距伸展（系数）命令}
+	行距系数命令主要指\cmd{baselinestretch}和\cmd{linespread\{<系数>\}}。
+	
+	\subsubsection{\cmd{baselinestretch}}
+	行距系数命令，其定义是\verb|\def\baselinestretch{1}|。从定义可以看出，其默认值是1。在ctex的文类（不含beamer）中，将伸展系数设置为1.3。
+	
+	修改\cmd{baselinestretch}的方法是：
+	
+	\begin{lstlisting}
+		\renewcommand{\baselinestretch}{<伸展系数>}
+	\end{lstlisting}
+	
+	\begin{LTXexample}[width = .35\linewidth, caption = \cmd{baselinestretch}初值及修改示例]
+		初值 = \baselinestretch
+		\renewcommand{\baselinestretch}{2}
+		\selectfont \\
+		修改后的值 = \baselinestretch
+	\end{LTXexample}
+	
+	\subsubsection{\cmd{linespread\{<伸展系数>\}}}
+	
+	将实际行距设为基础行距的倍数。该命令的定义是：
+	
+	\begin{lstlisting}
+		\DeclareRobustCommand\linespread[1]{\set@fontsize{#1}\f@size\f@baselineskip}
+	\end{lstlisting}
+	
+	\begin{LTXexample}[width = .35\linewidth, caption = \cmd{linespread}用法示例]
+		\linespread{2}\selectfont
+		修改linespread后，\\
+		baselinestretch的值 = \baselinestretch
+	\end{LTXexample}
+	
+	\subsubsection{关于\cmd{baselinestretch}和\cmd{linespread}命令的几点说明}
+	
+	\begin{enumerate}
+		\item 它们都是相对行距命令；
+		\item “系数”是一个十进制数，必须$\geq$1时才有效；
+		\item 在导言区使用，可以规定全文行距；
+		\item 在正文区使用，可以修改其所在段落及直至文末的行距；（\myemph{注意：在段落中使用，也可改变当前段落所有行的行距。}）
+		\item 它们在\cmd{selectfont}（或等效的字体变更命令，如\cmd{normalsize}、\cmd{zihao{3}}等）后生效；
+		\item 它们会影响\cmd{baselineskip}的最终值，即\cmd{baselineskip} = 伸展系数 $\times$ \cmd{f@baselineskip}。在ctex宏包中，\cmd{linespread}的初始值为1.3，即实际行距是字号大小的 1.3 $\times$ 1.2 = 1.56倍。
+		
+		例：在ctex中，5号字的大小为10.53937 pt，则5号字在系统内部存储宏\cmd{f@baselineskip}的值为 1.2 $\times$  10.53937 pt = 12.647244pt，5号字的实际行距\cmd{baselineskip}是  1.3 $\times$ （1.2 $\times$ 10.53937 pt） = 16.441472 pt。如将\cmd{linespread}的系数设为1.8，则\cmd{baselineskip} = 1.8 $\times$ （ 1.2 $\times$ 10.53937 pt ） = 22.7650392 pt。
+		\item \myemph{推荐使用\cmd{linespread}命令，不推荐使用\cmd{baselinestretch}命令。}
+	\end{enumerate}
+	
+	\begin{LTXexample}[width = .35\linewidth, caption = \cmd{linespread}影响\cmd{baselineskip}实际值示例]
+		%\usepackage{printlen}
+		baselineskip的初值为 \printlength{\baselineskip}
+		\par \linespread{1.8}\selectfont
+		修改linespread后，baselineskip的实际值 =\\
+		\printlength{\baselineskip}
+	\end{LTXexample}
+	
+	\subsection{字符尺寸设置命令}
+	
+	\subsubsection{\cmd{fontsize\{<尺寸>\}\{<基础行距>\}}命令}
+	\cmd{fontsize}命令用于设置字符的尺寸和基础行距属性。
+	
+	\begin{enumerate}
+		\item “尺寸”和“基础行距”的默认单位都是pt；
+		\item \cmd{fontsize}命令控制的是绝对行距；
+		\item \myemph{实际行距 = 伸展系数 $\times$ 基础行距；}
+		\item 在\cmd{selectfont}命令后生效；
+		\item 该命令的定义是：
+	\end{enumerate}
+	
+	\begin{lstlisting}
+		\DeclareRobustCommand\fontsize[2]  {\set@fontsize\baselinestretch{#1}{#2}}
+	\end{lstlisting}
+	
+	从命令的定义可以看出，\cmd{fontsize}不改变行距伸展系数的值。因此，实际行距要在\cmd{fontsize}命令给出的基础行距的基础上乘以伸展系数得出。
+	
+	\begin{LTXexample}[width = .35\linewidth, caption = \cmd{fontsize}修改基础行距示例]
+		\fontsize{5}{20}\selectfont
+		将大小为 5pt 的字符的基础行距\cmd{f@baselineskip}设为 20 pt，伸展系数baselinestretch的默认值 = \baselinestretch，则 5pt 字符的实际行距 = 1.3 $\times$ 20 pt = \printlength{\baselineskip}。
+		
+	\end{LTXexample}
+	
+	\subsubsection{声明式字符尺寸命令}
+	在\LaTeX 中，定义了\cmd{tiny}、\cmd{scriptsize}、\cmd{footnotesize}、\cmd{small}、\cmd{normalsize}、\cmd{large}、\cmd{Large}、\cmd{LARGE}、\cmd{huge}和\cmd{Huge} 10个声明形式的字符尺寸命令。
+	
+	以\cmd{normalsize}为例，其在bk10.clo文件中的定义是：
+	
+	\begin{lstlisting}[caption= {\cmd{normalsize}命令的定义}]
+		\renewcommand\normalsize{%
+			\@setfontsize\normalsize\@xpt\@xiipt
+			\abovedisplayskip 10\p@ \@plus2\p@ \@minus5\p@
+			\abovedisplayshortskip \z@ \@plus3\p@
+			\belowdisplayshortskip 6\p@ \@plus3\p@ \@minus3\p@
+			\belowdisplayskip \abovedisplayskip
+			\let\@listi\@listI}
+	\end{lstlisting}
+	
+	其中，
+	
+	\cmd{@xpt}代表常数10，其定义是\lstinline|\def\@xpt{10}|
+	
+	\cmd{@xiipt}代表常数12，定义是\lstinline|\def\@xiipt{12}|
+	
+	\cmd{p@}的定义是\lstinline|\newdimen\p@ \p@=1pt|，是长度数据命令，常作为长度单位pt使用
+	
+	\cmd{@plus}的定义是\lstinline|\def\@plus{plus}|，常用在\cmd{setlength}等长度赋值命令中
+	
+	\cmd{@minus}的定义是\lstinline|\def\@minus{plus}|，常用在\cmd{setlength}等长度赋值命令中
+	
+	\cmd{z@}是刚性长度命令，其值为 0 pt，定义是\lstinline|\newdimen\z@ \z@=0pt|
+	
+	\cmd{small}在bk10.clo文件中的定义是：
+	\begin{lstlisting}[caption= {\cmd{small}命令的定义}]
+		\DeclareRobustCommand\small{%
+			\@setfontsize\small\@ixpt{11}%
+			\abovedisplayskip 8.5\p@ \@plus3\p@ \@minus4\p@
+			\abovedisplayshortskip \z@ \@plus2\p@
+			\belowdisplayshortskip 4\p@ \@plus2\p@ \@minus2\p@
+			\def\@listi{\leftmargin\leftmargini
+				\topsep 4\p@ \@plus2\p@ \@minus2\p@
+				\parsep 2\p@ \@plus\p@ \@minus\p@
+				\itemsep \parsep}%
+			\belowdisplayskip \abovedisplayskip
+		}
+	\end{lstlisting}
+	
+	
+	
+	从\cmd{normalsize}和\cmd{small}的定义可以看出，每次声明字符尺寸后，都会修改基础行距的值。ctex宏集中的字号命令\cmd{zihao}也会修改基础行距的值。
+	
+	\section{行距有关的宏包}
+	\subsection{setspace}
+	主要通过给\cmd{\baselinestretch}赋予不同的值控制行距。
+	\begin{enumerate}
+		\item 可在修改行距伸展系数的同时，保证数学工公、浮动体、脚注间距的值也相对合理。
+		\item 可将行距设为字符尺寸的1倍、1.5倍和2倍。
+	\end{enumerate}
+	
+	\subsection{zhlineskip}
+	\pkg{zhlineskip}由张瑞熹编写，主要功能有：
+	\begin{enumerate}
+		\item 允许用户指定正文行距相比于正文字号的倍数（通常建议设置在 1.5 至 1.67 之间）
+		\item 允许用户指定脚注行距相比于脚注字号的倍数
+		\item 将数学公式的行距“恢复”成西文较为紧凑的行距（通常为西文字号的 1.2 倍）
+		\item 支持按照 Microsoft Word 进行“多倍行距”排版。
+	\end{enumerate}
+	具体使用方法请参见宏包帮助文档。
+	\section{小结}
+	
+	\TeX\ 中调整绝对行距命令有：\cmd{baselineskip}（基础行距，缺省为字符尺寸的1.2倍）、\cmd{lineskip}（行间插空距，缺省值为 1 pt）和\cmd{lineskiplimit}（最小行间距，缺省值为 0 pt），无调整相对行距（行距伸展系数）的命令。
+	
+	\LaTeX 中调整绝对行距的命令有\lstinline[basicstyle = \ttfamily]|\fontsize{<尺寸>}{<基础行距>}|，调整相对行距（行距伸展系数）的命令有\lstinline[basicstyle = \ttfamily]|\linespread{<伸展系数>}|（推荐使用）和\lstinline[basicstyle =  \ttfamily]|\renewcommand{\baselinestretch}{<伸展系数>}|（不推荐使用）。
+	
+	\lstinline[basicstyle = \ttfamily]|\fontsize|和\lstinline[basicstyle = \ttfamily]|\linespread|命令后必须紧跟\lstinline[basicstyle = \ttfamily]|\selectfont|命令才能生效。
+	
+	通常情况下，实际行距 = 伸展系数 $\times$ 基础行距 。如在ctex宏包中，各文类（不含beamer）的\cmd{linespread}的缺省值为1.3，即实际行距 = 1.3 $\times$ 1.2 $\times$ 字符尺寸 = 1.56 倍字符尺寸。
+	
+	改变字号的同时（如使用\cmd{footnotesize}、\cmd{large}、\cmd{zihao\{3\}}等命令时），基础行距都会被重新设置。
+	
+	在段落中的任意位置改变行距，都会影响整个段落的行距。
+	
+	修改单行行距的命令是\lstinline[basicstyle = \ttfamily]|\vadjust{<垂直空白>}|。
+	
+	%从\cmd{linespread{factor}}、\cmd{fontsize}和\cmd{normalsize}、\cmd{small}等声明式字符尺寸设置命令中可以看出，它们都调用同一个内部宏——\lstinline[basicstyle=\ttfamily]|\@setfontsize{<命令>}{<尺寸>}{<基础行距>}|
+	
+	
+	%\lstinline|\linespread{}|、\lstinline|\fontsize|以及\lstinline|\selectfont|命令都调用\lstinline|set@fontsize|
+	
+	%\printlength{\baselineskip}
+	%\linespread{2.6}\selectfont
+	%\printlength{\baselineskip}
+	
+	
+	%linespread 调用\cmd{set@fontsize}，fontsize调用 \cmd{set@fontsize}，\cmd{selectfont}
+	
+	
+	
+	
+	%\begin{verbatim}
+	%  \ifx \f@linespread \baselinestretch \else 
+	%  \set@fontsize \baselinestretch \f@size \f@baselineskip \fi 
+	%  \xdef \font@name {\csname \curr@fontshape /\f@size \endcsname }
+	%  \pickup@font \font@name \size@update \enc@update
+	%\end{verbatim}
+	
+	
+	%\opt{baselineskip} = \printlen[2][pt]{\baselineskip} = \printlen[2][mm]{\baselineskip}
+	%
+	%\opt{lineskip} = \printlen[2][pt]{\lineskip} = \printlen[2][mm]{\lineskip}
+	%
+	%\opt{lineskiplimit} = \printlen[2][pt]{\lineskiplimit} = \printlen[2][mm]{\lineskiplimit}
+	
+	%\newcommand{\mytest}[1]{\noindent\baselinerule\baselineskiprule#1\baselineskiprule}
+	%
+	%\mytest{中文 English}
+	
+	\section{参考文献}
+	1. LaTeX技巧761:关于行距的研究[转载].\url{https://www.latexstudio.net/archives/956}
+	
+	2. baselineskip和基线距离之间的关系.\url{https://wenda.latexstudio.net/q-1793.html}
+	
+	3. setspace 宏包帮助文档
+	
+	4. zhlineskip宏包帮助文档
+\end{document}

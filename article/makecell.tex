@@ -1,0 +1,87 @@
+\documentclass{ctexart}
+\usepackage{makecell}
+\usepackage[top=1mm,bottom=1mm,left=1cm,right=1mm]{geometry}
+\usepackage{array}
+\usepackage{tabu}
+\makeatletter
+\newcommand{\thickhline}{%
+	\noalign {\ifnum 0=`}\fi \hrule height 1pt
+	\futurelet \reserved@a \@xhline
+}
+\newcolumntype{"}{@{\hskip\tabcolsep\vrule width 1pt\hskip\tabcolsep}}
+\makeatother
+
+\begin{document}
+
+\begin{tabular}{|c|c|c|}
+	\hline
+	\multicolumn{3}{|c|}{部分倒装与全部倒装的对比} \\
+	\hline
+	& 部分倒装 & 全部倒装 \\
+	\hline
+	概念 & \makecell*[c]{只把助动词、be动词、情态动词置于主语前；\\ 
+		句首是程度副词} & \makecell*[c]{把“全部谓语动词”置于“主语”之前；\\ 
+		句首是状语} \\
+	\hline
+	用法/条件 & \makecell*[l]{\hspace{2em}1. 否定词位于句首；\\ 
+		\hspace{2em}2. “only + 状语”位于句首； \\ 
+		\hspace{2em}3. such,so,well,often,many a time等 \\ 
+		\hspace{2em}程度、频率副词于句首} & \makecell*[l]{\hspace{1em}1.主语不是代词；比如he, she, it ... \\ 
+		\hspace{1em}2. 谓语动词不是及物动词！ } \\
+	\hline
+	目的 & 为了突出句首的副词/状语 & 为了突出句尾的主语(除表语提前)  \\
+	\hline
+	区别 & 只看句首的副词/状语，对主语、谓语没要求 & 对主语、谓语有要求！(除表语提前) \\
+	\hline
+\end{tabular}
+\vspace{2ex}
+\hrule
+\vspace{2ex}
+\begin{tabular}{"c"c"c"}
+	\thickhline
+	\multicolumn{3}{c}{部分倒装与全部倒装的对比} \\
+	\thickhline
+	& 部分倒装 & 全部倒装 \\
+	\thickhline
+	概念 & \makecell*[c]{只把助动词、be动词、情态动词置于主语前；\\ 
+		句首是程度副词} & \makecell*[c]{把“全部谓语动词”置于“主语”之前；\\ 
+		句首是状语} \\
+	\thickhline
+	用法/条件 & \makecell*[l]{\hspace{2em}1. 否定词位于句首；\\ 
+		\hspace{2em}2. “only + 状语”位于句首； \\ 
+		\hspace{2em}3. such,so,well,often,many a time等 \\ 
+		\hspace{2em}程度、频率副词于句首} & \makecell*[l]{\hspace{1em}1.主语不是代词；比如he, she, it ... \\ 
+		\hspace{1em}2. 谓语动词不是及物动词！ } \\
+	\thickhline
+	目的 & 为了突出句首的副词/状语 & 为了突出句尾的主语(除表语提前)  \\
+	\thickhline
+	区别 & 只看句首的副词/状语，对主语、谓语没要求 & 对主语、谓语有要求！(除表语提前) \\
+	\thickhline
+\end{tabular}
+
+\vspace{2ex}
+\hrule
+\vspace{2ex}
+\begin{tabu}{|[2pt]c|c|c|}
+	\tabucline[2pt]{-}
+	\multicolumn{3}{|[2pt]c|[2pt]}{部分倒装与全部倒装的对比} \\
+	\tabucline[2pt]{-}
+	& 部分倒装 & 全部倒装 \\
+	\tabucline[2pt]{-}
+	概念 & \makecell*[c]{只把助动词、be动词、情态动词置于主语前；\\ 
+		句首是程度副词} & \makecell*[c]{把“全部谓语动词”置于“主语”之前；\\ 
+		句首是状语} \\
+	\tabucline[2pt]{-}
+	用法/条件 & \makecell*[l]{\hspace{2em}1. 否定词位于句首；\\ 
+		\hspace{2em}2. “only + 状语”位于句首； \\ 
+		\hspace{2em}3. such,so,well,often,many a time等 \\ 
+		\hspace{2em}程度、频率副词于句首} & \makecell*[l]{\hspace{1em}1.主语不是代词；比如he, she, it ... \\ 
+		\hspace{1em}2. 谓语动词不是及物动词！ } \\
+	\tabucline[2pt]{-}
+	目的 & 为了突出句首的副词/状语 & 为了突出句尾的主语(除表语提前)  \\
+	\tabucline[2pt]{-}
+	区别 & 只看句首的副词/状语，对主语、谓语没要求 & 对主语、谓语有要求！(除表语提前) \\
+	\tabucline[2pt]{-}
+\end{tabu}
+
+\end{document}
