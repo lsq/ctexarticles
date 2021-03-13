@@ -1,0 +1,43 @@
+\documentclass{ctexart}
+
+\usepackage{etoolbox}
+\usepackage{color}
+\usepackage{url}
+\usepackage{tcolorbox}
+\usepackage[margin=2.6cm]{geometry}
+\tcbuselibrary{listings,breakable}
+
+\title{\texttt{patchcmd}命令详解}
+
+\begin{document}
+	
+	\maketitle
+	
+	\verb|\patchcmd| 是\texttt{etoolbox}宏包中的一个替换命令，它能够早宏的展开中查找替换指定的内容。
+	该命令的语法如下：
+	\medskip
+	
+	\verb|\patchcmd[prefix]{command}{search}{replace}{success}{failure}|
+	\medskip
+	
+	\verb|\patchcmd|  接收5个参数，分别表示：
+	\begin{description}
+		\item[command] 你想对哪个命令打补丁
+		\item[search] 你想替换啥
+		\item[replace] 你想将它替换成啥
+		\item[success] 如果替换成功了咋办
+		\item[failure] 如果替换失败了咋办\footnote{\url{https://liam.page/2016/06/10/pseudocode-with-vertical-line/}}
+	\end{description}
+	
+	\begin{tcblisting}{}
+\newcommand{\mystr}[1]{{\color{red}\LARGE #1}}
+
+\mystr{红色，字号LARGE}
+
+使用patchcmd替换成蓝色，字号small
+
+\patchcmd{\mystr}{\color{red}\LARGE}{\color{blue}\small}{替换成功}{替换失败}
+
+\mystr{蓝色，字号small}
+\end{tcblisting}
+\end{document}

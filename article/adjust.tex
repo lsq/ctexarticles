@@ -1,6 +1,7 @@
 \documentclass[a4paper,png]{standalone}
 \usepackage{array}
 \usepackage{tabu}
+%\usepackage{ctex}
 \makeatletter
 \newcommand{\thickhline}{%
 	\noalign {\ifnum 0=`}\fi \hrule height 1pt
@@ -9,6 +10,9 @@
 \newcolumntype{"}{@{\hskip\tabcolsep\vrule width 1pt\hskip\tabcolsep}}
 \makeatother
 \begin{document}
+
+%\section{use array package}
+
 	\begin{tabular}{c"c"c|c|c|c}
 		$*$ & $a$ & $b$ & $c$ & $d$ & $e$ \\\thickhline
 		$a$ & $a$ & $b$ & $c$ & $b$ & $d$ \\\hline
@@ -16,8 +20,9 @@
 		$c$ & $c$ & $a$ & $b$ & $b$ & $a$ \\\hline
 		$d$ & $b$ & $e$ & $b$ & $e$ & $d$ \\\hline
 		$e$ & $d$ & $b$ & $a$ & $d$ & $c$
-	\end{tabular}
+	\end{tabular}\\
 
+%\section{use tabu package}
 
 	\begin{tabu}{c|[2pt]c|c|c|c|c}
 		$*$ & $a$ & $b$ & $c$ & $d$ & $e$ \\\tabucline[2pt]{-}

@@ -1,0 +1,9 @@
+\newcommand{\mystr}[1]{{\color{red}\LARGE #1}}
+
+\mystr{红色，字号LARGE}
+
+使用patchcmd替换成蓝色，字号small
+
+\patchcmd{\mystr}{\color{red}\LARGE}{\color{blue}\small}{替换成功}{替换失败}
+
+\mystr{蓝色，字号small}
