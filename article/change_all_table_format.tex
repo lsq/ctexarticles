@@ -3,15 +3,18 @@
 \usepackage[top=1mm,bottom=1mm,left=1cm,right=1mm]{geometry}
 \usepackage{array}
 \usepackage{tabu}
+\usepackage{amsmath}
 % tabular 务必放在浮动环境 table 中否则会影响后文字体大小。
 \usepackage{etoolbox}
 \BeforeBeginEnvironment{tabular}{\bfseries\zihao{-6}}
 \makeatletter
+% version 1 use "
 \newcommand{\thickhline}{%
 	\noalign {\ifnum 0=`}\fi \hrule height 1pt
 	\futurelet \reserved@a \@xhline
 }
 \newcolumntype{"}{@{\hskip\tabcolsep\vrule width 1pt\hskip\tabcolsep}}
+
 \makeatother
 
 \begin{document}
@@ -97,4 +100,16 @@ normal text\\
 		\tabucline[2pt]{-}
 	\end{tabu}
 	
+	\section{color table}
+	\subsection{use tabular enviroment}
+	\begin{tabular}{lccc}
+		\hline
+		状态変化 & $Q^{in}$ & $\varDelta U$ & $W^{out}$ \\
+		\hline \hline
+		定量変化 & $nC_V\varDelta T$ & $nC_V\varDelta T$ & 0 \\
+		定圧変化 & $nC_P\varDelta T$ & $nC_V\varDelta T$ & $nR\varDelta T$ \\
+		等温変化 & $nRT\log\frac{V_1}{V_0}$ & 0 & $nRT\log\frac{V_1}{V_0}$ \\
+		断熱変化変 & 0 & $nC_V\varDelta T$ & $-nC_V\varDelta T$ \\
+		\hline
+	\end{tabular}
 \end{document}

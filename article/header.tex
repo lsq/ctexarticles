@@ -1,0 +1,40 @@
+\documentclass[12pt]{book}
+\usepackage{tikz}
+\usepackage[a4paper, margin=4cm, headheight=23pt]{geometry}
+\usepackage{lipsum}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\newcommand{\X}{\phantom{X}} % Filler to define baseline of empty circles
+\fancyhf{}
+\DeclareRobustCommand{\bul}{\begin{tikzpicture}[baseline={(current bounding box.south)}]
+		\fill [blue!40,anchor=base,baseline] circle (1mm);
+\end{tikzpicture}}
+\renewcommand{\chaptermark}[1]{\markboth{Chapter \thechapter~%
+		\bul~#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{Section \thesection~%
+		\bul~#1}{}}
+\renewcommand\headrulewidth{0pt}
+\fancyhead[LO]{\leftmark}
+\fancyhead[RE]{\rightmark}
+\fancyhead[RO]
+{\begin{tikzpicture}[baseline, every node/.style={minimum size=8mm, anchor=base}]
+		\path node at (0,0) [shape=circle, fill=blue!20] (0,0) {\X}
+		node at (1,0) [shape=circle, fill=blue!40] (0,0) {\X}
+		node at (2,0) [shape=circle, fill=blue!60] (0,0) {\thepage};
+\end{tikzpicture}}
+\fancyhead[LE]
+{\begin{tikzpicture}[baseline, every node/.style={minimum size=8mm, anchor=base}]
+		\path node at (0,0) [shape=circle, fill=blue!60] (0,0) {\thepage}
+		node at (1,0) [shape=circle, fill=blue!40] (0,0) {\X}
+		node at (2,0) [shape=circle, fill=blue!20] (0,0) {\X};
+\end{tikzpicture}}
+
+\begin{document}
+	\chapter{Test Chapter}
+	\lipsum[1]
+	\section{Test Section}
+	\lipsum[1-15]
+	\newpage
+	\section{Test Section 2}
+	\lipsum[1-15]
+\end{document}
