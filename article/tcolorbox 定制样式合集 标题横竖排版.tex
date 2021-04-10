@@ -1,0 +1,85 @@
+\documentclass[a4paper]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage[most]{tcolorbox}
+\usepackage{lipsum}
+
+\makeatletter
+\tcbset{
+	myhbox/.style 2 args={%
+		enhanced,
+		breakable,
+		colback=white,
+		colframe=blue!30!black,
+		attach boxed title to top left={yshift*=-\tcboxedtitleheight},
+		title={#2},
+		boxed title size=title,
+		boxed title style={%
+			sharp corners,
+			rounded corners=northwest,
+			colback=tcbcolframe,
+			boxrule=0pt,
+		},
+		underlay boxed title={%
+			\path[fill=tcbcolframe] (title.south west)--(title.south east)
+			to[out=0, in=180] ([xshift=5mm]title.east)--
+			(title.center-|frame.east)
+			[rounded corners=\kvtcb@arc] |-
+			(frame.north) -| cycle;
+		},
+		#1
+	},
+	myvbox/.style 2 args={%
+		enhanced,
+		colback=white,
+		colframe=blue!30!black,
+		left=8mm,
+		overlay={
+			\node[rotate=90, anchor=north west, inner sep=2mm, text=white] (title@aux) at (frame.south west) {#2};
+			\path[fill=tcbcolframe] (title@aux.south west)--(title@aux.south east)
+			to[out=90, in=270] ([yshift=5mm]title@aux.east)--
+			(title@aux.center|-frame.north)
+			[rounded corners=\kvtcb@arc] -|
+			(frame.west) |- (title@aux.west)[sharp corners] -- cycle;
+			\node[rotate=90, inner sep=2mm, text=white] at (title@aux) {#2};
+		},
+		#1
+	},
+}
+\makeatother
+
+\newtcolorbox{myhbox}[2][]{%
+	myhbox={#1}{#2}
+}
+
+\newtcolorbox{myvbox}[2][]{%
+	myvbox={#1}{#2}
+}
+
+\begin{document}
+	
+	\begin{myhbox}{Long fancy title}
+		\begin{enumerate}
+			\item Show that
+			\[D_2f(x,y) = \frac{\partial{}}{\partial{y}} \left ( \int_0^xg_1 (t,0)\ dt + \int_0^y g_2(x,s)\ ds \right)\]
+			\item Prove that
+			\[\left(\forall x\in\mathbb{R}  \right)\left(\forall y \in \mathbb{R} \right) x\neq y\, \text{and} \, x+y \neq 2 \implies x^{2}-2x \neq y^2-2y\]
+		\end{enumerate}
+	\end{myhbox}
+	
+	\begin{myvbox}[colframe=red!80!black]{Long fancy title}
+		\begin{enumerate}
+			\item Show that
+			\[D_2f(x,y) = \frac{\partial{}}{\partial{y}} \left ( \int_0^xg_1 (t,0)\ dt + \int_0^y g_2(x,s)\ ds \right)\]
+			\item Prove that
+			\[\left(\forall x\in\mathbb{R}  \right)\left(\forall y \in \mathbb{R} \right) x\neq y\, \text{and} \, x+y \neq 2 \implies x^{2}-2x \neq y^2-2y\]
+		\end{enumerate}
+	\end{myvbox}
+	
+	\begin{tcboxeditemize}[raster columns=3, myhbox={colback=yellow!10, colframe=red!70!black}{Box \# \thetcbrasternum} ]{myhbox={colback=red!10}{External box}}
+		\tcbitem A
+		\tcbitem[notitle, myvbox={colback=green!70!black, height=4cm}{Box \# \thetcbrasternum}] B
+		\tcbitem C
+	\end{tcboxeditemize}
+	
+\end{document}

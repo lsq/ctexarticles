@@ -1,0 +1,38 @@
+\documentclass[border=15pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{ifthen}
+\begin{document}
+	\newcounter{maincounter}
+	\newcounter{secondcounter}
+	\begin{tikzpicture}[line width = 1.2pt]
+		\pgfmathsetmacro{\h}{1.4}   %两点的水平间距
+		\pgfmathsetmacro{\v}{1.4}   %两点的垂直间距
+		% %------------------------------------------------------
+		\foreach \r/\c in {0/0,2/0,4/0,6/0,0/2,2/2,4/2,6/2}
+		{	
+			\stepcounter{maincounter} %增加计数器的值
+			\setcounter{secondcounter}{0}%设置计数器的值
+			%定义原点坐标
+			\coordinate  (P0) at (\r,\c);	
+			
+			\path (P0)  node[circle,fill=red,inner sep=2pt](a){$a$};
+			\path (a)+(\h,0 )  node[circle,fill=red,inner sep=2pt](b){$b$};
+			\path (b)+(0,\v )  node[circle,fill=red,inner sep=2pt](c){$c$};
+			\path (a)+(0,\v )  node[circle,fill=red,inner sep=2pt](d){$d$};
+			\path ($ (a)!0.5! (b) $)+(0,-0.25)   node (T){ $\left( \themaincounter \right) $};
+			%画虚线
+			\foreach \from/\to in {a/b,b/c,c/d,d/a,a/c,b/d}
+			{
+				\stepcounter{secondcounter} %增加计数器的值
+				\ifthenelse{\value{maincounter} < 8}{
+					\ifthenelse{\value{secondcounter} < \value{maincounter}}
+					{\draw[blue,very thick] (\from)--(\to) ; }	{\draw[dashed,thin] (\from)--(\to) ;}
+				}{\draw[dashed,thin] (\from)--(\to) ;}
+				%------------------------------
+			}
+			%------------------------------
+			\ifthenelse{\value{maincounter} = 8}{\draw[green,very thick] (a)--(b)--(c)--(a) ;  }{}			
+		}
+	\end{tikzpicture}
+\end{document}

@@ -1,0 +1,21 @@
+\documentclass{ctexart}
+\usepackage{csvsimple}
+%\usepackage{cs}
+\begin{filecontents*}{db1.csv}
+	姓名, 性别, 年龄
+	张三, 男,18
+	李四, 男,45
+	马五, 女,16
+\end{filecontents*}
+
+\begin{document}
+	CSV 文件数据可以使用记事本、Excel 等软件生成，也可以在导言区用filecontents* 环境生成。
+	该代码会在当前工作目录下生成“db1.csv” 数据文件。
+	
+\section{使用csvsimple 宏包生成\LaTeX 表格}
+	\begin{table}[htb]
+		\centering
+		\caption{使用$\backslash$cs{csvautotabular}命令生成表格\label{tab01}}
+		\csvautotabular{db1.csv}
+	\end{table}
+\end{document}
