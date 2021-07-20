@@ -1,0 +1,317 @@
+\documentclass[zihao=-4]{ctexart}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{anyfontsize}
+\usepackage{sectsty}
+\usepackage{colortbl}
+\usepackage{hhline}
+\usepackage{newtxtext}
+\usepackage{hyperref}
+\usepackage{longtable,booktabs}
+\usepackage{pdfpages}
+
+
+\definecolor{mgray}{rgb}{0.498,0.498,0.498}
+%\usepackage[left=19.1mm,right=19.1mm,top=25.4mm,bottom=25.4mm]{geometry}% 用于页面设置
+% 设置为A4纸，边距适中模式（参考永中office）
+%\geometry{
+%	width = 210mm,
+%	height = 297mm,
+%	left = 19.1mm,
+%	right = 19.1mm,
+%	top = 25.4mm,
+%	bottom = 25.4mm
+%}
+%————————————————
+%版权声明：本文为CSDN博主「夜间之路」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+%原文链接：https://blog.csdn.net/con_me/article/details/114444542
+\usepackage[left=19.1mm, right=19.1mm, top=25.4mm, bottom=25.4mm]{geometry}
+\pagestyle{fancy}
+\lhead{\raisebox{1mm}{\includegraphics[scale=0.4]{./maxeye.png}\zihao{5}}} %在此处插入logo.pdf图片 图片靠左
+%\chead{MAXEYE} % 页眉中间位置内容
+\rhead{\bfseries 文档控制} %页眉右边位置内容，并加粗
+\lfoot{\zihao{-5}\copyright 2020-2021深圳市千分一智能技术有限公司\ 版权所有\  未经授权\ 禁止使用}  %页脚
+\cfoot{}
+\rfoot{\zihao{-5}第\thepage，共\pageref{LastPage}页}
+\renewcommand{\headrulewidth}{2pt}%脚注线的宽度
+\renewcommand{\footrulewidth}{1pt}%脚注线的宽度
+%\setlength{\abovecaptionskip}{-1cm} 
+
+\title{\hypertarget{ux5173ux4e8eux4f9bux5e94ux5546ux4ed8ux6b3eux7533ux8bf7ux5355ux4ed8ux6b3eux4fe1ux606fux586b}{%
+		{\heiti 付款申请单付款信息填写说明}\label{ux5173ux4e8eux4f9bux5e94ux5546ux4ed8ux6b3eux7533ux8bf7ux5355ux4ed8ux6b3eux4fe1ux606fux586b}}}
+%\setCJKmainfont[AutoFakeBold]{FangSong_GB2312}
+\setCJKmainfont[AutoFakeBold]{FangSong_GB2312}
+\author{}
+\date{}
+\begin{document}
+%	\pagestyle{empty}
+%	
+%	\begin{tikzpicture}[overlay,remember picture]
+%		
+%		% Background color
+%		\fill[
+%		black!2]
+%		(current page.south west) rectangle (current page.north east);
+%		
+%		% Rectangles
+%		\shade[
+%		left color=Dandelion,
+%		right color=Dandelion!40,
+%		transform canvas ={rotate around ={45:($(current page.north west)+(0,-6)$)}}]
+%		($(current page.north west)+(0,-6)$) rectangle ++(9,1.5);
+%		
+%		\shade[
+%		left color=lightgray,
+%		right color=lightgray!50,
+%		rounded corners=0.75cm,
+%		transform canvas ={rotate around ={45:($(current page.north west)+(.5,-10)$)}}]
+%		($(current page.north west)+(0.5,-10)$) rectangle ++(15,1.5);
+%		
+%		\shade[
+%		left color=lightgray,
+%		rounded corners=0.3cm,
+%		transform canvas ={rotate around ={45:($(current page.north west)+(.5,-10)$)}}] ($(current page.north west)+(1.5,-9.55)$) rectangle ++(7,.6);
+%		
+%		\shade[
+%		left color=orange!80,
+%		right color=orange!60,
+%		rounded corners=0.4cm,
+%		transform canvas ={rotate around ={45:($(current page.north)+(-1.5,-3)$)}}]
+%		($(current page.north)+(-1.5,-3)$) rectangle ++(9,0.8);
+%		
+%		\shade[
+%		left color=red!80,
+%		right color=red!80,
+%		rounded corners=0.9cm,
+%		transform canvas ={rotate around ={45:($(current page.north)+(-3,-8)$)}}] ($(current page.north)+(-3,-8)$) rectangle ++(15,1.8);
+%		
+%		\shade[
+%		left color=orange,
+%		right color=Dandelion,
+%		rounded corners=0.9cm,
+%		transform canvas ={rotate around ={45:($(current page.north west)+(4,-15.5)$)}}]
+%		($(current page.north west)+(4,-15.5)$) rectangle ++(30,1.8);
+%		
+%		\shade[
+%		left color=RoyalBlue,
+%		right color=Emerald,
+%		rounded corners=0.75cm,
+%		transform canvas ={rotate around ={45:($(current page.north west)+(13,-10)$)}}]
+%		($(current page.north west)+(13,-10)$) rectangle ++(15,1.5);
+%		
+%		\shade[
+%		left color=lightgray,
+%		rounded corners=0.3cm,
+%		transform canvas ={rotate around ={45:($(current page.north west)+(18,-8)$)}}]
+%		($(current page.north west)+(18,-8)$) rectangle ++(15,0.6);
+%		
+%		\shade[
+%		left color=lightgray,
+%		rounded corners=0.4cm,
+%		transform canvas ={rotate around ={45:($(current page.north west)+(19,-5.65)$)}}]
+%		($(current page.north west)+(19,-5.65)$) rectangle ++(15,0.8);
+%		
+%		\shade[
+%		left color=OrangeRed,
+%		right color=red!80,
+%		rounded corners=0.6cm,
+%		transform canvas ={rotate around ={45:($(current page.north west)+(20,-9)$)}}]
+%		($(current page.north west)+(20,-9)$) rectangle ++(14,1.2);
+%		
+%		% Year
+%		%		\draw[ultra thick,gray]
+%		%		($(current page.center)+(5,2)$) -- ++(0,-3cm)
+%		%		node[
+%		%		midway,
+%		%		left=0.25cm,
+%		%		text width=5cm,
+%		%		align=right,
+%		%		black!75
+%		%		]
+%		%		{
+%		%			{\fontsize{25}{30} \selectfont \bf ANNUAL \\[10pt] REPORT}
+%		%		}
+%		%		node[
+%		%		midway,
+%		%		right=0.25cm,
+%		%		text width=6cm,
+%		%		align=left,
+%		%		orange]
+%		%		{
+%		%			{\fontsize{72}{86.4} \selectfont 2020}
+%		%		};
+%		
+%		% Title
+%		\node[align=center] at ($(current page.center)+(0,-5)$)
+%		{
+%			{\fontsize{40}{48} \selectfont {{\heiti 多组织产能协同委托加工流程}}} \\[1cm]
+%			{\fontsize{16}{19.2} \selectfont \textcolor{orange}{ \heiti 深圳市千分一智能技术有限公司}}\\[3pt]
+%			%			Company Name\\[3pt]
+%			%			Address
+%		};
+%	\end{tikzpicture}
+	
+	%	\clearpage
+	\newpage
+	\pagestyle{fancy}% 设置页眉
+	{\noindent \zihao{3}\bf 文档控制\\
+	\zihao{-3} 更改记录
+	\zihao{-4}
+	\setlength\doublerulesep{2pt}\doublerulesepcolor{mgray}
+	
+	\begin{tabular}{|p{2cm}|p{3cm}|p{2cm}|p{8cm}|}
+		\hline
+		\rowcolor[rgb]{0.898,0.898,0.898} \textbf{日期} & \textbf{作者} & \textbf{版本} & \textbf{更改参考}\\\hhline{|=|=|=|=|}
+		& & & \\\hline
+		& & & \\\hline
+		& & & \\\hline
+	\end{tabular}\\
+	\zihao{-3} 审核
+	\zihao{-4}
+	
+	\begin{tabular}{|p{2cm}|p{3cm}|p{10.5cm}|}
+		\hline
+		\rowcolor[rgb]{0.898,0.898,0.898} \textbf{姓名} & \textbf{职位} & \textbf{签字} \\\hhline{|=|=|=|}
+		& & \\\hline
+		& & \\\hline
+		& & \\\hline
+	\end{tabular}\\	
+	\zihao{-3} 分发
+	\zihao{-4}
+	
+	\begin{tabular}{|p{2cm}|p{3cm}|p{10.5cm}|}
+		\hline
+		\rowcolor[rgb]{0.898,0.898,0.898} \textbf{拷贝号} & \textbf{姓名} & \textbf{区域} \\\hhline{|=|=|=|}
+		& & \\\hline
+		& & \\\hline
+		& & \\\hline
+	\end{tabular}
+}
+	\newpage
+	%\clearpage
+%	\thispagestyle{empty}
+	\rhead{\leftmark}
+	\tableofcontents
+	\newpage
+	
+	\zihao{-4}
+%	%	\pagestyle{fancy}% 设置页眉
+%	\section{介绍}
+%	
+%	\section{操作流程}
+%	
+%	\subsection{单据类型设置}
+%	设置单据类型中生产订单单据中“名称”为“组织委托加工-汇报入库”，”参数设置“中”单据控制“勾选”组织间受托加工“。
+%	
+%	%	\subsection{设置BOM}
+%	设置BOM中“物料控制”页签中“发料组织”为“深圳市千分一智能技术有限公司”，及”默认发料仓库“，”货主“为“深圳市千分一智能技术有限公司”，”供料方式“为”委托方供料“。
+	
+	%	\section{附件}
+
+
+
+\maketitle
+\hypertarget{ux586bux5199ux8bf4ux660e-1}{%
+\section{填写举例}\label{ux586bux5199ux8bf4ux660e-1}}
+
+以外币付款说明为例，人民币相对简单点，方法类似，下面是一个外币的Payment Instruction。\\
+\begin{figure}[!h]
+	\centering
+%	\includegraphics[width=\ScaleIfNeeded]{./payments_instruction.pdf}
+%	\rotatebox{10}{\includegraphics[scale=0.5]{./payments_instruction.pdf}}
+	\includegraphics[height=0.5\paperheight, angle=0.2]{./payments_instruction.pdf}
+%	\caption{Schematical view of Spearman's theory.}
+\end{figure}\\
+系统中供应商资料中“财务信息”填写结果如下：\\
+\begin{figure}[!h]
+	\centering
+	%	\includegraphics[width=\ScaleIfNeeded]{./payments_instruction.pdf}
+	%	\rotatebox{10}{\includegraphics[scale=0.5]{./payments_instruction.pdf}}
+	\includegraphics[width=\linewidth]{./fksq_usd.png}
+	%	\caption{Schematical view of Spearman's theory.}
+\end{figure}\\
+\hypertarget{ux4f9bux5e94ux5546ux57faux7840ux8d44ux6599}{%
+\section{填写供应商基础资料}\label{ux4f9bux5e94ux5546ux57faux7840ux8d44ux6599}}
+以下是上图中的供应商资料中字段与付款信息对应关系说明\\
+\hypertarget{ux586bux5199ux8bf4ux660e-2}{%
+\subsection{字段说明：}\label{ux586bux5199ux8bf4ux660e-2}}
+
+\begin{longtable}[]{@{}ll@{}}	
+\toprule
+\textbf{银行信息} & \textbf{填写对应列名称} \\
+\midrule
+\endhead
+Beneficairy's Bank Name & 开户银行 \\
+Beneficairy's Bank Address & 开户行地址 \\
+Benefcairy's Name & 账户名称 \\
+Benefcairy's Address & 地址（表头） \\
+Account Number(USD) & 银行账号 \\
+Swift Code & SwiftCode \\	
+ABA(ACH) CODE / Beneficairy's Bank Code & 联行号 \\
+Bank Country & 国家 \\
+\bottomrule
+\end{longtable}
+
+\hypertarget{ux5176ux4ed6ux6ce8ux610fux5730ux65b9}{%
+\subsection{其他注意地方}\label{ux5176ux4ed6ux6ce8ux610fux5730ux65b9}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  如果是\textbf{外币}，\textbf{结算币别}填写：“美元”/“日元”等。
+\item
+  \textbf{结算方式}：“电汇”。
+\item
+  \textbf{付款条件}，根据付款账款选择。
+\item
+  \textbf{发票类型}也要根据实际情况选择，进口请选择\textbf{零税率}。
+\item
+  如果有\textbf{多个}银行资料信息，可以新增行，添加另外一个银行账号资料，但需要选择一个作为\textbf{默认}。
+\end{enumerate}
+
+\hypertarget{ux5957ux6253ux8bbeux7f6eux9009ux62e9}{%
+\section{套打设置---自动选择套打模板}\label{ux5957ux6253ux8bbeux7f6eux9009ux62e9}}
+如果想在打印付款申请单时，根据币种自动选择打印模板，需要如下设置：\\
+\textbf{前置条件}：在付款申请单先选择"\textbf{币别}"，只有选择正确，套打设置才能\textbf{自动}选择正确的\textbf{套打模板}。\\
+%\begin{figure}[!h]
+%	\centering
+	%	\includegraphics[width=\ScaleIfNeeded]{./payments_instruction.pdf}
+	%	\rotatebox{10}{\includegraphics[scale=0.5]{./payments_instruction.pdf}}
+	\includegraphics[width=\linewidth]{./fksq_print0.png}
+	%	\caption{Schematical view of Spearman's theory.}
+%\end{figure}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  在付款申请单菜单栏，“选项”-\/-\/-“套打设置”中清空\textbf{默认}套打设置。\\
+%  \begin{figure}[!h]
+%  	\centering
+  	%	\includegraphics[width=\ScaleIfNeeded]{./payments_instruction.pdf}
+  	%	\rotatebox{10}{\includegraphics[scale=0.5]{./payments_instruction.pdf}}
+  	\includegraphics[width=\linewidth]{./fksq_print.png}
+  	%	\caption{Schematical view of Spearman's theory.}
+%  \end{figure}\\
+\item
+  在“高级”中新增行，并按如下操作设置套打模板。\\
+%  \begin{figure}[!h]
+%  	\centering
+  	%	\includegraphics[width=\ScaleIfNeeded]{./payments_instruction.pdf}
+  	%	\rotatebox{10}{\includegraphics[scale=0.5]{./payments_instruction.pdf}}
+  	\includegraphics[height=0.5\textheight,width=\linewidth]{./fksq_print2.png}\\
+  	%	\caption{Schematical view of Spearman's theory.}
+%  \end{figure}\\
+%  \begin{figure}[!h]
+%  	\centering
+  	%	\includegraphics[width=\ScaleIfNeeded]{./payments_instruction.pdf}
+  	%	\rotatebox{10}{\includegraphics[scale=0.5]{./payments_instruction.pdf}}
+  	\includegraphics[width=\linewidth]{./fksq_print1.png}
+  	%	\caption{Schematical view of Spearman's theory.}
+%  \end{figure}\\
+\end{enumerate}
+
+\end{document}
